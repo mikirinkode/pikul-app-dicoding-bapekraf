@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Pikul</string>
+
+    <!--  LOGIN ACTIVITY  -->
+    <string name="txt_button_login">LOGIN</string>
+    <string name="txt_hint_password">Password</string>
+    <string name="txt_hint_email">Email</string>
+    <string name="txt_welcome_description">Silahkan login terlebih dahulu dengan menggunakan username dan password anda.</string>
+    <string name="txt_welcome_back">Selamat Datang Kembali!</string>
+    <string name="txt_do_not_have_account">Belum punya akun?</string>
+    <string name="txt_login_success">Login Berhasil</string>
+    <string name="txt_button_register">Daftar</string>
+
+    <!--  REGISTER ACTIVITY  -->
+    <string name="name_too_short">Nama terlalu singkat</string>
+    <string name="txt_already_have_account">Sudah punya akun?</string>
+    <string name="txt_welcome_newcomer">Halo, Selamat Datang!</string>
+    <string name="txt_welcome_register_description">Silahkan buat akun terlebih dahulu sebelum masuk ke aplikasi.</string>
+    <string name="txt_hint_password_confirmation">Konfirmasi Password</string>
+    <string name="txt_hint_name">Nama</string>
+    <string name="empty_name">Nama tidak boleh kosong</string>
+    <string name="empty_email">Email tidak boleh kosong</string>
+    <string name="empty_password">Password tidak boleh kosong</string>
+    <string name="pass_not_match">Password tidak cocok</string>
+    <string name="invalid_email">Format email tidak valid</string>
+    <string name="invalid_password">Format Password Tidak Valid</string>
+    <string name="txt_hint_password_best_practice">Harus berisi Huruf besar, Huruf kecil, Angka dan paling sedikit 8 karakter</string>
+    <string name="txt_loading">Loading</string>
+
+
+    <!--  BOTTOM NAV  -->
+    <string name="txt_bottom_nav_title_home">Home</string>
+    <string name="txt_bottom_nav_title_maps">Maps</string>
+    <string name="txt_bottom_nav_title_chat">Chat</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
