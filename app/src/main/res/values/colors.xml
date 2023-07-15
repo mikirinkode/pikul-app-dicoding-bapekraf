@@ -5,6 +5,39 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="orange_200">#FFA726</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="orange_700">#F57C00</color>
+
+    <color name="colorPrimary">@color/purple_500</color>
+    <color name="colorPrimaryVariant">@color/purple_700</color>
+    <color name="colorPrimaryDark">@color/purple_200</color>
+    <color name="colorPrimaryVariantDark">@color/purple_700</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#df2951</color>
+    <color name="gray">#878787</color>
+
+    <color name="online_status_indicator_color">#00B307</color>
+    <color name="message_been_read_color">#00BCD4</color>
+
+    <color name="light_window_background">#F0F6FF</color>
+    <color name="night_window_background">#17212B</color>
+    <color name="night_secondary_background">#1E2B38</color>
+    <color name="night_third_background">#1E2B38</color>
+
+    <color name="light_color_on_background">#DBE5F3</color>
+    <color name="night_color_on_background">#131C25</color>
+
+    <color name="night_theme_text_color">#F0F6FF</color>
+    <color name="light_theme_text_color">#243342</color>
+
+    <color name="gray_tabs_title">#B5C6D8</color>
+    <color name="gray_divider_view">#B5C6D8</color>
+
+    <color name="gray_tokopedia_text">#7F91A4</color>
+
+    <color name="red_transparent20">#33DF2951</color>
+    <color name="backgroundColorRecycler">#e7e7e7</color>
 </resources>
