@@ -46,6 +46,7 @@ data class Merchant(
 
     val coordinatePosition: String,
     val movingStatus: String,
+    val type: String, // Motor, mobile, gerobak, stan
 //    val merchantRating: String,
     )
 
@@ -74,6 +75,7 @@ object DummyData{
                 PikulRole.MERCHANT.toString(),
                 "4241.434, 13141.24",
                 "Keliling",
+                "",
             )
         )
         return list

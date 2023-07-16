@@ -89,4 +89,7 @@ dependencies {
     implementation 'com.google.guava:guava:24.1-jre'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
+    // Google Maps SDK
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

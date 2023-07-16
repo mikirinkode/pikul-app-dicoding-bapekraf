@@ -37,6 +37,20 @@
 
     <!--  HOME FRAGMENT  -->
     <string name="txt_btn_see_all">Semua</string>
+    <string name="txt_section_title_nearby_merchant">Pedagang Disekitar</string>
+    <string name="txt_section_title_popular_food">Makanan Populer</string>
+    <string name="txt_section_title_category">Kategori</string>
+
+    <!--  MAPS FRAGMENT  -->
+    <string name="txt_your_location">Lokasi Anda</string>
+    <string name="txt_dialog_title_enable_location">Aktifkan Layanan Lokasi?</string>
+    <string name="txt_dialog_desc_enable_location_service">
+        Aplikasi ini membutuhkan anda untuk mengaktifkan layanan lokasi agar dapat menyesuaikan informasi berdasarkan lokasi anda.</string>
+    <string name="txt_dialog_btn_open_settings">Buka Pengaturan</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="cancel">Batalkan</string>
+    <string name="txt_location_permission_granted">Ijin Lokasi Diberikan</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

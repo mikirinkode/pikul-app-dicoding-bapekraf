@@ -13,6 +13,7 @@ object PermissionHelper {
     const val CAMERA_REQUEST_PERMISSION_CODE = 9001
     const val READ_EXTERNAL_REQUEST_PERMISSION_CODE = 9002
     const val NOTIFICATION_REQUEST_PERMISSION_CODE = 9003
+    const val LOCATION_REQUEST_PERMISSION_CODE = 9004
 
     /**
      * NOTIFICATION
@@ -95,7 +96,7 @@ object PermissionHelper {
     /**
      * LOCATION
      */
-    private fun isLocationPermissionGranted(context: Context): Boolean {
+    fun isLocationPermissionGranted(context: Context): Boolean {
         val fineLocation = ActivityCompat.checkSelfPermission(
             context,
             android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -105,5 +106,23 @@ object PermissionHelper {
             android.Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
         return fineLocation && coarseLocation
+    }
+    fun requestLocationPermission(activity: Activity) {
+        // check the permissions
+        val requestPermissions = mutableListOf<String>()
+        if (!isLocationPermissionGranted(activity)) {
+            // if permissions are not granted
+            requestPermissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        if (requestPermissions.isNotEmpty()) {
+            // request the permission
+            ActivityCompat.requestPermissions(
+                activity,
+                requestPermissions.toTypedArray(),
+                LOCATION_REQUEST_PERMISSION_CODE
+            )
+        }
     }
 }

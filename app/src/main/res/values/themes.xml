@@ -2,21 +2,70 @@
     <!-- Base application theme. -->
     <style name="Theme.Pikul" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimary">@color/primary_500</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/light_window_background</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Secondary brand color. it is for date picker -->
+        <item name="colorSecondary">@color/primary_500</item>
+        <item name="colorSecondaryVariant">@color/primary_700</item>
+        <item name="colorOnSecondary">@color/black</item>
 
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/poppins</item>
-        <item name="android:textColor">@color/light_theme_text_color</item>
-        <item name="android:windowBackground">@color/light_window_background</item>
+        <item name="android:windowBackground">@color/light_200</item>
         <item name="background">@color/white</item>
-        <item name="backgroundColor">@color/colorPrimary</item>
+        <item name="backgroundColor">@color/primary_500</item>
+
+        <item name="android:textColor">@color/neutral_700</item>
+
         <!--    For Selector    -->
-        <item name="itemTextAppearanceInactive">@color/light_theme_text_color</item>
+        <item name="itemTextAppearanceActive">@color/white</item>
+        <item name="itemTextAppearanceInactive">@color/light_400</item>
+        <item name="colorOnBackground">@color/neutral_700</item>
+        <item name="shimmer_base_color">@color/neutral_200</item>
+        <item name="shimmer_highlight_color">@color/light_400</item>
+    </style>
+
+    <style name="Theme.Pikul.Button" parent="Widget.Material3.Button">
+        <item name="android:padding">@dimen/button_padding</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="cornerSize">16dp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Theme.Pikul.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">@color/neutral_200</item>
+        <item name="android:textColor">@color/neutral_200</item>
+        <item name="android:padding">@dimen/button_padding</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Theme.Pikul.InputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
+    </style>
+
+    <style name="Theme.Pikul.FakeInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@drawable/outlined_rectangle</item>
+        <item name="android:minWidth">56dp</item>
+    </style>
+
+    <style name="Theme.Pikul.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
     </style>
 
     <style name="Pikul.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

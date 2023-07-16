@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -13,10 +18,10 @@
         android:theme="@style/Theme.Pikul"
         tools:targetApi="31">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".feature.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".feature.notification.NotificationActivity"
             android:exported="false" />
         <activity
             android:name=".feature.main.MainActivity"
@@ -37,6 +42,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCURYMLBai6v9N8W4ECRo7cJ6GX3ZCarns" />
     </application>
 
 </manifest>

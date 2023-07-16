@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutUserProfile"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnNotification"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
-                android:text="Kategori"
+                android:text="@string/txt_section_title_category"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
-                android:text="Makanan Populer"
+                android:text="@string/txt_section_title_popular_food"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvCategory" />
@@ -132,6 +132,7 @@
                 style="@style/Widget.Material3.Button.TextButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvPopularSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/tvPopularSectionTitle"
                 android:text="@string/txt_btn_see_all"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -151,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
-                android:text="Pedagang Disekitar"
+                android:text="@string/txt_section_title_nearby_merchant"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvPopularItem" />
@@ -162,6 +163,7 @@
                 style="@style/Widget.Material3.Button.TextButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvMerchantSectionTitle"
+                app:layout_constraintBottom_toBottomOf="@id/tvMerchantSectionTitle"
                 android:text="@string/txt_btn_see_all"/>
 
             <androidx.recyclerview.widget.RecyclerView
