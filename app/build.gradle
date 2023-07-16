@@ -54,6 +54,12 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
 
+    // ui
+    implementation "com.github.bumptech.glide:glide:4.13.0"
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
+
     // ----- TESTING
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

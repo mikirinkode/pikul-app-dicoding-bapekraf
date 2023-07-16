@@ -28,11 +28,15 @@
     <string name="txt_loading">Loading</string>
 
 
+
     <!--  BOTTOM NAV  -->
     <string name="txt_bottom_nav_title_home">Home</string>
     <string name="txt_bottom_nav_title_maps">Maps</string>
     <string name="txt_bottom_nav_title_chat">Chat</string>
+    <string name="txt_bottom_nav_title_transaction">Transaction</string>
 
+    <!--  HOME FRAGMENT  -->
+    <string name="txt_btn_see_all">Semua</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

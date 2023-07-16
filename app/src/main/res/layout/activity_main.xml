@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/background"
             app:itemIconSize="26dp"
+            app:itemActiveIndicatorStyle="@style/Pikul.Custom.Indicator"
             app:itemIconTint="@color/nav_color"
             app:itemTextColor="@color/nav_color"
             app:labelVisibilityMode="unlabeled"

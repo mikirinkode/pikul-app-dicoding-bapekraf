@@ -68,7 +68,8 @@ class RegisterViewModel @Inject constructor(
                                 createdAt = timestamp,
                                 lastLoginAt = timestamp,
                                 updatedAt = timestamp,
-                                role = PikulRole.CUSTOMER.toString()
+                                role = PikulRole.CUSTOMER.toString(),
+                                oneSignalToken = ""
                             )
 
                             documentRef

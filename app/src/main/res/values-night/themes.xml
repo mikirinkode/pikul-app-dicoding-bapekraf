@@ -15,5 +15,18 @@
         <item name="android:windowBackground">@color/night_window_background</item>
         <item name="background">@color/night_secondary_background</item>
         <item name="backgroundColor">@color/night_third_background</item>
+
+
+        <!--    For Selector    -->
+        <item name="itemTextAppearanceInactive">@color/gray_tabs_title</item>
+    </style>
+    <style name="Pikul.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/background</item>
+        <item name="android:height">0dp</item>
+        <item name="shapeAppearance">@style/Pikul.Custom.Indicator.ShapeAppearance</item>
+    </style>
+
+    <style name="Pikul.Custom.Indicator.ShapeAppearance" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">25%</item>
     </style>
 </resources>

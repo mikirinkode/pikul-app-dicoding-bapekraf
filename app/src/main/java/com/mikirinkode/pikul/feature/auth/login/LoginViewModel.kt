@@ -40,7 +40,6 @@ class LoginViewModel @Inject constructor(
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _isLoading.postValue(false)
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
 
@@ -60,6 +59,7 @@ class LoginViewModel @Inject constructor(
 
                         userRef.get()
                             .addOnSuccessListener { document ->
+                                _isLoading.postValue(false)
                                 val userAccount: UserAccount? = document.toObject()
 
                                 if (userAccount != null) {
@@ -73,6 +73,7 @@ class LoginViewModel @Inject constructor(
 
                             }.addOnFailureListener {
                                 _isError.postValue(true)
+                                _isLoading.postValue(false)
                                 _responseMessage.postValue(Event(task.exception?.message.toString()))
                             }
                     }
