@@ -28,7 +28,6 @@
     <string name="txt_loading">Loading</string>
 
 
-
     <!--  BOTTOM NAV  -->
     <string name="txt_bottom_nav_title_home">Home</string>
     <string name="txt_bottom_nav_title_maps">Maps</string>
@@ -50,6 +49,16 @@
     <string name="retry">Coba Lagi</string>
     <string name="cancel">Batalkan</string>
     <string name="txt_location_permission_granted">Ijin Lokasi Diberikan</string>
+
+    <!--  CHAT HISTORY FRAGMENT  -->
+    <string name="txt_chat_title">Percakapan</string>
+    <!--  CHAT ROOM FRAGMENT  -->
+    <string name="txt_today">Hari ini</string>
+    <string name="txt_yesterday">Kemarin</string>
+    <!--  TRANSACTION FRAGMENT  -->
+    <string name="txt_chat_transaction">Transaksi</string>
+    <string name="txt_tab_title_completed_order">Selesai</string>
+    <string name="txt_tab_title_ongoing_order">Berlangsung</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
