@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.databinding.ActivityLoginBinding
 import com.mikirinkode.pikul.feature.auth.register.RegisterActivity
 import com.mikirinkode.pikul.feature.main.MainActivity
@@ -25,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     @Inject
-    lateinit var pref: LocalSharedPref
+    lateinit var pref: LocalPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

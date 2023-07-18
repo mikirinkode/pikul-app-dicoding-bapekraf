@@ -3,12 +3,14 @@ package com.mikirinkode.pikul.di
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +24,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providePreferences(@ApplicationContext context: Context): LocalSharedPref {
-        return LocalSharedPref(context)
+    fun providePreferences(@ApplicationContext context: Context): LocalPreference {
+        return LocalPreference(context)
     }
 
     @Provides
@@ -49,5 +51,12 @@ class AppModule {
     @Singleton
     fun provideStorage(firebase: Firebase): FirebaseStorage {
         return firebase.storage
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideDatabase(firebase: Firebase): FirebaseDatabase {
+        return firebase.database
     }
 }

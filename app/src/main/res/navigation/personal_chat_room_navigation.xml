@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/personal_chat_room_navigation.xml"
+    app:startDestination="@id/chatRoomFragment">
+
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.mikirinkode.pikul.feature.chat.room.ChatRoomFragment"
+        android:label="fragment_chat_room"
+        tools:layout="@layout/fragment_chat_room">
+
+        <argument
+            android:name="conversationId"
+            app:argType="string"/>
+        <argument
+            android:name="interlocutorId"
+            app:argType="string"/>
+        <argument
+            android:name="navigateFrom"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/actionShowMessageInfo"
+            app:destination="@id/messageInfoFragment" />
+        <action
+            android:id="@+id/actionOpenImage"
+            app:destination="@id/fullScreenImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageInfoFragment"
+        android:name="com.mikirinkode.pikul.feature.chat.MessageInfoFragment"
+        android:label="fragment_message_info"
+        tools:layout="@layout/fragment_message_info" >
+
+        <argument
+            android:name="loggedUserId"
+            app:argType="string" />
+        <argument
+            android:name="conversationType"
+            app:argType="string" />
+        <argument
+            android:name="participantsId"
+            app:argType="string[]"/>
+        <argument
+            android:name="chatMessage"
+            app:argType="com.mikirinkode.pikul.data.model.chat.ChatMessage" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenImageFragment"
+        android:name="com.mikirinkode.pikul.feature.chat.extra.FullScreenImageFragment"
+        android:label="fragment_full_screen_image"
+        tools:layout="@layout/fragment_full_screen_image">
+
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="messageOnImage"
+            app:argType="string" />
+        <argument
+            android:name="dateSent"
+            app:argType="long" />
+        <argument
+            android:name="senderName"
+            app:argType="string" />
+    </fragment>
+</navigation>

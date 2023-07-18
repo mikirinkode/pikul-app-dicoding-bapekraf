@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.Brand
 import com.mikirinkode.pikul.data.model.Category
 import com.mikirinkode.pikul.data.model.DummyData
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
-    private val preferences: LocalSharedPref
+    private val preferences: LocalPreference
 ) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

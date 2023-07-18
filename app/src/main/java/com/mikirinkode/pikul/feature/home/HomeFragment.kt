@@ -7,15 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentHomeBinding
-import com.mikirinkode.pikul.feature.auth.login.LoginViewModel
 import com.mikirinkode.pikul.feature.notification.NotificationActivity
 import com.mikirinkode.pikul.feature.profile.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +25,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var pref: LocalSharedPref
+    lateinit var pref: LocalPreference
 
     private val viewModel: HomeViewModel by viewModels()
     private val categoryAdapter: CategoryAdapter by lazy {

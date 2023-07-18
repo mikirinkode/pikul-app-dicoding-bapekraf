@@ -7,7 +7,7 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.mikirinkode.pikul.data.model.UserAccount
 
-class LocalSharedPref(
+class LocalPreference(
     private val context: Context
 ) {
     private var mSharedPreferences: SharedPreferences = context.getSharedPreferences("user_pref", 0)

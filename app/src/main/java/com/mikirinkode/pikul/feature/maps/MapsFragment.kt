@@ -8,10 +8,8 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.PixelCopy
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -28,7 +26,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.databinding.FragmentMapsBinding
 import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +37,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     GoogleMap.OnMapClickListener {
 
     @Inject
-    lateinit var preferences: LocalSharedPref
+    lateinit var preferences: LocalPreference
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
@@ -170,7 +168,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                         preferences.saveString(LocalPreferenceConstants.USER_LAST_LATITUDE, it.latitude.toString())
                         preferences.saveString(LocalPreferenceConstants.USER_LAST_LONGITUDE, it.longitude.toString())
                         mMap.addMarker(marker)
-                        navigateToLocation(userLatLng)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 14f))
+//                        navigateToLocation(userLatLng)
                     }
                 }
                 .addOnFailureListener { exception: Exception ->

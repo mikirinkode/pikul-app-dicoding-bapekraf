@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikirinkode.pikul.constants.PikulRole
-import com.mikirinkode.pikul.data.local.LocalSharedPref
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.Event
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
-    private val preferences: LocalSharedPref
+    private val preferences: LocalPreference
 ) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
