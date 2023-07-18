@@ -5,15 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.data.model.Brand
-import com.mikirinkode.pikul.data.model.Category
-import com.mikirinkode.pikul.data.model.Merchant
-import com.mikirinkode.pikul.databinding.ItemNearbyMerchantBinding
-import com.mikirinkode.pikul.databinding.ItemPopularItemBinding
+import com.mikirinkode.pikul.databinding.ItemPopularProductBinding
 
-class PopularItemAdapter : RecyclerView.Adapter<PopularItemAdapter.ViewHolder>() {
+class PopularProductAdapter : RecyclerView.Adapter<PopularProductAdapter.ViewHolder>() {
     private val list = ArrayList<Brand>()
 
-    inner class ViewHolder(private val binding: ItemPopularItemBinding) :
+    inner class ViewHolder(private val binding: ItemPopularProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(item: Brand){
                 binding.apply {
@@ -27,7 +24,7 @@ class PopularItemAdapter : RecyclerView.Adapter<PopularItemAdapter.ViewHolder>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPopularItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPopularProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

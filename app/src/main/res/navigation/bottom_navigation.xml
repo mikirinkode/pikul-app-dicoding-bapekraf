@@ -25,4 +25,9 @@
         android:name="com.mikirinkode.pikul.feature.transaction.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
+    <fragment
+        android:id="@+id/nav_job_vacancy"
+        android:name="com.mikirinkode.pikul.JobVacancyFragment"
+        android:label="fragment_job_vacancy"
+        tools:layout="@layout/fragment_job_vacancy" />
 </navigation>

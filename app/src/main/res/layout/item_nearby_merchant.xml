@@ -61,14 +61,13 @@
             tools:text="Status: Keliling" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_location"
             app:layout_constraintEnd_toStartOf="@id/tvMerchantDistance"
             app:layout_constraintTop_toTopOf="@id/tvMerchantDistance"
             android:layout_marginEnd="8dp"
-            app:tint="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@id/tvMerchantDistance"/>
+            app:tint="?attr/colorPrimary"/>
         <TextView
             android:id="@+id/tvMerchantDistance"
             android:layout_width="wrap_content"

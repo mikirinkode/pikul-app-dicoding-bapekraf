@@ -20,4 +20,9 @@
         android:id="@+id/nav_transaction"
         android:icon="@drawable/switch_transaction"
         android:title="@string/txt_bottom_nav_title_transaction"/>
+
+    <item
+        android:id="@+id/nav_job_vacancy"
+        android:icon="@drawable/switch_job_vacancy"
+        android:title="@string/txt_bottom_nav_job_vacancy"/>
 </menu>

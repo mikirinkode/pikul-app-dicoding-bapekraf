@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Pikul"
         tools:targetApi="31">
         <activity
+            android:name=".feature.detail.DetailProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.profile.OtherUserProfileActivity"
             android:exported="false" />
         <activity

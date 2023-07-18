@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:backgroundTint="?attr/background"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardItemImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivItemPhoto"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardItemImage"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Siomay Telor" />
+
+        <TextView
+            android:id="@+id/tvItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/cardItemImage"
+            app:layout_constraintTop_toBottomOf="@id/tvItemName"
+            tools:text="20.000" />
+
+
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/layoutUserProfile"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
+        <!--            <de.hdodenhof.circleimageview.CircleImageView-->
+        <!--                android:id="@+id/ivUserAvatar"-->
+        <!--                android:layout_width="50dp"-->
+        <!--                android:layout_height="50dp"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                android:src="@drawable/ic_default_user_avatar" />-->
+
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tvUserName"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="16dp"-->
+        <!--                android:fontFamily="@font/poppins_medium"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:text="Halo, Coolva"-->
+        <!--                android:layout_marginEnd="16dp"-->
+        <!--                android:textSize="16sp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/ivUserAvatar"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tvGreeting"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="16dp"-->
+        <!--                android:text="Ingin jajan apa hari ini?"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="@id/tvUserName"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/tvUserName" />-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?android:attr/windowBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+                <Button
+                    android:id="@+id/btnRemove"
+                    android:padding="0dp"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_remove"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvItemOrderAmount"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvItemOrderAmount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/btnAdd"
+                    app:layout_constraintEnd_toStartOf="@id/btnAdd"
+                    app:layout_constraintTop_toTopOf="@id/btnAdd"
+                    tools:text="10" />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_add"
+                    android:padding="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!--            <Button-->
+            <!--                android:id="@+id/btnRemove"-->
+            <!--                style="@style/Widget.Material3.Button.IconButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:icon="@drawable/ic_remove"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@id/tvItemOrderAmount"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvItemOrderAmount"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/btnAdd"-->
+            <!--                app:layout_constraintEnd_toStartOf="@id/btnAdd"-->
+            <!--                app:layout_constraintTop_toTopOf="@id/btnAdd"-->
+            <!--                tools:text="93" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/btnAdd"-->
+            <!--                style="@style/Widget.Material3.Button.IconButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:icon="@drawable/ic_add"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

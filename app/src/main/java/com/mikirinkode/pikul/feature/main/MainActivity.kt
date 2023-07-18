@@ -3,15 +3,26 @@ package com.mikirinkode.pikul.feature.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mikirinkode.pikul.R
+import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
+import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ActivityMainBinding
+import com.mikirinkode.pikul.databinding.SideNavHeaderBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var pref: LocalPreference
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -20,7 +31,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initView()
+        initNavigation()
+    }
 
+    private fun initView() {
+        val sideNavBinding = SideNavHeaderBinding.bind(binding.sideNavView.getHeaderView(0))
+
+        val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+
+        sideNavBinding.apply {
+            tvUserName.text = user?.name
+
+            if (user?.avatarUrl.isNullOrBlank()){
+                Glide.with(this@MainActivity)
+                    .load(R.drawable.ic_default_user_avatar)
+                    .into(ivUserAvatar)
+            } else {
+                Glide.with(this@MainActivity)
+                    .load(user?.avatarUrl)
+                    .into(ivUserAvatar)
+            }
+        }
+    }
+
+    private fun initNavigation() {
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
 
         binding.apply {
@@ -28,6 +63,16 @@ class MainActivity : AppCompatActivity() {
             bottomNavView.background = null
 
             bottomNavView.setupWithNavController(navController)
+        }
+    }
+
+    override fun onBackPressed() {
+        binding.apply {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 }

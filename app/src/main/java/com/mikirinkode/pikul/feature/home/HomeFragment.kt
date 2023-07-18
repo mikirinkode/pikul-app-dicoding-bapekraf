@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.UserAccount
@@ -31,8 +33,8 @@ class HomeFragment : Fragment() {
     private val categoryAdapter: CategoryAdapter by lazy {
         CategoryAdapter()
     }
-    private val popularItemAdapter: PopularItemAdapter by lazy {
-        PopularItemAdapter()
+    private val popularProductAdapter: PopularProductAdapter by lazy {
+        PopularProductAdapter()
     }
     private val nearbyMerchantAdapter: NearbyMerchantAdapter by lazy {
         NearbyMerchantAdapter()
@@ -73,7 +75,7 @@ class HomeFragment : Fragment() {
             rvCategory.adapter = categoryAdapter
 
             rvPopularItem.layoutManager = LinearLayoutManager(requireContext())
-            rvPopularItem.adapter = popularItemAdapter
+            rvPopularItem.adapter = popularProductAdapter
 
             rvMerchantNearby.layoutManager = LinearLayoutManager(requireContext())
             rvMerchantNearby.adapter = nearbyMerchantAdapter
@@ -92,7 +94,7 @@ class HomeFragment : Fragment() {
         Log.e("HomeFragment", "Observing popular item list")
         viewModel.getPopularItemList().observe(viewLifecycleOwner) { list ->
             Log.e("HomeFragment", "popular list: ${list.size}")
-            popularItemAdapter.setData(list)
+            popularProductAdapter.setData(list)
         }
     }
 
@@ -112,6 +114,11 @@ class HomeFragment : Fragment() {
 
             btnNotification.setOnClickListener {
                 startActivity(Intent(requireContext(), NotificationActivity::class.java))
+            }
+
+            btnSideMenu.setOnClickListener {
+                val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+                drawer.open()
             }
         }
     }

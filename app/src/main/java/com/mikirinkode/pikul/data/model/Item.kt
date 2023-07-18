@@ -19,6 +19,10 @@ data class Brand(
     val merchantList: List<Merchant>
 )
 
+data class Product(
+    val productId:String,
+)
+
 data class Owner(
     var ownerId: String,
     var email: String,

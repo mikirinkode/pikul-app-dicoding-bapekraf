@@ -36,7 +36,32 @@
 
         <TextView
             android:id="@+id/tvBrandName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_semibold"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
+            tools:text="Siomay Kang Pikul" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintEnd_toStartOf="@id/tvBrandRating"
+            app:layout_constraintTop_toTopOf="@id/tvBrandRating"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvBrandRating"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,9 +70,8 @@
             android:textColor="@color/white"
             android:maxLines="1"
             android:ellipsize="end"
-            android:fontFamily="@font/poppins_semibold"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="Siomay Kang Pikul"/>
+            tools:text="4.5"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
