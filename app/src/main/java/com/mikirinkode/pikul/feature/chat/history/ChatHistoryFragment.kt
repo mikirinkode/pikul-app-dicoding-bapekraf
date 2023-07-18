@@ -1,5 +1,6 @@
 package com.mikirinkode.pikul.feature.chat.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentChatHistoryBinding
+import com.mikirinkode.pikul.feature.auth.login.LoginActivity
+import com.mikirinkode.pikul.feature.auth.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,13 +49,22 @@ class ChatHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        checkPermission() // TODO
-        initView()
+        checkLoggedUser()
         onClickAction()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun checkLoggedUser(){
+        if (loggedUser == null){
+            binding.layoutNotLoginYet.visibility = View.VISIBLE
+        } else {
+            binding.layoutNotLoginYet.visibility = View.GONE
+            initView()
+        }
     }
 
     private fun initView(){
@@ -75,6 +87,15 @@ class ChatHistoryFragment : Fragment() {
 //        }
     }
 
-    private fun onClickAction() {}
+    private fun onClickAction() {
+        binding.apply {
+            btnLogin.setOnClickListener {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
+            btnRegister.setOnClickListener {
+                startActivity(Intent(requireContext(), RegisterActivity::class.java))
+            }
+        }
+    }
 
 }

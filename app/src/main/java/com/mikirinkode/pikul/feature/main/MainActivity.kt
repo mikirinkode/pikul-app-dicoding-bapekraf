@@ -3,6 +3,7 @@ package com.mikirinkode.pikul.feature.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -14,6 +15,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ActivityMainBinding
 import com.mikirinkode.pikul.databinding.SideNavHeaderBinding
+import com.mikirinkode.pikul.feature.auth.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,36 +23,46 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var pref: LocalPreference
+    lateinit var preferences: LocalPreference
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
+    private val user: UserAccount? by lazy {
+        preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         initView()
         initNavigation()
+        onClickAction()
     }
 
     private fun initView() {
         val sideNavBinding = SideNavHeaderBinding.bind(binding.sideNavView.getHeaderView(0))
 
-        val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+//        val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
 
         sideNavBinding.apply {
-            tvUserName.text = user?.name
-
-            if (user?.avatarUrl.isNullOrBlank()){
-                Glide.with(this@MainActivity)
-                    .load(R.drawable.ic_default_user_avatar)
-                    .into(ivUserAvatar)
+            if (user == null){
+                layoutUserProfile.visibility = View.GONE
+                btnLogin.visibility = View.VISIBLE
             } else {
-                Glide.with(this@MainActivity)
-                    .load(user?.avatarUrl)
-                    .into(ivUserAvatar)
+                layoutUserProfile.visibility = View.VISIBLE
+                btnLogin.visibility = View.GONE
+                tvUserName.text = user?.name
+
+                if (user?.avatarUrl.isNullOrBlank()){
+                    Glide.with(this@MainActivity)
+                        .load(R.drawable.ic_default_user_avatar)
+                        .into(ivUserAvatar)
+                } else {
+                    Glide.with(this@MainActivity)
+                        .load(user?.avatarUrl)
+                        .into(ivUserAvatar)
+                }
             }
         }
     }
@@ -72,6 +84,15 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.closeDrawer(GravityCompat.START)
             } else {
                 super.onBackPressed()
+            }
+        }
+    }
+
+    private fun onClickAction(){
+        val sideNavBinding = SideNavHeaderBinding.bind(binding.sideNavView.getHeaderView(0))
+        sideNavBinding.apply {
+            btnLogin.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }
         }
     }

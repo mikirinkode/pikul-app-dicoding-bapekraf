@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         finishAffinity()
     }
 
-    private fun checkLoggedUser() {
+    private fun checkLoggedUser() { // TODO: update
         val isLoggedIn: Boolean? = pref.getBoolean(LocalPreferenceConstants.IS_LOGGED_IN)
 
         if (isLoggedIn == true) {

@@ -18,6 +18,7 @@ import com.mikirinkode.pikul.databinding.FragmentHomeBinding
 import com.mikirinkode.pikul.feature.notification.NotificationActivity
 import com.mikirinkode.pikul.feature.profile.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 
@@ -67,7 +68,11 @@ class HomeFragment : Fragment() {
         val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
 
         binding.apply {
-            tvUserName.text = "Halo, ${user?.name}"
+            if (user != null) {
+                tvUserName.text = "Halo, ${user?.name}"
+            } else {
+                tvUserName.text = getGreetings()
+            }
 
             // init recycler view
             rvCategory.layoutManager =
@@ -79,6 +84,18 @@ class HomeFragment : Fragment() {
 
             rvMerchantNearby.layoutManager = LinearLayoutManager(requireContext())
             rvMerchantNearby.adapter = nearbyMerchantAdapter
+        }
+    }
+
+    private fun getGreetings(): String {
+        val currentTime = Calendar.getInstance()
+        val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+
+        return when {
+            currentHour < 12 -> "Selamat Pagi"
+            currentHour < 15 -> "Selamat Siang"
+            currentHour < 18 -> "Selamat Sore"
+            else -> "Selamat Malam"
         }
     }
 

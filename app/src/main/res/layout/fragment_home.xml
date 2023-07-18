@@ -68,11 +68,11 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="8dp"
-            android:src="@drawable/ic_notification"
+            android:src="@drawable/ic_notification_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?android:attr/colorPrimary" />
+            app:tint="?android:attr/textColor" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
