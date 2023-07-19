@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.home
+package com.mikirinkode.pikul.feature.customer.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -65,7 +65,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
+        Log.e("HomeFragment", "on initView")
+        Log.e("HomeFragment", "pref: ${pref}")
         val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+        Log.e("HomeFragment", "user id: ${user?.userId}, userName: ${user?.name}")
 
         binding.apply {
             if (user != null) {

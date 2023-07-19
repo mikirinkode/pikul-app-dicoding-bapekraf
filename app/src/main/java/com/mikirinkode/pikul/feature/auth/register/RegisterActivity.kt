@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.databinding.ActivityRegisterBinding
 import com.mikirinkode.pikul.feature.auth.login.LoginActivity
-import com.mikirinkode.pikul.feature.main.MainActivity
+import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 

@@ -1,9 +1,9 @@
-package com.mikirinkode.pikul.feature.transaction
+package com.mikirinkode.pikul.feature.customer.transaction
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.mikirinkode.pikul.feature.transaction.history.HistoryFragment
-import com.mikirinkode.pikul.feature.transaction.order.OngoingOrderFragment
+import com.mikirinkode.pikul.feature.customer.transaction.history.OrderHistoryFragment
+import com.mikirinkode.pikul.feature.customer.transaction.order.OngoingOrderFragment
 
 class TransactionPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
@@ -12,7 +12,7 @@ class TransactionPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment
         var fragment: Fragment? = null
         when (position){
             0 -> fragment = OngoingOrderFragment()
-            1 -> fragment = HistoryFragment()
+            1 -> fragment = OrderHistoryFragment()
         }
         return fragment as Fragment
     }

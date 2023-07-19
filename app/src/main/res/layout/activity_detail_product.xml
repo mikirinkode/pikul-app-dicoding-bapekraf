@@ -78,8 +78,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivUserAvatar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_default_user_avatar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

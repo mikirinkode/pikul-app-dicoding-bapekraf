@@ -31,7 +31,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat_room)
+        setContentView(binding.root)
         // handle intent
         handleIntent()
     }

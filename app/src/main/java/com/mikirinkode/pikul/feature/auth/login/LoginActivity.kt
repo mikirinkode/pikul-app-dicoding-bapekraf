@@ -11,7 +11,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.databinding.ActivityLoginBinding
 import com.mikirinkode.pikul.feature.auth.register.RegisterActivity
-import com.mikirinkode.pikul.feature.main.MainActivity
+import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

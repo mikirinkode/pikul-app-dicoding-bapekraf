@@ -1,30 +1,29 @@
-package com.mikirinkode.pikul.feature.home
+package com.mikirinkode.pikul.feature.customer.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mikirinkode.pikul.data.model.Brand
-import com.mikirinkode.pikul.databinding.ItemPopularProductBinding
+import com.mikirinkode.pikul.data.model.Category
+import com.mikirinkode.pikul.databinding.ItemCategoryBinding
 
-class PopularProductAdapter : RecyclerView.Adapter<PopularProductAdapter.ViewHolder>() {
-    private val list = ArrayList<Brand>()
+class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+    private val list = ArrayList<Category>()
 
-    inner class ViewHolder(private val binding: ItemPopularProductBinding) :
+    inner class ViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: Brand){
+            fun bind(item: Category){
                 binding.apply {
-                    tvBrandName.text = item.name
-
+                    tvCategoryName.text = item.name
                     Glide.with(itemView.context)
                         .load(item.photoUrl)
-                        .into(ivBrandPicture)
+                        .into(ivCategoryImage)
                 }
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPopularProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -36,7 +35,7 @@ class PopularProductAdapter : RecyclerView.Adapter<PopularProductAdapter.ViewHol
         holder.bind(list[position])
     }
 
-    fun setData(newList: List<Brand>) {
+    fun setData(newList: List<Category>) {
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()

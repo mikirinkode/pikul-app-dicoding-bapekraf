@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_start_business.xml"
+    app:startDestination="@id/selectBusinessRoleFragment">
+
+    <fragment
+        android:id="@+id/selectBusinessRoleFragment"
+        android:name="com.mikirinkode.pikul.feature.startbusiness.SelectBusinessRoleFragment"
+        android:label="fragment_select_business_role"
+        tools:layout="@layout/fragment_select_business_role" >
+        <action
+            android:id="@+id/actionOwnerRegister"
+            app:destination="@id/ownerRegisterFragment" />
+        <action
+            android:id="@+id/actionMerchantRegister"
+            app:destination="@id/merchantRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/merchantRegisterFragment"
+        android:name="com.mikirinkode.pikul.feature.startbusiness.merchant.MerchantRegisterFragment"
+        android:label="fragment_merchant_register"
+        tools:layout="@layout/fragment_merchant_register" />
+    <fragment
+        android:id="@+id/ownerRegisterFragment"
+        android:name="com.mikirinkode.pikul.feature.startbusiness.OwnerRegisterFragment"
+        android:label="fragment_owner_register"
+        tools:layout="@layout/fragment_owner_register" />
+</navigation>

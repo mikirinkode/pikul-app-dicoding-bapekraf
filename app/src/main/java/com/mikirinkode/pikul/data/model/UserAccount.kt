@@ -5,14 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserAccount(
-    var userId: String? = "",
-    var email: String? = "",
-    var name: String? = "",
-    var avatarUrl: String? = "",
-    var createdAt: String? = "",
-    var lastLoginAt: String? = "",
-    var updatedAt: String? = "",
-    val oneSignalToken: String? = "",
-    val conversationIdList: List<String> = listOf<String>(),
-    val role: String? = "",
+    var avatarUrl: String? = null,
+    val conversationIdList: List<String>? = null,
+    var createdAt: String? = null,
+    var email: String? = null,
+    var lastLoginAt: String? = null,
+    var name: String? = null,
+    val oneSignalToken: String? = null,
+    val province: String? = null,
+    val role: String? = null,
+    var updatedAt: String? = null,
+    var userId: String? = null,
 ): Parcelable

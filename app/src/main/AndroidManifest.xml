@@ -4,6 +4,8 @@
     package="com.mikirinkode.pikul">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -17,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pikul"
         tools:targetApi="31">
+        <activity
+            android:name=".utils.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.merchant.MerchantDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.startbusiness.StartBusinessActivity"
+            android:exported="false" />
         <activity
             android:name=".feature.detail.DetailProductActivity"
             android:exported="false" />
@@ -33,9 +44,8 @@
             android:name=".feature.notification.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.main.MainActivity"
-            android:exported="true" >
-
+            android:name=".feature.customer.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,8 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".feature.auth.login.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

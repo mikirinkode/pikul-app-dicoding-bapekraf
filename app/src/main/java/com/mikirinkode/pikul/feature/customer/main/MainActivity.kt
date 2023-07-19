@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.main
+package com.mikirinkode.pikul.feature.customer.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,18 +16,19 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ActivityMainBinding
 import com.mikirinkode.pikul.databinding.SideNavHeaderBinding
 import com.mikirinkode.pikul.feature.auth.login.LoginActivity
+import com.mikirinkode.pikul.feature.startbusiness.StartBusinessActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var preferences: LocalPreference
-
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    @Inject
+    lateinit var preferences: LocalPreference
+
     private val user: UserAccount? by lazy {
         preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
     }
@@ -93,6 +94,9 @@ class MainActivity : AppCompatActivity() {
         sideNavBinding.apply {
             btnLogin.setOnClickListener {
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            }
+            btnStartSelling.setOnClickListener {
+                startActivity(Intent(this@MainActivity, StartBusinessActivity::class.java))
             }
         }
     }

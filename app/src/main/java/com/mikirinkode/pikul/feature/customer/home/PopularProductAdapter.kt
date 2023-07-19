@@ -1,29 +1,30 @@
-package com.mikirinkode.pikul.feature.home
+package com.mikirinkode.pikul.feature.customer.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mikirinkode.pikul.data.model.Category
-import com.mikirinkode.pikul.databinding.ItemCategoryBinding
+import com.mikirinkode.pikul.data.model.Brand
+import com.mikirinkode.pikul.databinding.ItemPopularProductBinding
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
-    private val list = ArrayList<Category>()
+class PopularProductAdapter : RecyclerView.Adapter<PopularProductAdapter.ViewHolder>() {
+    private val list = ArrayList<Brand>()
 
-    inner class ViewHolder(private val binding: ItemCategoryBinding) :
+    inner class ViewHolder(private val binding: ItemPopularProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: Category){
+            fun bind(item: Brand){
                 binding.apply {
-                    tvCategoryName.text = item.name
+                    tvBrandName.text = item.name
+
                     Glide.with(itemView.context)
                         .load(item.photoUrl)
-                        .into(ivCategoryImage)
+                        .into(ivBrandPicture)
                 }
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPopularProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -35,7 +36,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         holder.bind(list[position])
     }
 
-    fun setData(newList: List<Category>) {
+    fun setData(newList: List<Brand>) {
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()

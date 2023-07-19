@@ -25,7 +25,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage
 import com.mikirinkode.pikul.databinding.FragmentChatRoomBinding
-import com.mikirinkode.pikul.feature.main.MainActivity
+import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import com.mikirinkode.pikul.feature.profile.OtherUserProfileActivity
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.PermissionHelper

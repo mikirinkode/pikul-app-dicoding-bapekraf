@@ -85,80 +85,82 @@ class ChatHistoryViewModel @Inject constructor(
         val conversations = mutableListOf<Conversation>()
 
         currentUser?.userId?.let { userId ->
-            val userRef = fireStore?.collection("users")?.document(userId)
-            userRef
-                ?.addSnapshotListener { document, error ->
+            if (!userId.isNullOrBlank()){
+                val userRef = fireStore?.collection("users")?.document(userId)
+                userRef
+                    ?.addSnapshotListener { document, error ->
 
-                    val user: UserAccount? = document?.toObject()
-                    val idList = arrayListOf<String>()
-                    Log.e("ChatHistoryVM", "on success get data")
+                        val user: UserAccount? = document?.toObject()
+                        val idList = arrayListOf<String>()
+                        Log.e("ChatHistoryVM", "on success get data")
 
-                    user?.conversationIdList?.forEach { id -> idList.add(id) }
-                    Log.e("ChatHistoryVM", "idList: ${idList}")
-                    Log.e("ChatHistoryVM", "idList: ${idList.size}")
+                        user?.conversationIdList?.forEach { id -> idList.add(id) }
+                        Log.e("ChatHistoryVM", "idList: ${idList}")
+                        Log.e("ChatHistoryVM", "idList: ${idList.size}")
 
-                    if (idList.isEmpty()) {
+                        if (idList.isEmpty()) {
 //                        mListener.onEmptyConversation() // todo
-                    }
+                        }
 
-                    preferences?.saveObjectsList(
-                        LocalPreferenceConstants.CONVERSATION_ID_LIST,
-                        idList
-                    )
+                        preferences?.saveObjectsList(
+                            LocalPreferenceConstants.CONVERSATION_ID_LIST,
+                            idList
+                        )
 
-                    user?.conversationIdList?.forEach { conversationId ->
-                        val refWithQuery = conversationsRef?.orderByChild("conversationId")
-                            ?.equalTo(conversationId)
-                        Log.e("ChatHistoryVM", "current conversationId: ${conversationId}")
+                        user?.conversationIdList?.forEach { conversationId ->
+                            val refWithQuery = conversationsRef?.orderByChild("conversationId")
+                                ?.equalTo(conversationId)
+                            Log.e("ChatHistoryVM", "current conversationId: ${conversationId}")
 
-                        refWithQuery?.keepSynced(true)
+                            refWithQuery?.keepSynced(true)
 
-                        refWithQuery?.addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(conversationSnapshot: DataSnapshot) {
+                            refWithQuery?.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(conversationSnapshot: DataSnapshot) {
 
-                                for (snapshot in conversationSnapshot.children) {
-                                    val conversation = snapshot.getValue(Conversation::class.java)
-                        Log.e("ChatHistoryVM", "on conversation data changed")
-                                    val firstUserId =
-                                        conversation?.participants?.keys?.first().toString()
-                                    val secondUserId =
-                                        conversation?.participants?.keys?.last().toString()
-                                    val interlocutorId =
-                                        if (firstUserId == userId) secondUserId else firstUserId
-                        Log.e("ChatHistoryVM", "keys: ${conversation?.participants?.keys}")
-                        Log.e("ChatHistoryVM", "interlocutor id: $interlocutorId")
+                                    for (snapshot in conversationSnapshot.children) {
+                                        val conversation = snapshot.getValue(Conversation::class.java)
+                                        Log.e("ChatHistoryVM", "on conversation data changed")
+                                        val firstUserId =
+                                            conversation?.participants?.keys?.first().toString()
+                                        val secondUserId =
+                                            conversation?.participants?.keys?.last().toString()
+                                        val interlocutorId =
+                                            if (firstUserId == userId) secondUserId else firstUserId
+                                        Log.e("ChatHistoryVM", "keys: ${conversation?.participants?.keys}")
+                                        Log.e("ChatHistoryVM", "interlocutor id: $interlocutorId")
 
-                                    if (interlocutorId != "null") {
-                                        // Get user data by interlocutor ID
-                                        CoroutineScope(Dispatchers.Main).launch {
-                                            val interlocutorUser = getUserById(interlocutorId)
-                                            // Check if the interlocutorUser is not null
-                                            if (interlocutorUser != null) {
-                                                // Add the user data to the conversation object
-                                                conversation?.interlocutor = interlocutorUser
-                                                // Add the conversation object to the conversations list
-                                                if (conversation != null) {
-                                                    val oldConversation =
-                                                        conversations.find { it.conversationId == conversation.conversationId }
-                                                    conversations.remove(oldConversation)
-                                                    conversations.add(conversation)
+                                        if (interlocutorId != "null") {
+                                            // Get user data by interlocutor ID
+                                            CoroutineScope(Dispatchers.Main).launch {
+                                                val interlocutorUser = getUserById(interlocutorId)
+                                                // Check if the interlocutorUser is not null
+                                                if (interlocutorUser != null) {
+                                                    // Add the user data to the conversation object
+                                                    conversation?.interlocutor = interlocutorUser
+                                                    // Add the conversation object to the conversations list
+                                                    if (conversation != null) {
+                                                        val oldConversation =
+                                                            conversations.find { it.conversationId == conversation.conversationId }
+                                                        conversations.remove(oldConversation)
+                                                        conversations.add(conversation)
 
 //                                                    mListener.onDataChangeReceived(conversations)
-                                                    list.postValue(conversations)
+                                                        list.postValue(conversations)
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {
-                            }
-                        })
-                    }
+                                override fun onCancelled(error: DatabaseError) {
+                                }
+                            })
+                        }
 
 //                    list.postValue(conversations)
-                }
+                    }
+            }
         }
 //        list.postValue(conversations)
         return list

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.mikirinkode.pikul.feature.home.HomeFragment"
+        android:name="com.mikirinkode.pikul.feature.customer.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_maps"
-        android:name="com.mikirinkode.pikul.feature.maps.MapsFragment"
+        android:name="com.mikirinkode.pikul.feature.customer.maps.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
     <fragment
@@ -22,12 +22,12 @@
         tools:layout="@layout/fragment_chat_history" />
     <fragment
         android:id="@+id/nav_transaction"
-        android:name="com.mikirinkode.pikul.feature.transaction.TransactionFragment"
+        android:name="com.mikirinkode.pikul.feature.customer.transaction.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
     <fragment
         android:id="@+id/nav_job_vacancy"
-        android:name="com.mikirinkode.pikul.JobVacancyFragment"
+        android:name="com.mikirinkode.pikul.feature.customer.jobs.JobVacancyFragment"
         android:label="fragment_job_vacancy"
         tools:layout="@layout/fragment_job_vacancy" />
 </navigation>

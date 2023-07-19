@@ -1,6 +1,53 @@
 <resources>
     <string name="app_name">Pikul</string>
 
+    <string-array name="provinces">
+        <item>Aceh</item>
+        <item>Sumatra Utara</item>
+        <item>Sumatra Barat</item>
+        <item>Riau</item>
+        <item>Jambi</item>
+        <item>Sumtra Selatan</item>
+        <item>Bengkulu</item>
+        <item>Lampung</item>
+        <item>Kepulauan Riau</item>
+        <item>Kepulauan Bangka Belitung</item>
+
+        <item>DKI Jakarta</item>
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>DI Yogyakarta</item>
+        <item>Jawa Timur</item>
+        <item>Banten</item>
+
+        <item>Bali</item>
+        <item>Nusa Tenggara Barat</item>
+        <item>Nusa Tenggara Timur</item>
+
+        <item>Kalimantan Barat</item>
+        <item>Kalimantan Tengah</item>
+        <item>Kalimantan Selatan</item>
+        <item>Kalimantan Timur</item>
+        <item>Kalimantan Utara</item>
+
+        <item>Sulawesi Utara</item>
+        <item>Sulawesi Tengah</item>
+        <item>Sulawesi Selatan</item>
+        <item>Sulawesi Tenggara</item>
+        <item>Sulawesi Barat</item>
+        <item>Gorontalo</item>
+
+        <item>Maluku</item>
+        <item>Maluku Utara</item>
+
+        <item>Papua</item>
+        <item>Papua Barat</item>
+        <item>Papua Selatan</item>
+        <item>Papua Tengah</item>
+        <item>Papua Pegunungan</item>
+        <item>Papua Barat Daya</item>
+    </string-array>
+
     <!--  LOGIN ACTIVITY  -->
     <string name="txt_button_login">LOGIN</string>
     <string name="txt_hint_password">Password</string>
@@ -44,8 +91,7 @@
     <!--  MAPS FRAGMENT  -->
     <string name="txt_your_location">Lokasi Anda</string>
     <string name="txt_dialog_title_enable_location">Aktifkan Layanan Lokasi?</string>
-    <string name="txt_dialog_desc_enable_location_service">
-        Aplikasi ini membutuhkan anda untuk mengaktifkan layanan lokasi agar dapat menyesuaikan informasi berdasarkan lokasi anda.</string>
+    <string name="txt_dialog_desc_enable_location_service">Aplikasi ini membutuhkan anda untuk mengaktifkan layanan lokasi agar dapat menyesuaikan informasi berdasarkan lokasi anda.</string>
     <string name="txt_dialog_btn_open_settings">Buka Pengaturan</string>
     <string name="retry">Coba Lagi</string>
     <string name="cancel">Batalkan</string>
@@ -67,11 +113,32 @@
     <string name="txt_been_sent">Telah Terkirim</string>
     <string name="txt_fragment_message_info">Informasi Pesan</string>
 
-    <!--  Detail Brand FRAGMENT  -->
+    <!--  Detail Brand Activity  -->
     <string name="txt_btn_order">Pesan</string>
     <string name="tv_title_category">Kategori</string>
     <string name="tv_title_merchant">Pedagang</string>
+
+    <!--  Select Business Role FRAGMENT  -->
+    <string name="txt_btn_next">Lanjutkan</string>
+    <string name="txt_business_owner">Pemilik Bisnis</string>
+    <string name="txt_merchant">Pedagang</string>
+    <!--  Merchant Register FRAGMENT  -->
+    <string name="txt_province">Provinsi</string>
+    <string name="txt_fragment_merchant_register">Pendaftaran Pedagang</string>
+    <!--  CAMERA ACTIVITY  -->
+    <string name="content_desc_btn_capture">capture button</string>
+    <string name="content_desc_btn_switch_camera">switch camera button</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_dialog_choosing_action">Pilih Aksi:</string>
+    <string name="txt_dialog_item_gallery">Galeri</string>
+    <string name="txt_dialog_item_camera">Kamera</string>
+    <string name="txt_intent_title_choose_picture">Pilih Gambar</string>
+    <string name="txt_failed_open_cam">Gagal membuka kamera</string>
+    <string name="txt_success_capture_image">Berhasil mengambil gambar</string>
+    <string name="txt_failed_capture_image">Gagal mengambil gambar</string>
+    <string name="txt_error_permission_not_granted">Ijin tidak diberikan</string>
+    <string name="txt_registration_success">Pendaftaran Berhasil</string>
 
 </resources>

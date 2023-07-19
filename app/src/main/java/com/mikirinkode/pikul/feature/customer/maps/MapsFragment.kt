@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.maps
+package com.mikirinkode.pikul.feature.customer.maps
 
 import android.Manifest
 import android.content.Context

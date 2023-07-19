@@ -18,4 +18,7 @@ object FireStoreUtils {
     const val TABLE_USER_LAST_LOGIN = "lastLoginAt"
     const val TABLE_USER_UPDATED_AT = "updatedAt"
     const val TABLE_USER_DEVICE_TOKEN = "oneSignalToken"
+
+    const val TABLE_USER_PROVINCE = "province"
+    const val TABLE_USER_ROLE = "role"
 }

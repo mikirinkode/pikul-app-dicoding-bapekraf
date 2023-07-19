@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.home
+package com.mikirinkode.pikul.feature.customer.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

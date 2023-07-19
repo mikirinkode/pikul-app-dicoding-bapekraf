@@ -57,15 +57,22 @@ class LoginViewModel @Inject constructor(
                         val userRef =
                             fireStore.collection(FireStoreUtils.TABLE_USER).document(user.uid)
 
+                        // TODO: kadang disini error
+                        // kayaknya karena rules nya hanya boleh ngambil klo udh login / terontetikasi
+
                         userRef.get()
                             .addOnSuccessListener { document ->
                                 _isLoading.postValue(false)
-                                val userAccount: UserAccount? = document.toObject()
+                                val userAccount: UserAccount? = document.toObject<UserAccount>()
+                                Log.e(
+                                    TAG,
+                                    "userAccount: ${userAccount}, userId: ${userAccount?.userId}, userName: ${userAccount?.name}"
+                                )
 
-                                if (userAccount != null) {
+                                if (userAccount != null && !userAccount.userId.isNullOrBlank()) {
+                                    preferences.startSession(userAccount)
                                     _isLoginSuccess.postValue(true)
                                     _isError.postValue(false)
-                                    preferences.startSession(userAccount)
                                 } else {
                                     _isError.postValue(true)
                                     _responseMessage.postValue(Event(task.exception?.message.toString()))

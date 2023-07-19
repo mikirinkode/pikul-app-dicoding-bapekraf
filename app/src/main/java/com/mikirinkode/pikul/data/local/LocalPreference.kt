@@ -2,6 +2,7 @@ package com.mikirinkode.pikul.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.common.reflect.TypeParameter
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
@@ -119,6 +120,7 @@ class LocalPreference(
     }
 
     fun startSession(user: UserAccount) {
+        Log.e("LocalPreferences", "startSession called")
         saveBoolean(LocalPreferenceConstants.IS_LOGGED_IN, true)
         saveObject(LocalPreferenceConstants.USER, user)
     }
