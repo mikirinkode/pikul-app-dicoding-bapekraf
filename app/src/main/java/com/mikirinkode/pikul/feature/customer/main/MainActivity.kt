@@ -44,9 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         checkLatestView()
-        initView()
         initNavigation()
-        onClickAction()
     }
 
     private fun checkLatestView() {
@@ -54,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         if (latestView == MAIN_VIEW.BUSINESS_VIEW.toString()) {
             navigateToBusinessView()
         } else if (latestView == MAIN_VIEW.CUSTOMER_VIEW.toString()) {
-
+            // NOTHING TO DO
         }
     }
 
@@ -69,38 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initView() {
-        val sideNavBinding = SideNavHeaderBinding.bind(binding.sideNavView.getHeaderView(0))
 
-
-        sideNavBinding.apply {
-            if (user == null) {
-                layoutUserProfile.visibility = View.GONE
-                btnLogin.visibility = View.VISIBLE
-            } else {
-                layoutUserProfile.visibility = View.VISIBLE
-                btnLogin.visibility = View.GONE
-                tvUserName.text = user?.name
-                if (user?.role == PikulRole.CUSTOMER.toString()){
-                    btnBusinessView.visibility = View.GONE
-                    btnStartSelling.visibility = View.VISIBLE
-                } else {
-                    btnBusinessView.visibility = View.VISIBLE
-                    btnStartSelling.visibility = View.GONE
-                }
-
-                if (user?.avatarUrl.isNullOrBlank()) {
-                    Glide.with(this@MainActivity)
-                        .load(R.drawable.ic_default_user_avatar)
-                        .into(ivUserAvatar)
-                } else {
-                    Glide.with(this@MainActivity)
-                        .load(user?.avatarUrl)
-                        .into(ivUserAvatar)
-                }
-            }
-        }
-    }
 
     private fun initNavigation() {
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
@@ -113,29 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        binding.apply {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START)
-            } else {
-                super.onBackPressed()
-            }
-        }
-    }
 
-    private fun onClickAction() {
-        val sideNavBinding = SideNavHeaderBinding.bind(binding.sideNavView.getHeaderView(0))
-        sideNavBinding.apply {
-            btnLogin.setOnClickListener {
-                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-            }
-            btnStartSelling.setOnClickListener {
-                startActivity(Intent(this@MainActivity, StartBusinessActivity::class.java))
-            }
-            btnBusinessView.setOnClickListener {
-                preferences.saveString(LocalPreferenceConstants.SELECTED_MAIN_VIEW, MAIN_VIEW.BUSINESS_VIEW.toString())
-                navigateToBusinessView()
-            }
-        }
-    }
+
+
 }

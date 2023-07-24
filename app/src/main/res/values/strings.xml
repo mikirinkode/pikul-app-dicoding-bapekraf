@@ -134,9 +134,6 @@
     <string name="txt_hint_address">Alamat Bisnis</string>
     <string name="txt_empty_phone_number">Nomor telepon bisnis tidak boleh kosong</string>
     <string name="txt_empty_business_address">Alamat bisnis tidak boleh kosong</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_dialog_choosing_action">Pilih Aksi:</string>
     <string name="txt_dialog_item_gallery">Galeri</string>
     <string name="txt_dialog_item_camera">Kamera</string>
@@ -146,5 +143,18 @@
     <string name="txt_failed_capture_image">Gagal mengambil gambar</string>
     <string name="txt_error_permission_not_granted">Ijin tidak diberikan</string>
     <string name="txt_registration_success">Pendaftaran Berhasil</string>
+
+    <!--  PROFILE ACTIVITY  -->
+    <string name="txt_profile">Profile</string>
+    <!--  MERCHANT PROFILE FRAGMENT  -->
+    <string name="txt_btn_manage">Kelola</string>
+    <string name="txt_btn_manage_product">Barang Dagangan</string>
+    <string name="txt_btn_transaction">Transaksi Penjualan</string>
+    <string name="txt_btn_user_review">Ulasan Pembeli</string>
+    <string name="txt_btn_business_owner">Mitra Bisnis</string>
+    <string name="txt_btn_logout">Keluar Akun</string>
+    <string name="txt_btn_add_stop_point">Titik Berhenti</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

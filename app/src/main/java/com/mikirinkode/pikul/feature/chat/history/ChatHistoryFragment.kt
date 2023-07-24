@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
@@ -89,6 +90,10 @@ class ChatHistoryFragment : Fragment() {
 
     private fun onClickAction() {
         binding.apply {
+            topAppBar.setNavigationOnClickListener {
+                Navigation.findNavController(binding.root).navigateUp()
+            }
+
             btnLogin.setOnClickListener {
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }

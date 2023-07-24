@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentHomeBinding
+import com.mikirinkode.pikul.feature.auth.login.LoginActivity
 import com.mikirinkode.pikul.feature.notification.NotificationActivity
 import com.mikirinkode.pikul.feature.profile.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,8 +29,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var pref: LocalPreference
 
     private val viewModel: HomeViewModel by viewModels()
     private val categoryAdapter: CategoryAdapter by lazy {
@@ -39,6 +39,13 @@ class HomeFragment : Fragment() {
     }
     private val nearbyMerchantAdapter: NearbyMerchantAdapter by lazy {
         NearbyMerchantAdapter()
+    }
+
+    @Inject
+    lateinit var pref: LocalPreference
+
+    private val user: UserAccount? by lazy {
+        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
     }
 
     override fun onCreateView(
@@ -67,10 +74,20 @@ class HomeFragment : Fragment() {
     private fun initView() {
         Log.e("HomeFragment", "on initView")
         Log.e("HomeFragment", "pref: ${pref}")
-        val user = pref.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
         Log.e("HomeFragment", "user id: ${user?.userId}, userName: ${user?.name}")
 
         binding.apply {
+            if (user?.avatarUrl.isNullOrBlank()) {
+                Glide.with(requireContext())
+                    .load(R.drawable.ic_default_user_avatar)
+                    .into(ivUserAvatar)
+            } else {
+                Glide.with(requireContext())
+                    .load(user?.avatarUrl)
+                    .placeholder(R.drawable.progress_animation)
+                    .into(ivUserAvatar)
+            }
+
             if (user != null) {
                 tvUserName.text = "Halo, ${user?.name}"
             } else {
@@ -129,16 +146,15 @@ class HomeFragment : Fragment() {
     private fun onClickAction() {
         binding.apply {
             layoutUserProfile.setOnClickListener {
-                startActivity(Intent(requireContext(), ProfileActivity::class.java))
+                if (user == null ){
+                    startActivity(Intent(requireContext(), LoginActivity::class.java))
+                } else {
+                    startActivity(Intent(requireContext(), ProfileActivity::class.java))
+                }
             }
 
             btnNotification.setOnClickListener {
                 startActivity(Intent(requireContext(), NotificationActivity::class.java))
-            }
-
-            btnSideMenu.setOnClickListener {
-                val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
-                drawer.open()
             }
         }
     }

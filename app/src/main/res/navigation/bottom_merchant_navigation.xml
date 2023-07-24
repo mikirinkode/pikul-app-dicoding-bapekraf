@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_merchant_navigation"
+    app:startDestination="@id/nav_merchant_dashboard">
+
+    <fragment
+        android:id="@+id/nav_merchant_dashboard"
+        android:name="com.mikirinkode.pikul.feature.merchant.home.MerchantDashboardFragment"
+        android:label="fragment_merchant_dashboard"
+        tools:layout="@layout/fragment_merchant_dashboard" />
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.mikirinkode.pikul.feature.chat.history.Hilt_ChatHistoryFragment"
+        android:label="Hilt_ChatHistoryFragment" />
+</navigation>

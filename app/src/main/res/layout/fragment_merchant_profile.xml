@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.profile.ProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.merchant.profile.MerchantProfileFragment">
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -30,6 +31,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,11 +69,13 @@
 
                 <TextView
                     android:id="@+id/tvUserName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textSize="18sp"
+                    android:maxLines="2"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/cardUserAvatar"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Pikul" />
@@ -103,19 +108,150 @@
                     app:layout_constraintTop_toTopOf="@id/tvDummyRole"
                     tools:text="Pedagang" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <Button
-                android:id="@+id/btnOpenBusinessView"
+                android:id="@+id/btnOpenCustomerView"
                 style="@style/Theme.Pikul.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                tools:text="Mulai Berjualan / Bukan Tampilan Bisnis"
+                android:text="Buka Tampilan Pembeli"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutUserProfile" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutSellingInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_rounded_card"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnOpenCustomerView">
+
+            <TextView
+                android:id="@+id/tvTitleSelling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Penjualan"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnManageProduct"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColor"
+                android:text="@string/txt_btn_manage_product"
+                android:textAlignment="viewStart"
+                app:icon="@drawable/ic_merchant_menu"
+                app:iconPadding="16dp"
+                app:iconTint="?android:attr/textColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleSelling" />
+
+            <Button
+                android:id="@+id/btnAddStopPoint"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColor"
+                android:text="@string/txt_btn_add_stop_point"
+                android:textAlignment="viewStart"
+                app:icon="@drawable/ic_location_outline"
+                app:iconPadding="16dp"
+                app:iconTint="?android:attr/textColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnManageProduct" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutBusinessInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_rounded_card"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutSellingInfo">
+
+                <TextView
+                    android:id="@+id/tvTitleBusinessInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Informasi Bisnis"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <Button
+                    android:id="@+id/btnBusinessOwner"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColor"
+                    android:text="@string/txt_btn_business_owner"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_user_outline"
+                    app:iconPadding="16dp"
+                    app:iconTint="?android:attr/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleBusinessInfo" />
+
+
+                <TextView
+                    android:id="@+id/tvTitleTransaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_chat_transaction"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnBusinessOwner" />
+
+                <Button
+                    android:id="@+id/btnTransaction"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColor"
+                    android:text="@string/txt_btn_transaction"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_shopping_bag_outline"
+                    app:iconPadding="16dp"
+                    app:iconTint="?android:attr/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleTransaction" />
+
+                <Button
+                    android:id="@+id/btnUserReview"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColor"
+                    android:text="@string/txt_btn_user_review"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_star_outline"
+                    app:iconPadding="16dp"
+                    app:iconTint="?android:attr/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnTransaction" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutAccountInfo"
@@ -126,7 +262,7 @@
                 android:background="@drawable/bg_rounded_card"
                 android:padding="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnOpenBusinessView">
+                app:layout_constraintTop_toBottomOf="@id/layoutBusinessInformation">
 
                 <TextView
                     android:id="@+id/tvTitleAccountInfo"
@@ -171,8 +307,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

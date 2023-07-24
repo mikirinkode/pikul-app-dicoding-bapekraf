@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_merchant_dashboard"
+        android:icon="@drawable/switch_home"
+        android:title="@string/txt_bottom_nav_title_home"/>
+
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/switch_chat"
+        android:title="@string/txt_bottom_nav_title_chat"/>
+
+
+</menu>
