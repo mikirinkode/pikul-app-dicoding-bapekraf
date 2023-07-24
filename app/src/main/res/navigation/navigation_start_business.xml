@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_merchant_register" />
     <fragment
         android:id="@+id/ownerRegisterFragment"
-        android:name="com.mikirinkode.pikul.feature.startbusiness.OwnerRegisterFragment"
+        android:name="com.mikirinkode.pikul.feature.startbusiness.owner.OwnerRegisterFragment"
         android:label="fragment_owner_register"
         tools:layout="@layout/fragment_owner_register" />
 </navigation>

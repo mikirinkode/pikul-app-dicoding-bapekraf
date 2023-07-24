@@ -51,6 +51,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Mulai Berjualan"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardUserAvatar" />
+
+        <Button
+            android:id="@+id/btnBusinessView"
+            style="@style/Theme.Pikul.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Buka Tampilan Penjual"
+            android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardUserAvatar" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,7 @@ object FireStoreUtils {
 
     // FireStore Table / Collection Name
     const val TABLE_USER = "users"
-    const val TABLE_ROLE_REQUEST = "roleRequests"
-    const val TABLE_EVENTS = "events"
-    const val TABLE_ATTENDANCES = "attendances"
-    const val TABLE_NOTES = "notes"
+    const val TABLE_BUSINESS = "business"
 
     // User Column Name
     const val TABLE_USER_ID = "userId"
@@ -21,4 +18,5 @@ object FireStoreUtils {
 
     const val TABLE_USER_PROVINCE = "province"
     const val TABLE_USER_ROLE = "role"
+    const val TABLE_BUSINESS_DATA = "businessData"
 }

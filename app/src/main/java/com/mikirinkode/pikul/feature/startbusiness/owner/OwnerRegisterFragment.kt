@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.startbusiness.merchant
+package com.mikirinkode.pikul.feature.startbusiness.owner
 
 import android.Manifest
 import android.content.Intent
@@ -28,18 +28,18 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.MAIN_VIEW
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
-import com.mikirinkode.pikul.databinding.FragmentMerchantRegisterBinding
-import com.mikirinkode.pikul.feature.merchant.MerchantMainActivity
+import com.mikirinkode.pikul.databinding.FragmentOwnerRegisterBinding
+import com.mikirinkode.pikul.feature.owner.OwnerMainActivity
 import com.mikirinkode.pikul.utils.CameraActivity
 import com.mikirinkode.pikul.utils.ImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import javax.inject.Inject
 
-@AndroidEntryPoint
-class MerchantRegisterFragment : Fragment() {
 
-    private var _binding: FragmentMerchantRegisterBinding? = null
+@AndroidEntryPoint
+class OwnerRegisterFragment : Fragment() {
+    private var _binding: FragmentOwnerRegisterBinding? = null
     private val binding get() = _binding!!
 
     @Inject
@@ -49,7 +49,7 @@ class MerchantRegisterFragment : Fragment() {
         preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
     }
 
-    private val viewModel: MerchantRegisterViewModel by viewModels()
+    private val viewModel: OwnerRegisterViewModel by viewModels()
 
     private var getFile: File? = null
     private var isBackCamera: Boolean? = null
@@ -64,7 +64,7 @@ class MerchantRegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentMerchantRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentOwnerRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -90,21 +90,17 @@ class MerchantRegisterFragment : Fragment() {
                     provinces
                 )
                 actvProvince.setAdapter(arrayAdapter)
-
-
-                etName.setText(user?.name)
-                etEmail.setText(user?.email)
-
+                etBusinessEmail.setText(user?.email)
                 if (user?.avatarUrl.isNullOrBlank()) {
                     Glide.with(requireContext())
                         .load(R.drawable.ic_default_user_avatar)
-                        .into(ivUserAvatar)
+                        .into(ivBusinessPhoto)
                     btnCaptureImage.visibility = View.VISIBLE
                 } else {
                     btnCaptureImage.visibility = View.GONE
                     Glide.with(requireContext())
                         .load(user?.avatarUrl)
-                        .into(ivUserAvatar)
+                        .into(ivBusinessPhoto)
                 }
             }
         }
@@ -123,7 +119,6 @@ class MerchantRegisterFragment : Fragment() {
             }
         })
     }
-
     private fun showDialog() {
         // check if permission not granted, then request for permission else show picture dialog
         if (!allPermissionsGranted()) {
@@ -169,7 +164,7 @@ class MerchantRegisterFragment : Fragment() {
             binding.apply {
                 if (getFile == null) btnCaptureImage.visibility =
                     View.VISIBLE else btnCaptureImage.visibility = View.GONE
-                ivUserAvatar.setImageURI(selectedImg)
+                ivBusinessPhoto.setImageURI(selectedImg)
             }
         }
     }
@@ -196,7 +191,7 @@ class MerchantRegisterFragment : Fragment() {
             binding.apply {
                 if (getFile == null) btnCaptureImage.visibility =
                     View.VISIBLE else btnCaptureImage.visibility = View.GONE
-                ivUserAvatar.setImageBitmap(BitmapFactory.decodeFile(myFile.path))
+                ivBusinessPhoto.setImageBitmap(BitmapFactory.decodeFile(myFile.path))
             }
         }
     }
@@ -224,18 +219,18 @@ class MerchantRegisterFragment : Fragment() {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun registerMerchantProfile() {
+    private fun registerOwnerProfile(){
         binding.apply {
-            val provinces = resources.getStringArray(R.array.provinces)
-            val userProvince = actvProvince.text.toString()
-            val userName = etName.text.toString()
-            var isValid = true
+            val businessName = etBusinessName.text.toString().trim()
+            val businessEmail = etBusinessEmail.text.toString().trim()
+            val businessPhone = etBusinessPhoneNumber.text.toString().trim()
+            val businessAddress = etBusinessAddress.text.toString().trim()
 
-            if (userName.isEmpty()) {
-                isValid = false
-                etName.error = getString(R.string.empty_name)
-            }
-            if (!provinces.contains(userProvince)) {
+            val provinces = resources.getStringArray(R.array.provinces)
+            val businessProvince = actvProvince.text.toString()
+
+            var isValid = true
+            if (!provinces.contains(businessProvince)) {
                 isValid = false
                 Toast.makeText(
                     requireContext(),
@@ -244,52 +239,77 @@ class MerchantRegisterFragment : Fragment() {
                 ).show()
             }
 
-            if (isValid) {
-                viewModel.registerAsMerchant(userProvince, userName, getFile)
-                    .observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            is PikulResult.Loading -> {
-                                layoutLoading.visibility = View.VISIBLE
-                                layoutLoadingWithProgress.visibility = View.GONE
-                            }
-                            is PikulResult.LoadingWithProgress -> {
-                                val progress = result.progress
-                                layoutLoading.visibility = View.GONE
-                                layoutLoadingWithProgress.visibility = View.VISIBLE
-                                tvLoadingTitle.text = "Upload Gambar"
-                                uploadingProgressBar.progress = progress
-                            }
-                            is PikulResult.Error -> {
-                                layoutLoading.visibility = View.GONE
-                                layoutLoadingWithProgress.visibility = View.GONE
-                                val errorMessage = result.error
+            if (businessName.isEmpty()) {
+                isValid = false
+                etBusinessName.error = getString(R.string.empty_name)
+            }
+
+            if (businessEmail.isEmpty()) {
+                isValid = false
+                etBusinessEmail.error = getString(R.string.empty_email)
+            }
+
+            if (businessPhone.isEmpty()) {
+                isValid = false
+                etBusinessPhoneNumber.error = getString(R.string.txt_empty_phone_number)
+            }
+
+            if (businessAddress.isEmpty()) {
+                isValid = false
+                etBusinessAddress.error = getString(R.string.txt_empty_business_address)
+            }
+
+            if (isValid){
+                viewModel.registerAsOwner(
+                    businessName,
+                    businessEmail,
+                    businessPhone,
+                    businessProvince,
+                    businessAddress,
+                    getFile
+                ).observe(viewLifecycleOwner){ result ->
+                    when (result) {
+                        is PikulResult.Loading -> {
+                            layoutLoading.visibility = View.VISIBLE
+                            layoutLoadingWithProgress.visibility = View.GONE
+                        }
+                        is PikulResult.LoadingWithProgress -> {
+                            val progress = result.progress
+                            layoutLoading.visibility = View.GONE
+                            layoutLoadingWithProgress.visibility = View.VISIBLE
+                            tvLoadingTitle.text = "Upload Gambar"
+                            uploadingProgressBar.progress = progress
+                        }
+                        is PikulResult.Error -> {
+                            layoutLoading.visibility = View.GONE
+                            layoutLoadingWithProgress.visibility = View.GONE
+                            val errorMessage = result.error
+                            Toast.makeText(
+                                requireContext(),
+                                "Terjadi Kesalahan: ${errorMessage}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is PikulResult.Success -> {
+                            layoutLoading.visibility = View.GONE
+                            layoutLoadingWithProgress.visibility = View.GONE
+                            val success = result.data
+                            if (success) {
+                                preferences.saveString(LocalPreferenceConstants.SELECTED_MAIN_VIEW, MAIN_VIEW.BUSINESS_VIEW.toString())
                                 Toast.makeText(
                                     requireContext(),
-                                    "Terjadi Kesalahan: ${errorMessage}",
+                                    getString(R.string.txt_registration_success),
                                     Toast.LENGTH_SHORT
                                 ).show()
-                            }
-                            is PikulResult.Success -> {
-                                layoutLoading.visibility = View.GONE
-                                layoutLoadingWithProgress.visibility = View.GONE
-                                val success = result.data
-                                if (success) {
-                                    preferences.saveString(LocalPreferenceConstants.SELECTED_MAIN_VIEW, MAIN_VIEW.BUSINESS_VIEW.toString())
-                                    Toast.makeText(
-                                        requireContext(),
-                                        getString(R.string.txt_registration_success),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    startActivity(Intent(requireContext(), MerchantMainActivity::class.java))
-                                    requireActivity().finishAffinity()
-                                }
+                                startActivity(Intent(requireContext(), OwnerMainActivity::class.java))
+                                requireActivity().finishAffinity()
                             }
                         }
                     }
+                }
             }
         }
     }
-
 
     private fun onClickAction() {
         binding.apply {
@@ -297,7 +317,7 @@ class MerchantRegisterFragment : Fragment() {
                 Navigation.findNavController(binding.root).navigateUp()
             }
 
-            ivUserAvatar.setOnClickListener {
+            ivBusinessPhoto.setOnClickListener {
                 showDialog()
             }
 
@@ -306,7 +326,7 @@ class MerchantRegisterFragment : Fragment() {
             }
 
             btnNext.setOnClickListener {
-                registerMerchantProfile()
+                registerOwnerProfile()
             }
 
         }

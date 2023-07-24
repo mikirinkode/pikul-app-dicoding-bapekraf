@@ -4,7 +4,9 @@
     package="com.mikirinkode.pikul">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -20,10 +22,13 @@
         android:theme="@style/Theme.Pikul"
         tools:targetApi="31">
         <activity
+            android:name=".feature.owner.OwnerMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".utils.CameraActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.merchant.MerchantDashboardActivity"
+            android:name=".feature.merchant.MerchantMainActivity"
             android:exported="false" />
         <activity
             android:name=".feature.startbusiness.StartBusinessActivity"

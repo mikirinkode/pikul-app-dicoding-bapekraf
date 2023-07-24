@@ -68,6 +68,8 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/bg_rounded_card"
                 android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tilProvince">
 
                 <de.hdodenhof.circleimageview.CircleImageView

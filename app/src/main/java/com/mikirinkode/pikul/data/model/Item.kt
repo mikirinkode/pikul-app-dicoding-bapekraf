@@ -2,6 +2,26 @@ package com.mikirinkode.pikul.data.model
 
 import com.mikirinkode.pikul.constants.PikulRole
 
+
+data class Business(
+    var ownerId: String? = null,
+    var businessId: String? = null,
+    var businessName: String? = null,
+    var businessEmail: String? = null,
+    var businessPhoneNumber: String? = null,
+    var businessProvince: String? = null,
+    var businessAddress: String? = null,
+    var businessPhoto: String? = null,
+    var rating: Double? = null,
+//    var product: List<Product>
+//    var reviews
+)
+
+data class Product(
+    var productId: String,
+)
+
+
 data class Brand(
     // owner properties
     val ownerId: String,
@@ -19,9 +39,6 @@ data class Brand(
     val merchantList: List<Merchant>
 )
 
-data class Product(
-    val productId:String,
-)
 
 data class Owner(
     var ownerId: String,
@@ -35,7 +52,7 @@ data class Owner(
     val role: String,
 
 
-)
+    )
 
 data class Merchant(
     var merchantId: String,
@@ -52,7 +69,7 @@ data class Merchant(
     val movingStatus: String,
     val type: String, // Motor, mobile, gerobak, stan
 //    val merchantRating: String,
-    )
+)
 
 
 data class Item(
@@ -61,10 +78,10 @@ data class Item(
     val price: String,
     val description: String,
 
-)
+    )
 
 // TODO: REMOVE
-object DummyData{
+object DummyData {
     fun getDummyMerchant(): List<Merchant> {
         val list = listOf<Merchant>(
             Merchant(
@@ -84,6 +101,7 @@ object DummyData{
         )
         return list
     }
+
     fun getDummyBrand(): List<Brand> {
         val list = listOf<Brand>(
             Brand(
@@ -100,17 +118,20 @@ object DummyData{
                         "Siomay Kentang",
                         "2000",
                         "-"
-                    ),Item(
+                    ),
+                    Item(
                         "2",
                         "Siomay Telur",
                         "3000",
                         "-"
-                    ),Item(
+                    ),
+                    Item(
                         "3",
                         "Siomay Tahu",
                         "2000",
                         "-"
-                    ),Item(
+                    ),
+                    Item(
                         "4",
                         "Siomay Kol",
                         "2000",

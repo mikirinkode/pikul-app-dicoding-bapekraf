@@ -128,8 +128,9 @@ class MerchantRegisterViewModel @Inject constructor(
 
     private fun updateUserData(userName: String, userProvince: String, userRole: String, updatedAt: String, userAvatarUrl: String){
         val oldUser = preferences.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+        val avatar = if (userAvatarUrl == "") oldUser?.avatarUrl else userAvatarUrl
         val newUser = UserAccount(
-            avatarUrl = userAvatarUrl,
+            avatarUrl = avatar,
             conversationIdList = oldUser?.conversationIdList,
             createdAt = oldUser?.createdAt,
             email = oldUser?.email,
