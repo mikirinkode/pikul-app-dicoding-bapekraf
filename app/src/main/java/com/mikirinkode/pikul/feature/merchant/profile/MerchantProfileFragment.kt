@@ -16,6 +16,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.MAIN_VIEW
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
+import com.mikirinkode.pikul.databinding.DialogAddNewStopPointBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantProfileBinding
 import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -92,7 +93,10 @@ class MerchantProfileFragment : Fragment() {
                 finishAffinity(requireActivity())
             }
             btnManageProduct.setOnClickListener {}
-            btnAddStopPoint.setOnClickListener {}
+            btnAddStopPoint.setOnClickListener {
+                val action = MerchantProfileFragmentDirections.actionOpenStopPoint()
+                Navigation.findNavController(binding.root).navigate(action)
+            }
             btnBusinessOwner.setOnClickListener {}
             btnTransaction.setOnClickListener {}
             btnUserReview.setOnClickListener {}

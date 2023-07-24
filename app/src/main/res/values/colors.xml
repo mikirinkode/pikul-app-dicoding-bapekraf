@@ -67,5 +67,6 @@
 
 
     <color name="red_transparent20">#33DF2951</color>
+    <color name="black_transparent">#00000000</color>
     <color name="backgroundColorRecycler">#e7e7e7</color>
 </resources>

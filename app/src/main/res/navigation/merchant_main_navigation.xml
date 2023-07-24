@@ -21,10 +21,19 @@
         android:id="@+id/merchantProfileFragment"
         android:name="com.mikirinkode.pikul.feature.merchant.profile.MerchantProfileFragment"
         android:label="fragment_merchant_profile"
-        tools:layout="@layout/fragment_merchant_profile" />
+        tools:layout="@layout/fragment_merchant_profile" >
+        <action
+            android:id="@+id/actionOpenStopPoint"
+            app:destination="@id/merchantAllStopPointFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment"
         android:name="com.mikirinkode.pikul.feature.chat.history.ChatHistoryFragment"
         android:label="fragment_chat_history"
         tools:layout="@layout/fragment_chat_history" />
+    <fragment
+        android:id="@+id/merchantAllStopPointFragment"
+        android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantAllStopPointFragment"
+        android:label="fragment_merchant_all_stop_point"
+        tools:layout="@layout/fragment_merchant_all_stop_point" />
 </navigation>

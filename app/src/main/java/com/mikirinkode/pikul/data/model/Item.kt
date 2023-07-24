@@ -13,6 +13,8 @@ data class Business(
     var businessAddress: String? = null,
     var businessPhoto: String? = null,
     var rating: Double? = null,
+    var createdAt: String? = null,
+    var updatedAt: String? = null,
 //    var product: List<Product>
 //    var reviews
 )

@@ -81,6 +81,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
