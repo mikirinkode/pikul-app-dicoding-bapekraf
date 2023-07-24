@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.merchant.profile.MerchantProfileFragment">
 
 
@@ -28,11 +28,11 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingBottom="16dp"
-        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +49,7 @@
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardUserAvatar"
@@ -121,63 +121,142 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutUserProfile" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutSellingInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_rounded_card"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnOpenCustomerView">
 
-            <TextView
-                android:id="@+id/tvTitleSelling"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutSellingDashboard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Penjualan"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnManageProduct"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColor"
-                android:text="@string/txt_btn_manage_product"
-                android:textAlignment="viewStart"
-                app:icon="@drawable/ic_merchant_menu"
-                app:iconPadding="16dp"
-                app:iconTint="?android:attr/textColor"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitleSelling" />
+                app:layout_constraintTop_toBottomOf="@id/btnOpenCustomerView">
 
-            <Button
-                android:id="@+id/btnAddStopPoint"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutTotalTransaction"
+                    android:layout_width="0dp"
+                    android:background="@drawable/bg_rounded_card"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/layoutTotalRevenue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvTitleTotalTransaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Transaksi"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tvTotalTransaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitleTotalTransaction"
+                        tools:text="80" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutTotalRevenue"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_card"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/layoutTotalTransaction"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvTitleTotalRevenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Pendapatan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvTotalRevenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitleTotalRevenue"
+                        tools:text="Rp. 80.000" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutSellingInfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColor"
-                android:text="@string/txt_btn_add_stop_point"
-                android:textAlignment="viewStart"
-                app:icon="@drawable/ic_location_outline"
-                app:iconPadding="16dp"
-                app:iconTint="?android:attr/textColor"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_rounded_card"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnManageProduct" />
+                app:layout_constraintTop_toBottomOf="@id/layoutSellingDashboard">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvTitleSelling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Penjualan"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnManageProduct"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_btn_manage_product"
+                    android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
+                    app:icon="@drawable/ic_merchant_menu"
+                    app:iconPadding="16dp"
+                    app:iconTint="?android:attr/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleSelling" />
+
+                <Button
+                    android:id="@+id/btnAddStopPoint"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_btn_add_stop_point"
+                    android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
+                    app:icon="@drawable/ic_location_outline"
+                    app:iconPadding="16dp"
+                    app:iconTint="?android:attr/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnManageProduct" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutBusinessInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_rounded_card"
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -199,9 +278,9 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:attr/textColor"
                     android:text="@string/txt_btn_business_owner"
                     android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
                     app:icon="@drawable/ic_user_outline"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
@@ -214,9 +293,9 @@
                     android:id="@+id/tvTitleTransaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="@string/txt_chat_transaction"
                     android:textSize="18sp"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnBusinessOwner" />
 
@@ -225,9 +304,9 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:attr/textColor"
                     android:text="@string/txt_btn_transaction"
                     android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
                     app:icon="@drawable/ic_shopping_bag_outline"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
@@ -240,9 +319,9 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:attr/textColor"
                     android:text="@string/txt_btn_user_review"
                     android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
                     app:icon="@drawable/ic_star_outline"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
@@ -258,9 +337,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/bg_rounded_card"
                 android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutBusinessInformation">
 
@@ -274,31 +353,30 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-
                 <Button
                     android:id="@+id/tvEmail"
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:attr/textColor"
-                    tools:text="wafa@gmail.com"
+                    android:enabled="false"
                     android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
                     app:icon="@drawable/ic_email_outline"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
-                    android:enabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitleAccountInfo"/>
+                    app:layout_constraintTop_toBottomOf="@id/tvTitleAccountInfo"
+                    tools:text="wafa@gmail.com" />
 
                 <Button
                     android:id="@+id/btnLogout"
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:attr/textColor"
                     android:text="@string/txt_btn_logout"
                     android:textAlignment="viewStart"
+                    android:textColor="?android:attr/textColor"
                     app:icon="@drawable/ic_logout"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
