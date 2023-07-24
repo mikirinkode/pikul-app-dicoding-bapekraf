@@ -135,10 +135,17 @@ class ChatRoomViewModel @Inject constructor(
 
     fun createPersonaChatRoom(userId: String, anotherUserId: String, conversationId: String) {
         // add conversation id to user firestore collection
-        val userRef = fireStore?.collection("users")?.document(userId)
-        userRef?.update("conversationIdList", FieldValue.arrayUnion(conversationId))
-        val anotherUserRef = fireStore?.collection("users")?.document(anotherUserId)
-        anotherUserRef?.update("conversationIdList", FieldValue.arrayUnion(conversationId))
+//        val userRef = fireStore?.collection("users")?.document(userId)
+//        userRef?.update("conversationIdList", FieldValue.arrayUnion(conversationId))
+//        val anotherUserRef = fireStore?.collection("users")?.document(anotherUserId)
+//        anotherUserRef?.update("conversationIdList", FieldValue.arrayUnion(conversationId))
+        
+        // add conversation id to user on realtime database
+        val usersRef = database?.getReference("users")
+        usersRef?.child(userId)?.child("conversationIdList")?.child(conversationId)
+            ?.setValue(mapOf(conversationId to true))
+        usersRef?.child(anotherUserId)?.child("conversationIdList")?.child(conversationId)
+            ?.setValue(mapOf(conversationId to true))
 
 
         // create conversation object on realtime database

@@ -203,11 +203,11 @@ class ChatRoomFragment : Fragment(),
                                 interlocutorId,
                                 conversationId
                             )
-                            Toast.makeText(
-                                requireContext(),
-                                "Chat Room Created",
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                requireContext(),
+//                                "Chat Room Created",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
                         }
                     }
 

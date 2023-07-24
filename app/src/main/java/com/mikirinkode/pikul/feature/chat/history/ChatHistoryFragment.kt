@@ -30,6 +30,9 @@ class ChatHistoryFragment : Fragment() {
         ChatHistoryAdapter()
     }
 
+    private val userAdapter: UserListAdapter by lazy {
+        UserListAdapter()
+    }
 
     @Inject
     lateinit var preferences: LocalPreference
