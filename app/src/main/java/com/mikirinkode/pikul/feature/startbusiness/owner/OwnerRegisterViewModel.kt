@@ -73,7 +73,7 @@ class OwnerRegisterViewModel @Inject constructor(
 
 
                 // add new owner business data
-                fireStore.collection(FireStoreUtils.TABLE_BUSINESS).document(userId)
+                fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)
                     .set(businessData)
                     .addOnSuccessListener {
                         // upload new user data
@@ -119,7 +119,7 @@ class OwnerRegisterViewModel @Inject constructor(
                                 rating = 0.0
                             )
                             // add new owner business data
-                            fireStore.collection(FireStoreUtils.TABLE_BUSINESS).document(userId)
+                            fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)
                                 .set(businessData)
                                 .addOnSuccessListener {
                                     // upload new user data

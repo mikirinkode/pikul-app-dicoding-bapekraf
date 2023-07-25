@@ -16,6 +16,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,7 +31,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.model.PikulResult
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.databinding.FragmentMapsBinding
+import com.mikirinkode.pikul.feature.merchant.maps.SellingPlaceAdapter
+import com.mikirinkode.pikul.utils.MapsHelper
 import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,16 +45,22 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     GoogleMap.OnMapClickListener {
 
     @Inject
-    lateinit var preferences: LocalPreference
+    lateinit var pref: LocalPreference
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
 
     // used for detect user location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     // used for maps
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
+    private var userMarker: Marker? = null
+
+    private val viewModel: MapsViewModel by viewModels()
+
+    private lateinit var adapter: SellingPlaceAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +78,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+        observeSellingPlaces()
         onClickAction()
     }
 
@@ -93,52 +109,75 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         mapView.onSaveInstanceState(outState)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.setOnMarkerClickListener(this)
-        mMap.setOnMapClickListener(this)
-//        try {
-//            // check preference for dark mode
-//            val isDark = preferences.getBooleanValues(Preferences.DARK_MODE_PREF)
-//            if (isDark) {
-//                mMap.setMapStyle(
-//                    MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style_night)
-//                )
-//            } else {
-//                mMap.setMapStyle(
-//                    MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style_light)
-//                )
-//            }
-//        } catch (e: Exception) {
-//            Log.e("SelectLocation", "${e.message}")
-//        }
-        val initialLocation = LatLng(-4.375726916664182, 117.53723749844212)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(initialLocation))
+    private fun initView() {
+        binding.apply {
+            adapter = SellingPlaceAdapter(pref)
 
-        mMap.uiSettings.isZoomControlsEnabled = false
-        mMap.uiSettings.isIndoorLevelPickerEnabled = true
-        mMap.uiSettings.isCompassEnabled = false
-        mMap.uiSettings.isMapToolbarEnabled = true
+            rvSellingPlaces.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            rvSellingPlaces.adapter = adapter
 
-        observeSavedLocation()
+
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(rvSellingPlaces)
+
+            rvSellingPlaces.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        val position =
+                            (rvSellingPlaces.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+
+                        if (position >= 0) {
+                            val item: SellingPlace = adapter.getDataByPosition(position)
+                            val latLng = MapsHelper.getLatLngFromString(item.coordinate)
+                            if (latLng != null) {
+                                MapsHelper.navigateToLocation(mMap, latLng)
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
 
-    override fun onMapClick(p0: LatLng) {
-
+    private fun observeSellingPlaces() {
+        viewModel.getSellingPlaces().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PikulResult.Loading -> {}
+                is PikulResult.LoadingWithProgress -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+                is PikulResult.Success -> {
+                    if (result.data.isNotEmpty()) {
+                        adapter.setData(result.data)
+                        createAllSellingPlaces(result.data)
+                    }
+                }
+            }
+        }
     }
 
-    override fun onMarkerClick(p0: Marker): Boolean {
-        return true
+    private fun createAllSellingPlaces(list: List<SellingPlace>) {
+        for (place in list) {
+            val latLng = MapsHelper.getLatLngFromString(place.coordinate)
+            if (latLng != null) {
+                val marker =
+                    MapsHelper.createSellingPlaceMarker(latLng, place.placeId ?: "")
+                mMap.addMarker(marker)
+            }
+        }
     }
 
-    private fun observeSavedLocation(){
+    private fun observeSavedLocation() {
         // get last location
-        val latitude = preferences.getString(LocalPreferenceConstants.USER_LAST_LATITUDE)
-        val longitude = preferences.getString(LocalPreferenceConstants.USER_LAST_LONGITUDE)
+        val latitude = pref.getString(LocalPreferenceConstants.USER_LAST_LATITUDE)
+        val longitude = pref.getString(LocalPreferenceConstants.USER_LAST_LONGITUDE)
 
         if (!latitude.isNullOrEmpty() && !longitude.isNullOrEmpty()) {
-            val marker: Marker? =
-                mMap.addMarker(createMarker(LatLng(latitude.toDouble(), longitude.toDouble())))
+            handleUserMarker(latitude.toDouble(), longitude.toDouble())
         }
 
         // observe for real location
@@ -150,7 +189,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         }
     }
 
-    private fun observeNewLocation(){
+    private fun observeNewLocation() {
         // check the location service
         if (isLocationServiceEnabled(requireContext())) {
             if (ActivityCompat.checkSelfPermission(
@@ -167,13 +206,17 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 .addOnSuccessListener { location: Location? ->
                     // Use the retrieved location to navigate on Google Maps
                     location?.let {
-                        val userLatLng = LatLng(it.latitude, it.longitude)
-                        val marker = createMarker(userLatLng)
-                        preferences.saveString(LocalPreferenceConstants.USER_LAST_LATITUDE, it.latitude.toString())
-                        preferences.saveString(LocalPreferenceConstants.USER_LAST_LONGITUDE, it.longitude.toString())
-                        mMap.addMarker(marker)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 14f))
-//                        navigateToLocation(userLatLng)
+                        // save to local
+                        pref.saveString(
+                            LocalPreferenceConstants.USER_LAST_LATITUDE,
+                            it.latitude.toString()
+                        )
+                        pref.saveString(
+                            LocalPreferenceConstants.USER_LAST_LONGITUDE,
+                            it.longitude.toString()
+                        )
+
+                        handleUserMarker(it.latitude, it.longitude)
                     }
                 }
                 .addOnFailureListener { exception: Exception ->
@@ -192,6 +235,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    private fun handleUserMarker(latitude: Double, longitude: Double) {
+        // check for previous marker
+        if (userMarker != null) {
+            userMarker?.remove()
+            userMarker = null
+        }
+        val userLatLng = LatLng(latitude, longitude)
+        val marker = mMap.addMarker(MapsHelper.createUserMarker(userLatLng))
+        userMarker = marker
+
+        MapsHelper.navigateToLocation(mMap, userLatLng, 4f)
     }
 
     private fun isLocationServiceEnabled(context: Context): Boolean {
@@ -218,16 +274,40 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         alertDialog.show()
     }
 
-    private fun createMarker(latLng: LatLng): MarkerOptions {
-        val markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_user_location_marker)
-        return MarkerOptions().position(latLng).title(getString(R.string.txt_your_location)).icon(markerIcon)
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.setOnMarkerClickListener(this)
+        mMap.setOnMapClickListener(this)
+
+        val initialLocation = LatLng(-4.375726916664182, 117.53723749844212)
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(initialLocation))
+
+        mMap.uiSettings.isZoomControlsEnabled = false
+        mMap.uiSettings.isIndoorLevelPickerEnabled = true
+        mMap.uiSettings.isCompassEnabled = false
+        mMap.uiSettings.isMapToolbarEnabled = true
+
+        observeSavedLocation() // TODO
     }
 
-    private fun navigateToLocation(latLng: LatLng, zoom: Float = 14.0f) {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+    override fun onMapClick(p0: LatLng) {
+
     }
-    
-    private fun onClickAction(){}
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val placeId = marker.title
+        if (placeId != null) {
+            val position = adapter.getDataPositionById(placeId)
+            if (position != RecyclerView.NO_POSITION) {
+                binding.rvSellingPlaces.smoothScrollToPosition(position)
+            }
+        }
+        MapsHelper.navigateToLocation(mMap, marker.position)
+        return true
+    }
+
+
+    private fun onClickAction() {}
 
 
     // handle the request permission result

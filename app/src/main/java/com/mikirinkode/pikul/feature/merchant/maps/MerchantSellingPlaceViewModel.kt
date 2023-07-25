@@ -7,13 +7,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.PikulResult
-import com.mikirinkode.pikul.data.model.maps.MerchantStopPoint
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.utils.DateHelper
+import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MerchantStopPointViewModel @Inject constructor(
+class MerchantSellingPlaceViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
     private val preferences: LocalPreference
@@ -29,12 +30,12 @@ class MerchantStopPointViewModel @Inject constructor(
         result.postValue(PikulResult.Loading)
 
         if (userId != null) {
-            val ref = fireStore.collection("merchant_stop_points").document()
+            val ref = fireStore.collection(FireStoreUtils.TABLE_SELLING_PLACES).document()
 
-            val data = MerchantStopPoint(
+            val data = SellingPlace(
                 userId = userId,
-                stopPointId = ref.id,
-                pointName = name,
+                placeId = ref.id,
+                placeName = name,
                 startTime = startTime,
                 endTime = endTime,
                 coordinate = coordinate,

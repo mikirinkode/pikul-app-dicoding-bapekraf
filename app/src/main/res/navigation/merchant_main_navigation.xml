@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_merchant_profile" >
         <action
             android:id="@+id/actionOpenStopPoint"
-            app:destination="@id/merchantAllStopPointFragment" />
+            app:destination="@id/merchantSellingPlaceFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment"
@@ -32,8 +32,8 @@
         android:label="fragment_chat_history"
         tools:layout="@layout/fragment_chat_history" />
     <fragment
-        android:id="@+id/merchantAllStopPointFragment"
-        android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantAllStopPointFragment"
+        android:id="@+id/merchantSellingPlaceFragment"
+        android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantSellingPlaceFragment"
         android:label="fragment_merchant_all_stop_point"
-        tools:layout="@layout/fragment_merchant_all_stop_point" />
+        tools:layout="@layout/fragment_merchant_selling_place" />
 </navigation>
