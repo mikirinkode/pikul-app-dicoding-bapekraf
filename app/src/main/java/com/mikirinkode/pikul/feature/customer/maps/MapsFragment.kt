@@ -280,7 +280,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         mMap.setOnMapClickListener(this)
 
         val initialLocation = LatLng(-4.375726916664182, 117.53723749844212)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(initialLocation))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 4f))
 
         mMap.uiSettings.isZoomControlsEnabled = false
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
