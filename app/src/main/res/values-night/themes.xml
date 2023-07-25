@@ -39,10 +39,10 @@
     </style>
 
     <style name="Theme.Pikul.InputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/input_layout_corner_radius</item>
     </style>
 
     <style name="Pikul.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

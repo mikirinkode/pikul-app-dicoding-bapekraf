@@ -105,7 +105,7 @@
             android:layout_marginEnd="16dp"
             android:text="@string/txt_button_login"
             android:theme="@style/Theme.Pikul.Button"
-            app:cornerRadius="@dimen/corner_radius"
+            app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintEnd_toStartOf="@id/btnRegister"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNotLoginDesc" />
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/txt_button_register"
-            app:cornerRadius="@dimen/corner_radius"
+            app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnLogin"
             app:layout_constraintTop_toBottomOf="@+id/tvNotLoginDesc" />

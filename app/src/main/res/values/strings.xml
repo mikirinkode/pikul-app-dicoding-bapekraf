@@ -159,5 +159,14 @@
     <string name="txt_all_stop_point">Titik Berhenti</string>
     <string name="txt_btn_add_new_stop_point">Tambah Titik</string>
     <string name="txt_dialog_title_add_new_stop_point">Titik Baru</string>
+    <string name="txt_btn_manage_merchant">Pedagang</string>
+    <string name="txt_product">Produk</string>
+    <string name="txt_selling">Penjualan Anda</string>
+    <string name="txt_transaction">Transaksi</string>
+    <string name="txt_add_product">Tambah Produk</string>
+    <string name="txt_hint_product_name">Nama Produk</string>
+    <string name="txt_hint_produt_category">Kategori</string>
+    <string name="txt_hint_product_price">Harga</string>
+    <string name="txt_btn_add">Tambah</string>
 
 </resources>

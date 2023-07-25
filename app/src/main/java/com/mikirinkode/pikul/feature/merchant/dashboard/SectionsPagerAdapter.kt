@@ -1,4 +1,4 @@
-package com.mikirinkode.pikul.feature.merchant
+package com.mikirinkode.pikul.feature.merchant.dashboard
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

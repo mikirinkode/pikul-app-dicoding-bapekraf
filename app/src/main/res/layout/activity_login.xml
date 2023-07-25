@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/txt_button_login"
-            app:cornerRadius="@dimen/corner_radius"
+            app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilPassword" />

@@ -228,7 +228,7 @@
                     android:text="@string/txt_btn_manage_product"
                     android:textAlignment="viewStart"
                     android:textColor="?android:attr/textColor"
-                    app:icon="@drawable/ic_merchant_menu"
+                    app:icon="@drawable/ic_spoon_and_fork"
                     app:iconPadding="16dp"
                     app:iconTint="?android:attr/textColor"
                     app:layout_constraintEnd_toEndOf="parent"

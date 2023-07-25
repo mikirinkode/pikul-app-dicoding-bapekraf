@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/owner_main_navigation"
+    app:startDestination="@id/ownerDashboardFragment">
+
+    <fragment
+        android:id="@+id/ownerDashboardFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.dashboard.OwnerDashboardFragment"
+        android:label="fragment_owner_dashboard"
+        tools:layout="@layout/fragment_owner_dashboard" >
+        <action
+            android:id="@+id/actionOpenProfile"
+            app:destination="@id/ownerProfileFragment" />
+        <action
+            android:id="@+id/actionOpenMerchantSellingPlace"
+            app:destination="@id/merchantSellingPlaceFragment2" />
+        <action
+            android:id="@+id/actionCreateProduct"
+            app:destination="@id/createProductFragment" />
+        <action
+            android:id="@+id/actionManageMerchant"
+            app:destination="@id/manageMerchantFragment" />
+        <action
+            android:id="@+id/actionOpenChat"
+            app:destination="@id/chatHistoryFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerProfileFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.profile.OwnerProfileFragment"
+        android:label="fragment_owner_profile"
+        tools:layout="@layout/fragment_owner_profile" />
+    <fragment
+        android:id="@+id/merchantSellingPlaceFragment2"
+        android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantSellingPlaceFragment"
+        android:label="fragment_merchant_selling_place"
+        tools:layout="@layout/fragment_merchant_selling_place" />
+    <fragment
+        android:id="@+id/createProductFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.product.CreateProductFragment"
+        android:label="fragment_create_product"
+        tools:layout="@layout/fragment_create_product" />
+    <fragment
+        android:id="@+id/manageMerchantFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.merchant.ManageMerchantFragment"
+        android:label="fragment_manage_merchant"
+        tools:layout="@layout/fragment_manage_merchant" />
+    <fragment
+        android:id="@+id/chatHistoryFragment2"
+        android:name="com.mikirinkode.pikul.feature.chat.history.ChatHistoryFragment"
+        android:label="fragment_chat_history"
+        tools:layout="@layout/fragment_chat_history" />
+</navigation>

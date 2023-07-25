@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/txt_button_register"
-            app:cornerRadius="@dimen/corner_radius"
+            app:cornerRadius="@dimen/button_corner_radius"
             android:theme="@style/Theme.Pikul.Button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

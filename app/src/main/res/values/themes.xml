@@ -32,7 +32,7 @@
 
     <style name="Theme.Pikul.Button" parent="Widget.Material3.Button">
         <item name="android:padding">@dimen/button_padding</item>
-        <item name="cornerRadius">16dp</item>
+        <item name="cornerRadius">6dp</item>
         <item name="cornerSize">16dp</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">16sp</item>
@@ -49,10 +49,10 @@
     </style>
 
     <style name="Theme.Pikul.InputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
-        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/input_layout_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/input_layout_corner_radius</item>
     </style>
 
     <style name="Theme.Pikul.FakeInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">

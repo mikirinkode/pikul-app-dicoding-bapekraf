@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.databinding.ActivityOwnerMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OwnerMainActivity : AppCompatActivity() {
 
     private val binding: ActivityOwnerMainBinding by lazy {

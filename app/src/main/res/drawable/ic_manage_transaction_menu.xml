@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_circle_background_transparent"/>
+
+    <item
+        android:top="8dp"
+        android:bottom="8dp"
+        android:right="8dp"
+        android:left="8dp"
+        android:drawable="@drawable/ic_shopping_bag_fill"/>
+
+
+</layer-list>

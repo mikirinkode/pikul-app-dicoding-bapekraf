@@ -147,7 +147,7 @@
                 android:enabled="false"
                 android:text="@string/txt_btn_next"
                 android:theme="@style/Theme.Pikul.Button"
-                app:cornerRadius="@dimen/corner_radius"
+                app:cornerRadius="@dimen/button_corner_radius"
                 app:layout_constraintTop_toBottomOf="@id/layoutUserProfile"
                 android:layout_margin="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
