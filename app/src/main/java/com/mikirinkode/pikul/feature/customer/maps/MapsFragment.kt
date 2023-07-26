@@ -148,7 +148,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 is PikulResult.Loading -> {}
                 is PikulResult.LoadingWithProgress -> {}
                 is PikulResult.Error -> {
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
                 }
                 is PikulResult.Success -> {
                     if (result.data.isNotEmpty()) {

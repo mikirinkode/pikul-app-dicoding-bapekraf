@@ -38,8 +38,7 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
                 val interlocutorId = user.userId
                 val loggedUserId = "FGz3dlEn9AYHbuTcKv3fLol8cp32"
                 if (loggedUserId != null && interlocutorId != null) {
-                    val conversationId =
-                        if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
+                    val conversationId = if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
                         itemView.context.startActivity(
                         Intent(
                             itemView.context,

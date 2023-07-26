@@ -262,7 +262,7 @@ class MerchantRegisterFragment : Fragment() {
                             is PikulResult.Error -> {
                                 layoutLoading.visibility = View.GONE
                                 layoutLoadingWithProgress.visibility = View.GONE
-                                val errorMessage = result.error
+                                val errorMessage = result.errorMessage
                                 Toast.makeText(
                                     requireContext(),
                                     "Terjadi Kesalahan: ${errorMessage}",

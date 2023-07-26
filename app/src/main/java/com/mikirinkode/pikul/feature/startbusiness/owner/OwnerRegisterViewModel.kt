@@ -68,7 +68,7 @@ class OwnerRegisterViewModel @Inject constructor(
                     businessProvince = businessProvince,
                     businessAddress = businessAddress,
                     businessPhoto = "",
-                    rating = 0.0
+                    businessRating = 0.0
                 )
 
 
@@ -116,7 +116,7 @@ class OwnerRegisterViewModel @Inject constructor(
                                 businessProvince = businessProvince,
                                 businessAddress = businessAddress,
                                 businessPhoto = uri.toString(),
-                                rating = 0.0
+                                businessRating = 0.0
                             )
                             // add new owner business data
                             fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)

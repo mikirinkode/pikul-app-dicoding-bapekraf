@@ -12,15 +12,11 @@ data class Business(
     var businessProvince: String? = null,
     var businessAddress: String? = null,
     var businessPhoto: String? = null,
-    var rating: Double? = null,
+    var businessRating: Double? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
 //    var product: List<Product>
 //    var reviews
-)
-
-data class Product(
-    var productId: String,
 )
 
 

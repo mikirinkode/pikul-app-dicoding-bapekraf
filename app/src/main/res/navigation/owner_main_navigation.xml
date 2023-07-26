@@ -17,14 +17,14 @@
             android:id="@+id/actionOpenMerchantSellingPlace"
             app:destination="@id/merchantSellingPlaceFragment2" />
         <action
-            android:id="@+id/actionCreateProduct"
-            app:destination="@id/createProductFragment" />
-        <action
             android:id="@+id/actionManageMerchant"
             app:destination="@id/manageMerchantFragment" />
         <action
             android:id="@+id/actionOpenChat"
             app:destination="@id/chatHistoryFragment2" />
+        <action
+            android:id="@+id/actionOpenProductList"
+            app:destination="@id/productListFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
@@ -37,10 +37,10 @@
         android:label="fragment_merchant_selling_place"
         tools:layout="@layout/fragment_merchant_selling_place" />
     <fragment
-        android:id="@+id/createProductFragment"
-        android:name="com.mikirinkode.pikul.feature.owner.product.CreateProductFragment"
+        android:id="@+id/addProductFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.product.AddProductFragment"
         android:label="fragment_create_product"
-        tools:layout="@layout/fragment_create_product" />
+        tools:layout="@layout/fragment_add_product" />
     <fragment
         android:id="@+id/manageMerchantFragment"
         android:name="com.mikirinkode.pikul.feature.owner.merchant.ManageMerchantFragment"
@@ -51,4 +51,13 @@
         android:name="com.mikirinkode.pikul.feature.chat.history.ChatHistoryFragment"
         android:label="fragment_chat_history"
         tools:layout="@layout/fragment_chat_history" />
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.product.ProductListFragment"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/actionCreateProduct"
+            app:destination="@id/addProductFragment" />
+    </fragment>
 </navigation>

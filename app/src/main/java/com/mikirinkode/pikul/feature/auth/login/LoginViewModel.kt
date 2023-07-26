@@ -48,10 +48,10 @@ class LoginViewModel @Inject constructor(
                         val lastLogin = hashMapOf(
                             FireStoreUtils.TABLE_USER_LAST_LOGIN to DateHelper.getCurrentDateTime()
                         )
-                        // Post Last Login Data to Collection
-                        fireStore.collection(FireStoreUtils.TABLE_USER)
-                            .document(user.uid)
-                            .set(lastLogin, SetOptions.merge())
+                        // Post Last Login Data to Collection // TODO: WORK IF HIDDEN, try to update ruless add read,write, update
+//                        fireStore.collection(FireStoreUtils.TABLE_USER)
+//                            .document(user.uid)
+//                            .set(lastLogin, SetOptions.merge())
 
                         // get user data and save to local pref
                         val userRef =
