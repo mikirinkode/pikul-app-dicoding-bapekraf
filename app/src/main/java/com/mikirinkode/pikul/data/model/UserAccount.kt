@@ -13,6 +13,7 @@ data class UserAccount(
     var name: String? = null,
     val oneSignalToken: String? = null,
     val province: String? = null,
+    val coordinates: String? = null,
     val role: String? = null,
     val roles: List<String>? = null,
     var updatedAt: String? = null,

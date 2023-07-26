@@ -170,7 +170,7 @@
     <string name="txt_btn_add_stop_point">Titik Berhenti</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_all_stop_point">Titik Berhenti</string>
+    <string name="txt_all_stop_point">Titik Penjualan</string>
     <string name="txt_btn_add_new_stop_point">Tambah Titik</string>
     <string name="txt_dialog_title_add_new_stop_point">Titik Baru</string>
     <string name="txt_btn_manage_merchant">Pedagang</string>

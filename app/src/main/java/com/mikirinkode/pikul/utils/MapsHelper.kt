@@ -32,10 +32,21 @@ object MapsHelper {
     fun createMarker(latLng: LatLng, title: String, snippet: String): MarkerOptions {
         return MarkerOptions().position(latLng).title(title).snippet(snippet)
     }
+    fun createMarkerNewSellingPlace(latLng: LatLng): MarkerOptions {
+        val markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_add)
+        return MarkerOptions().position(latLng).title("Lokasi Pilihan Anda").icon(markerIcon)
+    }
+
+    fun createCustomerMarker(latLng: LatLng): MarkerOptions {
+        val markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_user_location_marker)
+        return MarkerOptions().position(latLng).icon(markerIcon)
+    }
 
     fun createSellingPlaceMarker(latLng: LatLng, placeId: String): MarkerOptions {
-        return MarkerOptions().position(latLng).title(placeId)
+        val markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_on)
+        return MarkerOptions().position(latLng).title(placeId).icon(markerIcon)
     }
+
 
     fun createUserMarker(latLng: LatLng): MarkerOptions {
         val markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_user_location_marker)

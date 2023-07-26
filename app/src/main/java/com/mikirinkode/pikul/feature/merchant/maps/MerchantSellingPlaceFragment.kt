@@ -22,6 +22,7 @@ import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.databinding.DialogAddNewStopPointBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantSellingPlaceBinding
 import com.mikirinkode.pikul.feature.merchant.MerchantMainActivity
@@ -80,6 +81,8 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeUserPlaces()
+        observeSellingPlaces()
         onClickAction()
         dialogOnClickAction()
     }
@@ -128,6 +131,60 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
             .setView(dialogBinding?.root)
             .setCancelable(true)
         addSellingPlaceDialog = dialogBuilder.create()
+    }
+
+    private fun observeUserPlaces(){
+        viewModel.getUserPlaceCoordinates().observe(viewLifecycleOwner){ result ->
+            when (result) {
+                is PikulResult.Loading -> {}
+                is PikulResult.LoadingWithProgress -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                }
+                is PikulResult.Success -> {
+                    createAllUserPlaces(result.data)
+                }
+            }
+        }
+    }
+
+    private fun observeSellingPlaces() {
+        viewModel.getOwnerSellingPlaces().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PikulResult.Loading -> {}
+                is PikulResult.LoadingWithProgress -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                }
+                is PikulResult.Success -> {
+                    createAllSellingPlaces(result.data)
+                }
+            }
+        }
+    }
+
+    private fun createAllUserPlaces(coordinates: List<String>){
+        for (coordinate in coordinates){
+            if (coordinate.isNotEmpty()){
+                val latLng = MapsHelper.getLatLngFromString(coordinate)
+                if (latLng != null) {
+                    val marker =
+                        MapsHelper.createCustomerMarker(latLng)
+                    mMap.addMarker(marker)
+                }
+            }
+        }
+    }
+
+    private fun createAllSellingPlaces(list: List<SellingPlace>) {
+        for (place in list) {
+            val latLng = MapsHelper.getLatLngFromString(place.coordinate)
+            if (latLng != null) {
+                val marker =
+                    MapsHelper.createSellingPlaceMarker(latLng, place.placeId ?: "")
+                mMap.addMarker(marker)
+            }
+        }
     }
 
     private fun updateView() {
@@ -203,6 +260,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                                     ).show()
                                 }
                                 is PikulResult.Success -> {
+                                    dialogBinding?.etStopPointName?.setText("")
                                     binding.layoutLoading.visibility = View.GONE
                                     Toast.makeText(
                                         requireContext(),
@@ -243,23 +301,64 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onMapClick(latLng: LatLng) {
+        binding.cardSellingPointDetail.visibility = View.GONE
+
         MapsHelper.navigateToLocation(mMap, latLng)
         if (currentSelectedLocation != null) {
             currentSelectedLocation?.remove()
         }
-        val marker: Marker? = mMap.addMarker(
-            MapsHelper.createMarker(
-                latLng,
-                "Lokasi Pilihan Anda",
-                "Lokasi Pilihan Anda"
-            )
-        )
+        val marker: Marker? = mMap.addMarker(MapsHelper.createMarkerNewSellingPlace(latLng))
         currentSelectedLocation = marker
 
         updateView()
     }
 
-    override fun onMarkerClick(p0: Marker): Boolean {
+    override fun onMarkerClick(marker: Marker): Boolean {
+        binding.cardSellingPointDetail.visibility = View.GONE
+        MapsHelper.navigateToLocation(mMap, marker.position)
+        if (marker.title != null) {
+            viewModel.getSellingPlaceById(marker.title!!).observe(viewLifecycleOwner) { result ->
+                if (result != null) {
+                    binding.apply {
+                        cardSellingPointDetail.visibility = View.VISIBLE
+                        tvPlaceName.text = result.placeName
+                        tvPlaceProvince.text = result.province
+                        tvPlaceCoordinate.text = result.coordinate
+
+
+                        btnDelete.setOnClickListener {
+                            viewModel.deleteSellingPlaceById(placeId = result.placeId ?: "")
+                                .observe(viewLifecycleOwner) { result ->
+                                    when (result) {
+                                        is PikulResult.Loading -> {
+                                            layoutLoading.visibility = View.VISIBLE
+                                        }
+                                        is PikulResult.LoadingWithProgress -> {}
+                                        is PikulResult.Error -> {
+                                            layoutLoading.visibility = View.GONE
+                                            Toast.makeText(
+                                                requireContext(),
+                                                result.errorMessage,
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        is PikulResult.Success -> {
+                                            marker.remove()
+                                            cardSellingPointDetail.visibility = View.GONE
+                                            layoutLoading.visibility = View.GONE
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Berhasil Menghapus Data",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+        }
         return true
     }
 
