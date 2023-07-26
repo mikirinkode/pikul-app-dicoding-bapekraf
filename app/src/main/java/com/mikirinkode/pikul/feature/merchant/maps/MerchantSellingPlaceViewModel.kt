@@ -24,7 +24,7 @@ class MerchantSellingPlaceViewModel @Inject constructor(
 
     }
 
-    fun addStopPoint(name: String, startTime: String, endTime: String, coordinate: String): LiveData<PikulResult<Boolean>> {
+    fun addStopPoint(name: String, province: String, startTime: String, endTime: String, coordinate: String): LiveData<PikulResult<Boolean>> {
         val userId = auth.currentUser?.uid
         val result = MediatorLiveData<PikulResult<Boolean>>()
         result.postValue(PikulResult.Loading)
@@ -36,6 +36,8 @@ class MerchantSellingPlaceViewModel @Inject constructor(
                 userId = userId,
                 placeId = ref.id,
                 placeName = name,
+                province = province,
+                visibility = true,
                 startTime = startTime,
                 endTime = endTime,
                 coordinate = coordinate,

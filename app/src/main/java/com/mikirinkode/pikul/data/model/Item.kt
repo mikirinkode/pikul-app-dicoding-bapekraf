@@ -13,6 +13,7 @@ data class Business(
     var businessAddress: String? = null,
     var businessPhoto: String? = null,
     var businessRating: Double? = null,
+    var sellingMode: Boolean? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
 //    var product: List<Product>

@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/ic_shop_fill"
+        android:drawable="@drawable/ic_receipt_fill"
         android:state_checked="true"/>
 
     <item
-        android:drawable="@drawable/ic_shop_outline"
+        android:drawable="@drawable/ic_receipt_outline"
         android:state_checked="false"/>
 </selector>

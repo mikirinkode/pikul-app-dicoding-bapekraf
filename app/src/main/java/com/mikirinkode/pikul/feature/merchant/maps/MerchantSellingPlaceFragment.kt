@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -18,7 +19,9 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.PikulResult
+import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.DialogAddNewStopPointBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantSellingPlaceBinding
 import com.mikirinkode.pikul.feature.merchant.MerchantMainActivity
@@ -42,6 +45,9 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     @Inject
     lateinit var pref: LocalPreference
 
+    private val user: UserAccount? by lazy {
+        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+    }
 
     private var addSellingPlaceDialog: AlertDialog? = null
 
@@ -104,7 +110,18 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun initView() {
+        val provinces = resources.getStringArray(R.array.provinces)
+        val arrayAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            provinces
+        )
+        val userProvince = user?.province
+        dialogBinding?.actvProvince?.setAdapter(arrayAdapter)
+        dialogBinding?.actvProvince?.setText(userProvince)
+
         MerchantMainActivity.timePickerListener = this
+
         // used for dialog
         val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.txt_dialog_title_add_new_stop_point))
@@ -131,22 +148,23 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
             btnAdd.setOnClickListener {
                 var isValid = true
                 val name = etStopPointName.text.toString().trim()
-                val startTime = etStartTime.text.toString().trim()
-                val endTime = etEndTime.text.toString().trim()
+                val province = actvProvince.text.toString().trim()
+                val startTime = ""
+                val endTime = "" // TODO: CHANGE LATER
 
                 if (name.isEmpty()) {
                     isValid = false
                     etStopPointName.error = getString(R.string.empty_name)
                 }
 
-                if (startTime.isEmpty() || endTime.isEmpty() || startTime == "Waktu Mulai" || endTime == "Waktu Selesai") {
-                    isValid = false
-                    Toast.makeText(
-                        requireContext(),
-                        "Mohon pilih waktu mulai dan selesai",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+//                if (startTime.isEmpty() || endTime.isEmpty() || startTime == "Waktu Mulai" || endTime == "Waktu Selesai") {
+//                    isValid = false
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "Mohon pilih waktu mulai dan selesai",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
 
                 if (currentSelectedLocation == null) {
                     isValid = false
@@ -160,7 +178,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 if (isValid) {
                     val coordinate =
                         "${currentSelectedLocation?.position?.latitude}, ${currentSelectedLocation?.position?.longitude}"
-                    viewModel.addStopPoint(name, startTime, endTime, coordinate)
+                    viewModel.addStopPoint(name, province, startTime, endTime, coordinate)
                         .observe(viewLifecycleOwner) { result ->
                             // reset data
                             addSellingPlaceDialog?.dismiss()

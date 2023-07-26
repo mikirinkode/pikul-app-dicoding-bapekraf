@@ -27,17 +27,40 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilProvince"
+        style="@style/Theme.Pikul.Dropdown.Outline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tilStopPointName">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/actvProvince"
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/txt_province"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/tilStartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:backgroundTint="?android:attr/windowBackground"
         android:padding="16dp"
         app:cardCornerRadius="@dimen/input_layout_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilStopPointName"
+        app:layout_constraintTop_toBottomOf="@id/tilProvince"
         app:strokeColor="@color/gray"
         app:strokeWidth="1dp">
 
@@ -64,6 +87,8 @@
         android:backgroundTint="?android:attr/windowBackground"
         android:padding="16dp"
         app:cardCornerRadius="@dimen/input_layout_corner_radius"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilStartTime"

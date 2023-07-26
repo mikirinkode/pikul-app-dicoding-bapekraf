@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         checkLatestView()
-        initNavigation()
     }
 
     private fun checkLatestView() {
@@ -53,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             navigateToBusinessView()
         } else if (latestView == MAIN_VIEW.CUSTOMER_VIEW.toString()) {
             // NOTHING TO DO
+            initNavigation()
         }
     }
 

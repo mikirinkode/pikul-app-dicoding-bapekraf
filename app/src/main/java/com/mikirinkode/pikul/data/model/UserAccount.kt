@@ -14,6 +14,7 @@ data class UserAccount(
     val oneSignalToken: String? = null,
     val province: String? = null,
     val role: String? = null,
+    val roles: List<String>? = null,
     var updatedAt: String? = null,
     var userId: String? = null,
 ): Parcelable

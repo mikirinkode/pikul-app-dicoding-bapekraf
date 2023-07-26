@@ -1,10 +1,13 @@
 package com.mikirinkode.pikul.data.model.maps
 
 data class SellingPlace (
-    var userId: String? = null,
+    var merchantId: String? = null,
     var placeId: String? = null,
     var placeName: String? = null,
     var coordinate: String? = null,
+    var province: String? = null,
+    var visibility: Boolean? = null,
+
     var startTime: String? = null,
     var endTime: String? = null,
     var createdAt: String? = null,

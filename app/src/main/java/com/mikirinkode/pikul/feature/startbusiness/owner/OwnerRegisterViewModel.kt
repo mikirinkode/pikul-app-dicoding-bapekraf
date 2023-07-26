@@ -48,6 +48,7 @@ class OwnerRegisterViewModel @Inject constructor(
             val role = PikulRole.OWNER.toString()
             val timestamp = DateHelper.getCurrentDateTime()
             val newUserData = mapOf<String, Any>(
+                FireStoreUtils.TABLE_USER_PROVINCE to businessProvince,
                 FireStoreUtils.TABLE_USER_UPDATED_AT to timestamp,
                 FireStoreUtils.TABLE_USER_ROLE to role
             )
@@ -55,6 +56,7 @@ class OwnerRegisterViewModel @Inject constructor(
             // update local saved user data
             updateUserData(
                 role,
+                businessProvince,
                 timestamp,
             ) // todo: province not updated
 
@@ -145,7 +147,7 @@ class OwnerRegisterViewModel @Inject constructor(
         return result
     }
 
-    private fun updateUserData(userRole: String, updatedAt: String) {
+    private fun updateUserData(userRole: String, province: String, updatedAt: String) {
         val oldUser = preferences.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
         val newUser = UserAccount(
             avatarUrl = oldUser?.avatarUrl,
@@ -155,7 +157,7 @@ class OwnerRegisterViewModel @Inject constructor(
             lastLoginAt = oldUser?.lastLoginAt,
             name = oldUser?.name,
             oneSignalToken = oldUser?.oneSignalToken,
-            province = oldUser?.province,
+            province = province,
             role = userRole,
             updatedAt = updatedAt,
             userId = oldUser?.userId,
