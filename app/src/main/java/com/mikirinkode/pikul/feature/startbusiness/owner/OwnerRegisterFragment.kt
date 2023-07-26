@@ -242,6 +242,11 @@ class OwnerRegisterFragment : Fragment() {
                 etBusinessAddress.error = getString(R.string.txt_empty_business_address)
             }
 
+            if (getFile == null) {
+                isValid = false
+                Toast.makeText(requireContext(), "Harap pilih foto untuk bisnis anda", Toast.LENGTH_SHORT).show()
+            }
+
             if (isValid){
                 viewModel.registerAsOwner(
                     businessName,

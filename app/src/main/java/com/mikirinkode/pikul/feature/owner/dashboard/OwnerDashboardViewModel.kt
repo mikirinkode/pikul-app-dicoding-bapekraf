@@ -23,6 +23,7 @@ class OwnerDashboardViewModel @Inject constructor(
     private val preferences: LocalPreference
 ) : ViewModel() {
 
+    // TODO: ADD LISTENER DETACH
     fun getBusinessData(): LiveData<PikulResult<Business>> {
         Log.e(TAG, "getBusinessData")
         val result = MutableLiveData<PikulResult<Business>>()

@@ -60,8 +60,8 @@ class MerchantProfileFragment : Fragment() {
         binding.apply {
             if (user != null){
                 tvUserName.text = user?.name
-                tvDummyRole.text = user?.role
-                tvRole.text = user?.role
+                tvDummyRole.text = "Pedagang"
+                tvRole.text = "Pedagang"
                 tvEmail.text = user?.email
 
                 if (user?.avatarUrl.isNullOrBlank()) {

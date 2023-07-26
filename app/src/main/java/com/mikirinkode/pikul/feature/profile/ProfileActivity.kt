@@ -70,13 +70,20 @@ class ProfileActivity : AppCompatActivity() {
                 layoutUserProfile.visibility = View.VISIBLE
                 tvUserName.text = user?.name
                 tvEmail.text = user?.email
-                tvDummyRole.text = user?.role
-                tvRole.text = user?.role
 
                 if (user?.role == PikulRole.CUSTOMER.toString()) {
                     btnOpenBusinessView.text = BTN_START_SELLING
+                    tvRole.text = "Pembeli"
+                    tvDummyRole.text = "Pembeli"
                 } else {
                     btnOpenBusinessView.text = BTN_OPEN_BUSINESS_VIEW
+                    if (user?.role == PikulRole.MERCHANT.toString()) {
+                        tvRole.text = "Pedagang"
+                        tvDummyRole.text = "Pedagant"
+                    } else if (user?.role == PikulRole.OWNER.toString()){
+                        tvRole.text = "Pemilik Bisnis"
+                        tvDummyRole.text = "Pemilik Bisnis"
+                    }
                 }
 
                 if (user?.avatarUrl.isNullOrBlank()) {
@@ -99,7 +106,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             btnLogout.setOnClickListener {
-                viewModel.logout().observe(this@ProfileActivity){ result ->
+                viewModel.logout().observe(this@ProfileActivity) { result ->
                     when (result) {
                         is PikulResult.Loading -> {} // TODO
                         is PikulResult.LoadingWithProgress -> {}
