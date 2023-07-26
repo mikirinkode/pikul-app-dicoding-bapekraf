@@ -77,6 +77,7 @@ class OwnerProfileFragment : Fragment() {
                         if (businessData.businessPhoto != null && businessData.businessPhoto != ""){
                             Glide.with(requireContext())
                                 .load(businessData.businessPhoto)
+                                .placeholder(R.drawable.progress_animation)
                                 .into(ivUserAvatar)
                         } else {
 

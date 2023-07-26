@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.owner.product.ProductListFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.owner.stock.ManageStockFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -21,8 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="?android:attr/textColor"
-            app:title="@string/txt_product_list" />
-
+            app:title="@string/txt_manage_stock" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,8 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        tools:listitem="@layout/item_product" />
-
+        tools:listitem="@layout/item_product_stock" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutLoading"
@@ -72,16 +70,4 @@
             app:layout_constraintStart_toEndOf="@id/progressBar"
             app:layout_constraintTop_toTopOf="@id/progressBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCreateProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:backgroundTint="?android:attr/colorPrimary"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="?attr/background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

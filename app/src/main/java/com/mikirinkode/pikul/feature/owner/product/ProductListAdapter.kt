@@ -11,9 +11,10 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ItemProductBinding
 import com.mikirinkode.pikul.databinding.ItemUserBinding
 import com.mikirinkode.pikul.feature.chat.room.ChatRoomActivity
+import com.mikirinkode.pikul.utils.MoneyHelper
 
 
-class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+class ProductListAdapter(private val clickListener: ClickListener) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     private val list: ArrayList<Product> = ArrayList()
 
@@ -22,6 +23,20 @@ class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
             fun bind(product: Product){
                 binding.apply {
                     tvProductName.text = product.productName
+                    tvProductCategory.text = product.productCategory
+                    tvProductPrice.text = MoneyHelper.getFormattedPrice(product.productPrice ?: 0f)
+
+                    Glide.with(itemView.context)
+                        .load(product.productThumbnailUrl)
+                        .placeholder(R.drawable.progress_animation)
+                        .into(ivProductPhoto)
+
+                    btnDelete.setOnClickListener {
+                        clickListener.onDeleteClick(product)
+                    }
+                    btnEdit.setOnClickListener {
+                        clickListener.onEditClick(product)
+                    }
                 }
             }
     }
@@ -44,5 +59,8 @@ class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
         list.addAll(newList)
         notifyDataSetChanged()
     }
-
+    interface ClickListener {
+        fun onDeleteClick(product: Product)
+        fun onEditClick(product: Product)
+    }
 }

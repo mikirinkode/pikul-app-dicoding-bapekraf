@@ -186,5 +186,8 @@
     <string name="txt_empty_product_price">Harga tidak boleh kosong</string>
     <string name="txt_add_product_success">Berhasil menambah produk</string>
     <string name="txt_product_list">Daftar Produk</string>
+    <string name="txt_manage_stock">Atur Stok</string>
+    <string name="txt_dialog_action_delete">Hapus</string>
+    <string name="txt_edit_product_success">Berhasil mengubah produk</string>
 
 </resources>
