@@ -25,6 +25,9 @@
         <action
             android:id="@+id/actionOpenProductList"
             app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/actionManageStock"
+            app:destination="@id/manageStockFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
@@ -68,4 +71,9 @@
             android:id="@+id/actionCreateProduct"
             app:destination="@id/addProductFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/manageStockFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.stock.ManageStockFragment"
+        android:label="fragment_manage_stock"
+        tools:layout="@layout/fragment_manage_stock" />
 </navigation>

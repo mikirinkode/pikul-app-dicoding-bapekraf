@@ -12,5 +12,6 @@ data class Product(
     var productPrice: Float? = null,
     var productThumbnailUrl: String? = null,
     var createdAt: String? = null,
-    var updatedAt: String? = null
+    var updatedAt: String? = null,
+    var productStocks: Map<String, Int?>? = null
 ): Parcelable

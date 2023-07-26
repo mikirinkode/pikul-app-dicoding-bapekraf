@@ -189,5 +189,9 @@
     <string name="txt_manage_stock">Atur Stok</string>
     <string name="txt_dialog_action_delete">Hapus</string>
     <string name="txt_edit_product_success">Berhasil mengubah produk</string>
+    <string name="txt_product_stock">Stok Produk</string>
+    <string name="txt_dialog_title_update_product_stok">Ubah Stok</string>
+    <string name="txt_dialog_gtn_edit">Ubah</string>
+    <string name="txt_btn_edit_stock">Ubah Stok</string>
 
 </resources>
