@@ -36,10 +36,10 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
                 userClickListener?.onUserClick(user)
 
                 val interlocutorId = user.userId
-                val loggedUserId = "FGz3dlEn9AYHbuTcKv3fLol8cp32"
+                val loggedUserId = "FGz3dlEn9AYHbuTcKv3fLol8cp32" // TODO: HARDCODED
                 if (loggedUserId != null && interlocutorId != null) {
                     val conversationId = if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
-                        itemView.context.startActivity(
+                    itemView.context.startActivity(
                         Intent(
                             itemView.context,
                             ChatRoomActivity::class.java

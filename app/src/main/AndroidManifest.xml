@@ -34,7 +34,7 @@
             android:name=".feature.startbusiness.StartBusinessActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.detail.DetailProductActivity"
+            android:name=".feature.detail.DetailBusinessActivity"
             android:exported="false" />
         <activity
             android:name=".feature.profile.OtherUserProfileActivity"

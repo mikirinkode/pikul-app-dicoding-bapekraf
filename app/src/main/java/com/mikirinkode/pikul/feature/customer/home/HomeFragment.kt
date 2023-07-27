@@ -7,13 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentHomeBinding
 import com.mikirinkode.pikul.feature.auth.login.LoginActivity
@@ -34,8 +34,8 @@ class HomeFragment : Fragment() {
     private val categoryAdapter: CategoryAdapter by lazy {
         CategoryAdapter()
     }
-    private val popularProductAdapter: PopularProductAdapter by lazy {
-        PopularProductAdapter()
+    private val popularBusinessAdapter: PopularBusinessAdapter by lazy {
+        PopularBusinessAdapter()
     }
     private val nearbyMerchantAdapter: NearbyMerchantAdapter by lazy {
         NearbyMerchantAdapter()
@@ -65,6 +65,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observePopularBusinessList()
+
         observeCategoryList()
         observePopularItemList()
         observeNearbyMerchantList()
@@ -100,7 +102,7 @@ class HomeFragment : Fragment() {
             rvCategory.adapter = categoryAdapter
 
             rvPopularItem.layoutManager = LinearLayoutManager(requireContext())
-            rvPopularItem.adapter = popularProductAdapter
+            rvPopularItem.adapter = popularBusinessAdapter
 
             rvMerchantNearby.layoutManager = LinearLayoutManager(requireContext())
             rvMerchantNearby.adapter = nearbyMerchantAdapter
@@ -127,11 +129,24 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun observePopularBusinessList() {
+        viewModel.getPopularBusinessList().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PikulResult.Loading -> {}
+                is PikulResult.LoadingWithProgress -> {}
+                is PikulResult.Error -> {}
+                is PikulResult.Success -> {
+                    popularBusinessAdapter.setData(result.data)
+                }
+            }
+        }
+    }
+
     private fun observePopularItemList() {
         Log.e("HomeFragment", "Observing popular item list")
         viewModel.getPopularItemList().observe(viewLifecycleOwner) { list ->
             Log.e("HomeFragment", "popular list: ${list.size}")
-            popularProductAdapter.setData(list)
+//            popularProductAdapter.setData(list)
         }
     }
 
@@ -146,7 +161,7 @@ class HomeFragment : Fragment() {
     private fun onClickAction() {
         binding.apply {
             layoutUserProfile.setOnClickListener {
-                if (user == null ){
+                if (user == null) {
                     startActivity(Intent(requireContext(), LoginActivity::class.java))
                 } else {
                     startActivity(Intent(requireContext(), ProfileActivity::class.java))

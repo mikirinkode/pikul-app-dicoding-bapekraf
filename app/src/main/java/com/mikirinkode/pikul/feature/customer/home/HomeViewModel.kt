@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikirinkode.pikul.data.local.LocalPreference
-import com.mikirinkode.pikul.data.model.Brand
-import com.mikirinkode.pikul.data.model.Category
-import com.mikirinkode.pikul.data.model.DummyData
-import com.mikirinkode.pikul.data.model.Merchant
+import com.mikirinkode.pikul.data.model.*
 import com.mikirinkode.pikul.utils.Event
+import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,14 +19,7 @@ class HomeViewModel @Inject constructor(
     private val fireStore: FirebaseFirestore,
     private val preferences: LocalPreference
 ) : ViewModel() {
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _isError = MutableLiveData<Boolean>()
-    val isError: LiveData<Boolean> = _isError
-
-    private val _responseMessage = MutableLiveData<Event<String>>()
-    val responseMessage: LiveData<Event<String>> = _responseMessage
 
     private val _categoryList = MutableLiveData<List<Category>>()
     private val categoryList: LiveData<List<Category>> = _categoryList
@@ -49,6 +40,25 @@ class HomeViewModel @Inject constructor(
         Log.e("HomeViewModel", "data: ${list.size}")
         popularList.postValue(list)
         return popularList
+    }
+
+    fun getPopularBusinessList(): MutableLiveData<PikulResult<List<Business>>> {
+        val result = MutableLiveData<PikulResult<List<Business>>>()
+
+        fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).get()
+            .addOnFailureListener {
+                val errorMessage = it.message ?: "Gagal mengambil Data"
+                result.postValue(PikulResult.Error(errorMessage))
+            }
+            .addOnSuccessListener {snapshots ->
+                val list = ArrayList<Business>()
+                for (doc in snapshots){
+                    val business = doc.toObject(Business::class.java)
+                    list.add(business)
+                }
+                result.postValue(PikulResult.Success(list))
+            }
+        return result
     }
 
     fun getNearbyMerchantList(): LiveData<List<Merchant>> {

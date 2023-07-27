@@ -7,6 +7,8 @@ data class Business(
     var ownerId: String? = null,
     var businessId: String? = null,
     var businessName: String? = null,
+    var businessDescription: String? = null,
+    var businessProductCategory: String? = null,
     var businessEmail: String? = null,
     var businessPhoneNumber: String? = null,
     var businessProvince: String? = null,

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikirinkode.pikul.R
@@ -153,6 +154,10 @@ class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
     }
 
     private fun onClickAction() {
-
+        binding.apply {
+            topAppBar.setNavigationOnClickListener {
+                Navigation.findNavController(binding.root).navigateUp()
+            }
+        }
     }
 }
