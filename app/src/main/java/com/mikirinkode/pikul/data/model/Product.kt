@@ -14,4 +14,7 @@ data class Product(
     var createdAt: String? = null,
     var updatedAt: String? = null,
     var productStocks: Map<String, Int?>? = null,
+
+    // local variables
+    var totalAmount: Int = 0
 ): Parcelable

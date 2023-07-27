@@ -23,6 +23,7 @@ data class Business(
 )
 
 
+// TODO: REMOVE UNUSED CLASS
 data class Brand(
     // owner properties
     val ownerId: String,

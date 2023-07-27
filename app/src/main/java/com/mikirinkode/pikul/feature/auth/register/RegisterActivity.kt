@@ -15,6 +15,8 @@ import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 
+// TODO: ADD BACK BUTTON
+// TODO: GOOGLE ACCOUNT
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private val binding: ActivityRegisterBinding by lazy {

@@ -16,6 +16,7 @@ import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO: SHOW TRANSACTIONS
 @AndroidEntryPoint
 class MerchantDashboardFragment : Fragment() {
     private var _binding: FragmentMerchantDashboardBinding? = null

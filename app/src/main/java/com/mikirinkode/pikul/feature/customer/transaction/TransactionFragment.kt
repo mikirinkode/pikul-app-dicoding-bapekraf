@@ -19,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+// TODO: SHOW TRANSACTIONS
+
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
 

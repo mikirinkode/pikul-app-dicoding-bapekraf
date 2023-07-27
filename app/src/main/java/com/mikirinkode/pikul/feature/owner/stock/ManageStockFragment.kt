@@ -24,6 +24,7 @@ import com.mikirinkode.pikul.feature.owner.product.ProductListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO CHECK AGAIN
 @AndroidEntryPoint
 class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
     private var _binding: FragmentManageStockBinding? = null

@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.mikirinkode.firebasechatapp.constants.ConversationType
-import com.mikirinkode.firebasechatapp.constants.MessageType
-import com.mikirinkode.pikul.R
-import com.mikirinkode.pikul.databinding.FragmentChatHistoryBinding
+import com.mikirinkode.pikul.constants.MessageType
 import com.mikirinkode.pikul.databinding.FragmentMessageInfoBinding
 import com.mikirinkode.pikul.utils.DateHelper
 import dagger.hilt.android.AndroidEntryPoint

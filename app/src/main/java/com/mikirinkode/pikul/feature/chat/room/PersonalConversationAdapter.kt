@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mikirinkode.firebasechatapp.constants.MessageType
+import com.mikirinkode.pikul.constants.MessageType
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage

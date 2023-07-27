@@ -22,6 +22,15 @@ import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * TODO: UPDATE VIEW, LOOKS SAME WITH THE CUSTOMER
+ */
+
+/**
+ * TODO:
+ * ADD LOADING INDICATOR
+ * ON ERROR INDICATOR
+ */
 @AndroidEntryPoint
 class MerchantProfileFragment : Fragment() {
     private var _binding: FragmentMerchantProfileBinding? = null

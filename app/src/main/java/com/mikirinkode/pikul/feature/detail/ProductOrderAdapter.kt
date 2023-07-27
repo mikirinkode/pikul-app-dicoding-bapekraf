@@ -9,12 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.model.Product
-import com.mikirinkode.pikul.databinding.ItemOrderProductBinding
-import com.mikirinkode.pikul.databinding.ItemProductBinding
-import com.mikirinkode.pikul.feature.owner.product.ProductListAdapter
+import com.mikirinkode.pikul.databinding.ItemProductOrderBinding
 import com.mikirinkode.pikul.utils.MoneyHelper
 
-class ProductOrderAdapter(private val ownerId: String, private val clickListener: ClickListener) :
+class ProductOrderAdapter(private val merchantId: String, private val clickListener: ClickListener) :
     RecyclerView.Adapter<ProductOrderAdapter.ViewHolder>() {
 
     private val list: ArrayList<Product> = ArrayList()
@@ -22,10 +20,10 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
     // to save the product order
     // the key is the product id
     // the value is the product amount
-    private val productOrderItemAmount: MutableMap<String, Int> = mutableMapOf()
+//    private val productOrderItemAmount: MutableMap<String, Int> = mutableMapOf()
 
 
-    inner class ViewHolder(private val binding: ItemOrderProductBinding) :
+    inner class ViewHolder(private val binding: ItemProductOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, position: Int) {
             binding.apply {
@@ -33,9 +31,9 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
                 tvItemPrice.text = MoneyHelper.getFormattedPrice(product.productPrice ?: 0f)
 
                 Log.e("ProductOrderAdapter", "\n it's first line")
-                Log.e("ProductOrderAdapter", "owner id: ${ownerId}")
+                Log.e("ProductOrderAdapter", "owner id: ${merchantId}")
 
-                val stock = product.productStocks?.get(ownerId) ?: 0
+                val stock = product.productStocks?.get(merchantId) ?: 0
                 Log.e("ProductOrderAdapter", "stock: ${stock}")
                 tvItemStock.text = "Stok: ${stock}"
 
@@ -45,11 +43,12 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
                     .into(ivItemPhoto)
 
 
-                val totalAmount: Int = productOrderItemAmount[product.productId] ?: 0
+//                val totalAmount: Int = productOrderItemAmount[product.productId] ?: 0
+                val totalAmount: Int = product.totalAmount
                 etItemOrderAmount.setText(totalAmount.toString())
 
                 Log.e("ProductOrderAdapter", "amount: ${totalAmount}")
-                Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId]: ${productOrderItemAmount[product.productId]}")
+//                Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId]: ${productOrderItemAmount[product.productId]}")
                 Log.e("ProductOrderAdapter", "productId: ${product.productId}")
 
                 if (totalAmount == 0) {
@@ -61,42 +60,51 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
                 }
 
                 btnPlusAmount.setOnClickListener {
-                    if (productOrderItemAmount[product.productId] == null && product.productId != null){
-                        productOrderItemAmount[product.productId!!] = 1
+                    val newAmount = product.totalAmount + 1
+                    if (newAmount <= stock){
+                        product.totalAmount = newAmount
                     } else {
-                        val newAmount = productOrderItemAmount[product.productId!!]!! + 1
-                        if (newAmount > stock){
                             Toast.makeText(itemView.context, "Maksimal Produk sudah tercapai", Toast.LENGTH_SHORT).show()
-                        } else {
-                            productOrderItemAmount[product.productId!!] = productOrderItemAmount[product.productId!!]!! + 1
-                        }
-//                        productOrderItemAmount[product.productId]?.plus(1)
                     }
-//                    totalAmount.plus(1)
-                    clickListener.onProductOrderAmountChanged(product, productOrderItemAmount[product.productId] ?: 0)
+//                    if (productOrderItemAmount[product.productId] == null && product.productId != null){
+//                        productOrderItemAmount[product.productId!!] = 1
+//                    } else {
+//                        val newAmount = productOrderItemAmount[product.productId!!]!! + 1
+//                        if (newAmount > stock){
+//                            Toast.makeText(itemView.context, "Maksimal Produk sudah tercapai", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            productOrderItemAmount[product.productId!!] = productOrderItemAmount[product.productId!!]!! + 1
+//                        }
+////                        productOrderItemAmount[product.productId]?.plus(1)
+//                    }
+                    clickListener.onProductOrderAmountChanged()
                     notifyItemChanged(position)
                     Log.e("ProductOrderAdapter", "plus clicked")
-                    Log.e("ProductOrderAdapter", "plus clicked ${productOrderItemAmount[product.productId]?.plus(1)}")
-                    Log.e("ProductOrderAdapter", "amount: ${totalAmount}")
-                    Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId] == null && product.productId != null: ${productOrderItemAmount[product.productId] == null && product.productId != null}")
-                    Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId]: ${productOrderItemAmount[product.productId]}")
+//                    Log.e("ProductOrderAdapter", "plus clicked ${productOrderItemAmount[product.productId]?.plus(1)}")
+//                    Log.e("ProductOrderAdapter", "amount: ${totalAmount}")
+//                    Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId] == null && product.productId != null: ${productOrderItemAmount[product.productId] == null && product.productId != null}")
+//                    Log.e("ProductOrderAdapter", "productOrderItemAmount[product.productId]: ${productOrderItemAmount[product.productId]}")
                 }
 
                 btnMinusAmount.setOnClickListener {
-                    if (totalAmount > 0 && productOrderItemAmount[product.productId!!] != null) {
-                        productOrderItemAmount[product.productId!!] = productOrderItemAmount[product.productId!!]!! - 1
-//                        productOrderItemAmount[product.productId]?.minus(1)
-//                        totalAmount.minus(1)
-                    } else {
-                        if (product.productId != null){
-                            productOrderItemAmount[product.productId!!] = 0
-                        }
-//                        totalAmount = 0
+                    val newAmount = product.totalAmount - 1
+                    if (newAmount >= 0){
+                        product.totalAmount = newAmount
                     }
-                    clickListener.onProductOrderAmountChanged(product, productOrderItemAmount[product.productId] ?: 0)
+//                    if (totalAmount > 0 && productOrderItemAmount[product.productId!!] != null) {
+//                        productOrderItemAmount[product.productId!!] = productOrderItemAmount[product.productId!!]!! - 1
+////                        productOrderItemAmount[product.productId]?.minus(1)
+////                        totalAmount.minus(1)
+//                    } else {
+//                        if (product.productId != null){
+//                            productOrderItemAmount[product.productId!!] = 0
+//                        }
+////                        totalAmount = 0
+//                    }
+                    clickListener.onProductOrderAmountChanged()
                     notifyItemChanged(position)
-                    Log.e("ProductOrderAdapter", "minus clicked")
-                    Log.e("ProductOrderAdapter", "amount: ${totalAmount}")
+//                    Log.e("ProductOrderAdapter", "minus clicked")
+//                    Log.e("ProductOrderAdapter", "amount: ${totalAmount}")
                 }
             }
         }
@@ -108,7 +116,7 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
         viewType: Int
     ): ProductOrderAdapter.ViewHolder {
         val binding =
-            ItemOrderProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemProductOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -137,25 +145,45 @@ class ProductOrderAdapter(private val ownerId: String, private val clickListener
     
     fun getTotalOrderItemAmount(): Int {
         var totalItem = 0
-        productOrderItemAmount.forEach { (productId, amount) ->
-           totalItem += amount
+        for (product in list){
+            totalItem += product.totalAmount
         }
+//        productOrderItemAmount.forEach { (productId, amount) ->
+//           totalItem += amount
+//        }
         return totalItem
     }
     
     fun getTotalOrderBilling(): Float {
         var totalBilling: Float = 0f
-        productOrderItemAmount.forEach { (productId, amount) ->
-            val product = getProductById(productId)
-            if (product != null){
-                val billing: Float = product.productPrice?.times(amount) ?: 0f
+        for (product in list){
+            if (product.totalAmount > 0){
+                val billing: Float = product.productPrice?.times(product.totalAmount) ?: 0f
                 totalBilling += billing
             }
         }
+//        productOrderItemAmount.forEach { (productId, amount) ->
+//            val product = getProductById(productId)
+//            if (product != null){
+//                val billing: Float = product.productPrice?.times(amount) ?: 0f
+//                totalBilling += billing
+//            }
+//        }
         return totalBilling
     }
 
+    fun getBookedProducts(): List<Product> {
+        val products = ArrayList<Product>()
+        for (product in list){
+            if (product.totalAmount > 0){
+                products.add(product)
+            }
+        }
+
+        return products
+    }
+
     interface ClickListener{
-        fun onProductOrderAmountChanged(product: Product, amount: Int)
+        fun onProductOrderAmountChanged()
     }
 }

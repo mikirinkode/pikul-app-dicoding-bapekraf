@@ -24,6 +24,7 @@ import com.mikirinkode.pikul.feature.startbusiness.StartBusinessActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO: CHECK AGAIN
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     private val binding: ActivityProfileBinding by lazy {

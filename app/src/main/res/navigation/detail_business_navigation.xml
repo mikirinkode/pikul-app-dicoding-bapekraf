@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_business_navigation"
+    app:startDestination="@id/detailBusinessFragment">
+
+    <fragment
+        android:id="@+id/detailBusinessFragment"
+        android:name="com.mikirinkode.pikul.feature.detail.DetailBusinessFragment"
+        android:label="fragment_detail_business"
+        tools:layout="@layout/fragment_detail_business" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+        <action
+            android:id="@+id/actionOrderSummary"
+            app:destination="@id/orderSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderSuccessFragment"
+        android:name="com.mikirinkode.pikul.feature.order.OrderSuccessFragment"
+        android:label="fragment_order_success"
+        tools:layout="@layout/fragment_order_success" />
+    <fragment
+        android:id="@+id/orderSummaryFragment"
+        android:name="com.mikirinkode.pikul.feature.order.OrderSummaryFragment"
+        android:label="fragment_order_summary"
+        tools:layout="@layout/fragment_order_summary" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+        <argument
+            android:name="merchantId"
+            app:argType="string" />
+        <argument
+            android:name="products"
+            app:argType="com.mikirinkode.pikul.data.model.Product[]" />
+        <action
+            android:id="@+id/actionPayTransaction"
+            app:destination="@id/midtransWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/midtransWebViewFragment"
+        android:name="com.mikirinkode.pikul.feature.payment.MidtransWebViewFragment"
+        android:label="fragment_midtrans_web_view"
+        tools:layout="@layout/fragment_midtrans_web_view" >
+        <argument android:name="paymentUrl" />
+        <action
+            android:id="@+id/actionOnPaymentSuccess"
+            app:destination="@id/orderSuccessFragment" />
+    </fragment>
+</navigation>

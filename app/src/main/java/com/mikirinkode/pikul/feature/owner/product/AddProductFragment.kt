@@ -31,6 +31,7 @@ import com.mikirinkode.pikul.utils.ImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
+// TODO: CHECK AGAIN
 
 @AndroidEntryPoint
 class AddProductFragment: Fragment() {

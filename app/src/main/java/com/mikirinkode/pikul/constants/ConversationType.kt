@@ -1,4 +1,4 @@
-package com.mikirinkode.firebasechatapp.constants
+package com.mikirinkode.pikul.constants
 
 enum class ConversationType {
     PERSONAL,

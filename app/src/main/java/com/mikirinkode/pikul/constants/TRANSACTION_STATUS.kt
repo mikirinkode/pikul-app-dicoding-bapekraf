@@ -1,0 +1,10 @@
+package com.mikirinkode.pikul.constants
+
+enum class TRANSACTION_STATUS {
+    WAITING_FOR_PAYMENT,
+    WAITING_FOR_MERCHANT,
+    ON_PROCESS_BY_MERCHANT,
+    WAITING_FOR_PICKUP,
+    COMPLETED,
+    CANCELLED,
+}

@@ -7,6 +7,7 @@ object FireStoreUtils {
     const val TABLE_BUSINESSES = "businesses"
     const val TABLE_SELLING_PLACES = "sellingPlaces"
     const val TABLE_PRODUCTS = "products"
+    const val TABLE_TRANSACTIONS = "transactions"
 
     // User Column Name
     const val TABLE_USER_ID = "userId"

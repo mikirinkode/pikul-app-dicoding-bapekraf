@@ -24,6 +24,10 @@ import java.util.*
 import javax.inject.Inject
 
 
+/**
+ * TODO: FINISH LIST
+ * REMOVE NEARBY MERCHANT I THINK?
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

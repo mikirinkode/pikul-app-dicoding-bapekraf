@@ -15,6 +15,8 @@ import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO: ADD BACK BUTTON
+// TODO: GOOGLE ACCOUNT
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {

@@ -33,6 +33,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * TODO: ADD RULES ONLY ALLOW TO CREATE ONE PLACE
+ */
+/**
+ * TODO:
+ * ADD LOADING INDICATOR
+ * ON ERROR INDICATOR
+ */
 @AndroidEntryPoint
 class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     GoogleMap.OnMarkerClickListener,

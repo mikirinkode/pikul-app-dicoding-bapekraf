@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.findNavController
-import com.mikirinkode.firebasechatapp.constants.ConversationType
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.databinding.ActivityChatRoomBinding
 import dagger.hilt.android.AndroidEntryPoint

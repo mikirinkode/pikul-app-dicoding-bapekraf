@@ -196,5 +196,8 @@
     <string name="tv_title_rating">Rating</string>
     <string name="txt_hint_business_desc">Deskripsi Bisnis</string>
     <string name="txt_hint_business_product_category">Kategori Produk</string>
+    <string name="txt_btn_pay">Bayar Sekarang</string>
+    <string name="txt_order_summary">Pesanan</string>
+    <string name="txt_fragment_payment">Pembayaran</string>
 
 </resources>

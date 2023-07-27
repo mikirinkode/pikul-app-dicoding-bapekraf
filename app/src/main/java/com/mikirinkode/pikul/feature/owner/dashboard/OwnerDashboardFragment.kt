@@ -152,7 +152,7 @@ class OwnerDashboardFragment : Fragment() {
                 Navigation.findNavController(binding.root).navigate(action)
             }
 
-            cardTotalOrder.setOnClickListener {  }
+            cardTotalOrder.setOnClickListener {  } // TODO
 
             cardSellingPlace.setOnClickListener {
                 val action = OwnerDashboardFragmentDirections.actionOpenMerchantSellingPlace()
@@ -163,8 +163,8 @@ class OwnerDashboardFragment : Fragment() {
             cardProduct.setOnClickListener {
                 val action = OwnerDashboardFragmentDirections.actionOpenProductList()
                 Navigation.findNavController(binding.root).navigate(action) }
-            cardMerchant.setOnClickListener {  }
-            cardTransaction.setOnClickListener {  }
+            cardMerchant.setOnClickListener {  } // TODO
+            cardTransaction.setOnClickListener {  } // TODO
         }
     }
 }

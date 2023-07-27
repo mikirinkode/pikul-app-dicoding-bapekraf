@@ -10,6 +10,7 @@ import com.mikirinkode.pikul.databinding.FragmentMerchantRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
+// TODO: UNIMPLEMENTED
 @AndroidEntryPoint
 class JobVacancyFragment : Fragment() {
     private var _binding: FragmentJobVacancyBinding? = null

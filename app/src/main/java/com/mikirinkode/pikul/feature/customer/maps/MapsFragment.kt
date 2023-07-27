@@ -40,6 +40,15 @@ import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * TODO:
+ * SHOW USER LOCATION AND SAVE IT TO FIRESTORE
+ */
+/**
+ * TODO:
+ * ADD LOADING INDICATOR
+ * ON ERROR INDICATOR
+ */
 @AndroidEntryPoint
 class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     GoogleMap.OnMapClickListener {

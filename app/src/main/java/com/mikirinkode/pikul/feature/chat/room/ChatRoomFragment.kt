@@ -17,8 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mikirinkode.firebasechatapp.constants.ConversationType
-import com.mikirinkode.firebasechatapp.constants.MessageType
+import com.mikirinkode.pikul.constants.ConversationType
+import com.mikirinkode.pikul.constants.MessageType
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
@@ -26,13 +26,18 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage
 import com.mikirinkode.pikul.databinding.FragmentChatRoomBinding
 import com.mikirinkode.pikul.feature.customer.main.MainActivity
-import com.mikirinkode.pikul.feature.profile.OtherUserProfileActivity
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+/**
+ * TODO:
+ * allow to send transaction on paid
+ * allow to send job asking for
+ * allow to send job invitation
+ */
 @AndroidEntryPoint
 class ChatRoomFragment : Fragment(),
     PersonalConversationAdapter.ChatClickListener {
