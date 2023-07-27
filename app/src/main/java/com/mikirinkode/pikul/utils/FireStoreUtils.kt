@@ -21,4 +21,7 @@ object FireStoreUtils {
 
     const val TABLE_USER_PROVINCE = "province"
     const val TABLE_USER_ROLE = "role"
+
+
+    // transaction column name
 }

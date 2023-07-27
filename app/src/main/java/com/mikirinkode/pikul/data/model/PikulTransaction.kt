@@ -1,6 +1,6 @@
 package com.mikirinkode.pikul.data.model
 
-data class Transaction(
+data class PikulTransaction(
     // transaction data
     var transactionId: String? = null,
     var alreadyPaid: Boolean? = null,

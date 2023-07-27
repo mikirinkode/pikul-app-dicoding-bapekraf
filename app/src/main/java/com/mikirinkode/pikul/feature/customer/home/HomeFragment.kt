@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
     private fun observePopularBusinessList() {
         viewModel.getPopularBusinessList().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is PikulResult.Loading -> {}
+                is PikulResult.Loading -> {} // TODO
                 is PikulResult.LoadingWithProgress -> {}
                 is PikulResult.Error -> {}
                 is PikulResult.Success -> {

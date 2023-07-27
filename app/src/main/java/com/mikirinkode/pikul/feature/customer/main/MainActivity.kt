@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         } else if (latestView == MAIN_VIEW.CUSTOMER_VIEW.toString()) {
             // NOTHING TO DO
             initNavigation()
+        } else {
+            initNavigation()
         }
     }
 

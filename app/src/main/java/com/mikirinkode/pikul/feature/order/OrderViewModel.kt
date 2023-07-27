@@ -93,7 +93,7 @@ class OrderViewModel @Inject constructor(
                         val paymentUrl = response.body()?.redirectUrl
 
 
-                        val transaction = Transaction(
+                        val pikulTransaction = PikulTransaction(
                             transactionId = ref.id,
                             alreadyPaid = false,
                             paymentStatus = PAYMENT_STATUS.WAITING_FOR_PAYMENT.toString(),
@@ -122,7 +122,7 @@ class OrderViewModel @Inject constructor(
                             updatedAt = null,
                         )
 
-                        ref.set(transaction)
+                        ref.set(pikulTransaction)
                             .addOnFailureListener {
                                 val errorMessage: String = it.message ?: "Gagal membuat transaksi"
                                 result.postValue(PikulResult.Error(errorMessage))

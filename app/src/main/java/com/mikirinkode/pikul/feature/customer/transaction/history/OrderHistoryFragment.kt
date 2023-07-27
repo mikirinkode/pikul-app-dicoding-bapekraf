@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.mikirinkode.pikul.databinding.FragmentOrderHistoryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class OrderHistoryFragment : Fragment() {
     private var _binding: FragmentOrderHistoryBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,11 +26,24 @@ class OrderHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initRecyclerView()
+        observeData()
+        onClickAction()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun initRecyclerView() {
+        binding.apply {
+
+        }
+    }
+
+    private fun observeData() {
+    }
+
+    private fun onClickAction(){}
 }
