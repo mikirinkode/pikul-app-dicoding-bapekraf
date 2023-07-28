@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
+import com.mikirinkode.pikul.data.model.MerchantAgreement
+import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,9 +28,13 @@ class MerchantDashboardFragment : Fragment() {
     @Inject
     lateinit var pref: LocalPreference
 
-    private val user: UserAccount? by lazy {
-        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
-    }
+//    private val user: UserAccount? by lazy {
+//        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+//    }
+
+    private val viewModel: MerchantDashboardViewModel by viewModels()
+
+    private var agreement: MerchantAgreement? = null
 
     companion object {
         @StringRes
@@ -49,8 +56,8 @@ class MerchantDashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        setupTabs()
         onClickAction()
+        observeData()
     }
 
     override fun onDestroyView() {
@@ -60,14 +67,52 @@ class MerchantDashboardFragment : Fragment() {
 
     private fun initView() {
         binding.apply {
-            if (user != null){
-                tvUserName.text = user?.name
-                tvAddress.text = user?.province
+//            if (user != null) {
+//                tvUserName.text = user?.name
+//                tvAddress.text = user?.province
+//            }
+        }
+    }
+
+    private fun observeData() {
+        binding.apply {
+            viewModel.getMerchantData().observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {}
+                    is PikulResult.LoadingWithProgress -> {} // TODO
+                    is PikulResult.Error -> {}
+                    is PikulResult.Success -> {
+                        val user = result.data
+                        tvUserName.text = user.name
+                        tvAddress.text = user.province
+                    }
+                }
+            }
+
+            viewModel.getAgreement().observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {}
+                    is PikulResult.LoadingWithProgress -> {} // TODO
+                    is PikulResult.Error -> {}
+                    is PikulResult.Success -> {
+                        agreement = result.data
+                        if (agreement == null) {
+                            cardNotHavePartner.visibility = View.VISIBLE
+                        } else {
+                            if (agreement?.businessPartnerId != null) {
+                                cardNotHavePartner.visibility = View.GONE
+                                setupTabs()
+                            } else {
+                                cardNotHavePartner.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    private fun setupTabs(){
+    private fun setupTabs() {
         binding.apply {
             val sectionsPagerAdapter = SectionsPagerAdapter(this@MerchantDashboardFragment)
             viewPager.adapter = sectionsPagerAdapter
@@ -80,7 +125,8 @@ class MerchantDashboardFragment : Fragment() {
     private fun onClickAction() {
         binding.apply {
             layoutUserProfile.setOnClickListener {
-                val action = MerchantDashboardFragmentDirections.actionOpenMerchantProfile()
+                val action =
+                    MerchantDashboardFragmentDirections.actionOpenMerchantProfile(agreement)
                 Navigation.findNavController(binding.root).navigate(action)
             }
 

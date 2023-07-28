@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
@@ -19,6 +21,7 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.DialogAddNewStopPointBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantProfileBinding
 import com.mikirinkode.pikul.feature.customer.main.MainActivity
+import com.mikirinkode.pikul.utils.MoneyHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -41,9 +44,12 @@ class MerchantProfileFragment : Fragment() {
     @Inject
     lateinit var pref: LocalPreference
 
-    private val user: UserAccount? by lazy {
-        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
-    }
+//    private val user: UserAccount? by lazy {
+//        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+//    }
+
+    private val args: MerchantProfileFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +64,7 @@ class MerchantProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         onClickAction()
+        observeData()
     }
 
     override fun onDestroyView() {
@@ -67,26 +74,87 @@ class MerchantProfileFragment : Fragment() {
 
     private fun initView() {
         binding.apply {
-            if (user != null){
-                tvUserName.text = user?.name
-                tvDummyRole.text = "Pedagang"
-                tvRole.text = "Pedagang"
-                tvEmail.text = user?.email
 
-                if (user?.avatarUrl.isNullOrBlank()) {
-                    Glide.with(requireContext())
-                        .load(R.drawable.ic_default_user_avatar)
-                        .into(ivUserAvatar)
-                } else {
-                    Glide.with(requireContext())
-                        .load(user?.avatarUrl)
-                        .placeholder(R.drawable.progress_animation)
-                        .into(ivUserAvatar)
+        }
+    }
+
+    private fun observeData(){
+        binding.apply {
+            viewModel.getMerchantData().observe(viewLifecycleOwner) {result ->
+                when (result) {
+                    is PikulResult.Loading -> {}
+                    is PikulResult.LoadingWithProgress -> {} // TODO
+                    is PikulResult.Error -> {}
+                    is PikulResult.Success -> {
+                        val user = result.data
+                        tvUserName.text = user?.name
+                        tvDummyRole.text = "Pedagang"
+                        tvRole.text = "Pedagang"
+                        tvEmail.text = user?.email
+
+                        if (user?.avatarUrl.isNullOrBlank()) {
+                            Glide.with(requireContext())
+                                .load(R.drawable.ic_default_user_avatar)
+                                .into(ivUserAvatar)
+                        } else {
+                            Glide.with(requireContext())
+                                .load(user?.avatarUrl)
+                                .placeholder(R.drawable.progress_animation)
+                                .into(ivUserAvatar)
+                        }
+                    }
+                }
+            }
+
+            if (isHaveAgreement()){
+                viewModel.getTransactionList().observe(viewLifecycleOwner) {result ->
+                    when (result) {
+                        is PikulResult.Loading -> {}
+                        is PikulResult.LoadingWithProgress -> {} // TODO
+                        is PikulResult.Error -> {}
+                        is PikulResult.Success -> {
+                            val list = result.data
+                            tvTotalTransaction.text = list.size.toString()
+                            var totalRevenue = 0f
+                            for (transaction in list){
+                                totalRevenue += transaction.totalBilling ?: 0f
+                            }
+                            tvTotalRevenue.text = MoneyHelper.getFormattedPrice(totalRevenue)
+                        }
+                    }
                 }
 
+                args.agreement?.businessPartnerId?.let { businessId ->
+                    viewModel.getBusinessData(businessId).observe(viewLifecycleOwner) {result ->
+                        when (result) {
+                            is PikulResult.Loading -> {}
+                            is PikulResult.LoadingWithProgress -> {} // TODO
+                            is PikulResult.Error -> {}
+                            is PikulResult.Success -> {
+                                layoutBusinessInformation.visibility = View.VISIBLE
+                                val businessData = result.data
+                                tvBusinessName.text = businessData.businessName
+                                tvBusinessSince.text = args.agreement?.partnerSince
+
+                                if (businessData.businessPhoto != null && businessData.businessPhoto != "") {
+                                    Glide.with(requireContext())
+                                        .load(businessData.businessPhoto)
+                                        .placeholder(R.drawable.progress_animation)
+                                        .into(ivUserAvatar)
+                                }
+
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+
+    private fun isHaveAgreement(): Boolean {
+        return (args.agreement != null && args.agreement?.businessPartnerId != null)
+    }
+
     private fun onClickAction() {
         binding.apply {
             topAppBar.setNavigationOnClickListener {
@@ -101,14 +169,37 @@ class MerchantProfileFragment : Fragment() {
                 startActivity(Intent(requireContext(), MainActivity::class.java))
                 finishAffinity(requireActivity())
             }
-            btnManageProduct.setOnClickListener {}
-            btnAddStopPoint.setOnClickListener {
-                val action = MerchantProfileFragmentDirections.actionOpenStopPoint()
-                Navigation.findNavController(binding.root).navigate(action)
+            btnManageStock.setOnClickListener {
+                if (isHaveAgreement()){
+
+                } else {
+                    Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
+                }
             }
-            btnBusinessOwner.setOnClickListener {}
-            btnTransaction.setOnClickListener {}
-            btnUserReview.setOnClickListener {}
+            btnAddStopPoint.setOnClickListener {
+                if (isHaveAgreement()){
+                    val action = MerchantProfileFragmentDirections.actionOpenStopPoint()
+                    Navigation.findNavController(binding.root).navigate(action)
+                } else {
+                    Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
+                }
+            }
+            layoutBusinessInformation.setOnClickListener {
+                if (isHaveAgreement()){
+                } else {
+                    Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
+                }
+            }
+            btnTransaction.setOnClickListener {
+                if (isHaveAgreement()){
+
+                } else {
+                    Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            btnUserReview.setOnClickListener {} // currently set to invinsible
+
             btnLogout.setOnClickListener {
                 viewModel.logout().observe(viewLifecycleOwner){ result ->
                     when (result) {

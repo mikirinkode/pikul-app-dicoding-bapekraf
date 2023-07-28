@@ -22,6 +22,7 @@ import com.mikirinkode.pikul.constants.MessageType
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
+import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage
 import com.mikirinkode.pikul.databinding.FragmentChatRoomBinding
@@ -87,6 +88,11 @@ class ChatRoomFragment : Fragment(),
         _binding = null
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetTotalUnreadMessage(args.conversationId)
+    }
+
     private fun initView() {
         binding.apply {
             rvMessages.layoutManager = LinearLayoutManager(requireContext())
@@ -136,6 +142,7 @@ class ChatRoomFragment : Fragment(),
                 if (user.avatarUrl != null && user.avatarUrl != "") {
                     Glide.with(requireContext())
                         .load(user.avatarUrl)
+                        .placeholder(R.drawable.progress_animation)
                         .into(ivUserAvatar)
                 } else {
                     Glide.with(requireContext())
@@ -248,6 +255,9 @@ class ChatRoomFragment : Fragment(),
                         }
                         MessageType.VIDEO -> {}
                         MessageType.AUDIO -> {}
+                        MessageType.BUSINESS_INVITATION -> {
+
+                        }
                     }
                 }
             }
@@ -269,6 +279,31 @@ class ChatRoomFragment : Fragment(),
         }
     }
 
+
+    override fun onAcceptInvitationButtonClicked(
+        invitationId: String,
+        messageId: String,
+        businessId: String,
+        merchantId: String,
+    ) {
+        viewModel.acceptBusinessInvitation(invitationId, args.conversationId, messageId, businessId, merchantId)
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {
+                        binding.layoutLoading.visibility = View.VISIBLE
+                    }
+                    is PikulResult.LoadingWithProgress -> {} // TODO
+                    is PikulResult.Error -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                    is PikulResult.Success -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Undangan Telah Diterima", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
 
     override fun onMessageSelected() {
         Log.e("ChatRoom", "on message selected")

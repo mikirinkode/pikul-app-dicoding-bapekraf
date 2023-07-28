@@ -21,7 +21,8 @@ import java.util.*
 
 class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAdapter.ViewHolder>() {
 
-    private var conversation: Conversation? = null // TODO: NEED TO BE SET, i think we can change to total unread message
+    private var conversation: Conversation? =
+        null // TODO: NEED TO BE SET, i think we can change to total unread message
     private var interlocutorData: UserAccount? = null // TODO: NEED TO BE SET
     private var loggedUserId: String = ""
     private val messages: ArrayList<ChatMessage> = ArrayList()
@@ -39,10 +40,15 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                 // handle message type
                 when (chat.type.uppercase()) {
                     MessageType.TEXT.toString() -> {
+                        layoutLoggedUserBusinessInvitation.visibility = View.GONE
+                        layoutInterlocutorBusinessInvitation.visibility = View.GONE
                         ivInterlocutorExtraImage.visibility = View.GONE
                         ivloggedUserExtraImage.visibility = View.GONE
+
                     }
                     MessageType.IMAGE.toString() -> {
+                        layoutLoggedUserBusinessInvitation.visibility = View.GONE
+                        layoutInterlocutorBusinessInvitation.visibility = View.GONE
                         if (chat.imageUrl != "") {
                             if (chat.senderId == loggedUserId) {
                                 ivloggedUserExtraImage.visibility = View.VISIBLE
@@ -61,6 +67,51 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                     }
                     MessageType.VIDEO.toString() -> {}
                     MessageType.AUDIO.toString() -> {}
+                    MessageType.BUSINESS_INVITATION.toString() -> {
+                        if (chat.businessInvitationData != null) {
+                            ivInterlocutorExtraImage.visibility = View.GONE
+                            ivloggedUserExtraImage.visibility = View.GONE
+                            val businessData = chat.businessInvitationData
+
+                            // show message
+                            if (chat.senderId == loggedUserId) {
+                                layoutLoggedUserBusinessInvitation.visibility = View.VISIBLE
+                                layoutInterlocutorBusinessInvitation.visibility = View.GONE
+                                tvBusinessName.text = businessData["businessName"]
+                                tvBusinessAddress.text = businessData["businessAddress"]
+                                Glide.with(itemView.context)
+                                    .load(businessData["businessPhotoUrl"])
+                                    .placeholder(R.drawable.progress_animation)
+                                    .into(ivBusinessAvatar)
+                            } else {
+                                layoutLoggedUserBusinessInvitation.visibility = View.GONE
+                                layoutInterlocutorBusinessInvitation.visibility = View.VISIBLE
+                                tvInterlocutorBusinessName.text = businessData["businessName"]
+                                tvInterlocutorBusinessAddress.text = businessData["businessAddress"]
+                                Glide.with(itemView.context)
+                                    .load(businessData["businessPhotoUrl"])
+                                    .placeholder(R.drawable.progress_animation)
+                                    .into(ivInterlocutorBusinessAvatar)
+
+                                val isAccepted: Boolean? = businessData["accepted"].toBoolean()
+
+                                if (isAccepted == true) {
+                                    btnAcceptInvitation.isEnabled = false
+                                    btnAcceptInvitation.text = "Diterima"
+                                }
+
+                                btnAcceptInvitation.setOnClickListener {
+                                    // TODO
+                                    chatClickListener?.onAcceptInvitationButtonClicked(
+                                        businessData["invitationId"] ?: "",
+                                        chat.messageId,
+                                        businessData["businessOwnerId"] ?: "",
+                                        businessData["merchantId"] ?: "",
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // show message
@@ -277,7 +328,7 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
             }
             layoutInterlocutorMessage.setOnClickListener {
                 // is chat selected is more than one
-                if (listIndexOfSelectedMessages.size >= 1){
+                if (listIndexOfSelectedMessages.size >= 1) {
                     if (!chat.isSelected) {
                         chat.isSelected = true
                         currentSelectedMessage = chat
@@ -299,7 +350,7 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                     notifyItemChanged(position)
                     listIndexOfSelectedMessages.add(position)
                     chatClickListener?.onMessageSelected()
-                }else if (chat.isSelected) {
+                } else if (chat.isSelected) {
                     chat.isSelected = false
                     listIndexOfSelectedMessages.remove(position)
                     notifyItemChanged(position)
@@ -318,7 +369,7 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
 
             layoutLoggedUserMessage.setOnClickListener {
                 // is chat selected is more than one
-                if (listIndexOfSelectedMessages.size >= 1){
+                if (listIndexOfSelectedMessages.size >= 1) {
                     if (!chat.isSelected) {
                         chat.isSelected = true
                         currentSelectedMessage = chat
@@ -405,5 +456,12 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
 
         fun onMessageSelected()
         fun onMessageDeselect()
+
+        fun onAcceptInvitationButtonClicked(
+            invitationId: String,
+            messageId: String,
+            businessId: String,
+            merchantId: String,
+        )
     }
 }

@@ -19,6 +19,10 @@ import com.mikirinkode.pikul.feature.auth.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * TODO: ADD LOADING INDICATOR
+ * EMPTY MESSAGE
+ */
 @AndroidEntryPoint
 class ChatHistoryFragment : Fragment() {
     private var _binding: FragmentChatHistoryBinding? = null

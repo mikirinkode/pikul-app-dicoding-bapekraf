@@ -1,7 +1,5 @@
 package com.mikirinkode.pikul.data.model
 
-import com.mikirinkode.pikul.constants.PikulRole
-
 
 data class Business(
     var ownerId: String? = null,
@@ -38,7 +36,7 @@ data class Brand(
     val items: List<Item>,
 
     // merchant properties
-    val merchantList: List<Merchant>
+    val merchantAggrementList: List<MerchantAgreement>
 )
 
 
@@ -56,22 +54,22 @@ data class Owner(
 
     )
 
-data class Merchant(
-    var merchantId: String,
-    var email: String,
-    var name: String,
-    var avatarUrl: String,
-    var createdAt: String,
-    var lastLoginAt: String,
-    var updatedAt: String,
-    val oneSignalToken: String,
-    val role: String,
-
-    val coordinatePosition: String,
-    val movingStatus: String,
-    val type: String, // Motor, mobile, gerobak, stan
-//    val merchantRating: String,
-)
+//data class Merchant(
+//    var merchantId: String,
+//    var email: String,
+//    var name: String,
+//    var avatarUrl: String,
+//    var createdAt: String,
+//    var lastLoginAt: String,
+//    var updatedAt: String,
+//    val oneSignalToken: String,
+//    val role: String,
+//
+//    val coordinatePosition: String,
+//    val movingStatus: String,
+//    val type: String, // Motor, mobile, gerobak, stan
+////    val merchantRating: String,
+//)
 
 
 data class Item(
@@ -84,22 +82,22 @@ data class Item(
 
 // TODO: REMOVE
 object DummyData {
-    fun getDummyMerchant(): List<Merchant> {
-        val list = listOf<Merchant>(
-            Merchant(
-                "1",
-                "merchant@mail.com",
-                "Pedagang 1",
-                "",
-                "",
-                "",
-                "",
-                "",
-                PikulRole.MERCHANT.toString(),
-                "4241.434, 13141.24",
-                "Keliling",
-                "",
-            )
+    fun getDummyMerchant(): List<MerchantAgreement> {
+        val list = listOf<MerchantAgreement>(
+//            Merchant(
+//                "1",
+//                "merchant@mail.com",
+//                "Pedagang 1",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                PikulRole.MERCHANT.toString(),
+//                "4241.434, 13141.24",
+//                "Keliling",
+//                "",
+//            )
         )
         return list
     }

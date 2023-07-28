@@ -47,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textStyle="bold"
             android:textColor="?attr/background"
-            tools:text="3 Pesan Belum Dibaca"/>
+            android:textStyle="bold"
+            tools:text="3 Pesan Belum Dibaca" />
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,16 +88,141 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/ivInterlocutorExtraImage"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutInterlocutorExtraContent"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic"
-                tools:visibility="visible" />
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/ivInterlocutorExtraImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic"
+                    tools:visibility="visible" />
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layoutInterlocutorBusinessInvitation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="?android:attr/colorPrimary"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tvInterlocutorInvitationTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Undangan Kerja Sama"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvInterlocutorInvitationDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvInterlocutorInvitationTitle" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardInterlocutorBusinessAvatar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            app:cardCornerRadius="12dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvInterlocutorInvitationDesc">
+
+                            <ImageView
+                                android:id="@+id/ivInterlocutorBusinessAvatar"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                android:scaleType="centerCrop"
+                                tools:src="@tools:sample/backgrounds/scenic" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/tvInterlocutorBusinessName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:maxLines="1"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardInterlocutorBusinessAvatar"
+                            app:layout_constraintTop_toTopOf="@+id/cardInterlocutorBusinessAvatar"
+                            tools:text="Pikul" />
+
+                        <ImageView
+                            android:id="@+id/ivInterlocutorBusinessLocation"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_location"
+                            app:layout_constraintStart_toStartOf="@+id/tvInterlocutorBusinessName"
+                            app:layout_constraintTop_toBottomOf="@id/tvInterlocutorBusinessName"
+                            app:tint="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tvInterlocutorBusinessAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:maxLines="1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivInterlocutorBusinessLocation"
+                            app:layout_constraintTop_toTopOf="@+id/ivInterlocutorBusinessLocation"
+                            tools:text="2.0 KM" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAcceptInvitation"
+                            style="@style/Theme.Pikul.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:text="Terima Tawaran"
+                            android:textColor="?android:attr/colorPrimary"
+                            app:cornerRadius="@dimen/button_corner_radius"
+                            app:icon="@drawable/ic_agreement_fill"
+                            app:iconGravity="textStart"
+                            app:iconPadding="16dp"
+                            app:iconTint="?android:attr/colorPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/cardInterlocutorBusinessAvatar"
+                            app:strokeColor="?android:attr/colorPrimary"
+                            app:strokeWidth="1dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
             <TextView
                 android:id="@+id/tvInterlocutorMessage"
@@ -105,7 +230,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivInterlocutorExtraImage"
+                app:layout_constraintTop_toBottomOf="@id/layoutInterlocutorExtraContent"
                 tools:text="some messagess" />
 
             <TextView
@@ -151,22 +276,127 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_sender_message_card"
-            android:backgroundTint="?android:attr/colorPrimary"
+            android:backgroundTint="?attr/background"
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/ivloggedUserExtraImage"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutExtraContent"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic"
-                tools:visibility="visible" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layoutLoggedUserBusinessInvitation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="?android:attr/colorPrimary"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tvInvitationTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Undangan Kerja Sama"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvInvitationDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvInvitationTitle" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardBusinessAvatar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            app:cardCornerRadius="12dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvInvitationDesc">
+
+                            <ImageView
+                                android:id="@+id/ivBusinessAvatar"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                android:scaleType="centerCrop"
+                                tools:src="@tools:sample/backgrounds/scenic" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/tvBusinessName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:maxLines="1"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardBusinessAvatar"
+                            app:layout_constraintTop_toTopOf="@+id/cardBusinessAvatar"
+                            tools:text="Pikul" />
+
+                        <ImageView
+                            android:id="@+id/ivLocation"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_location"
+                            app:layout_constraintStart_toStartOf="@+id/tvBusinessName"
+                            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
+                            app:tint="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tvBusinessAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:maxLines="1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivLocation"
+                            app:layout_constraintTop_toTopOf="@+id/ivLocation"
+                            tools:text="2.0 KM" />
+
+                    
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <ImageView
+                    android:id="@+id/ivloggedUserExtraImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/tvloggedUserMessage"
@@ -174,7 +404,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivloggedUserExtraImage"
+                app:layout_constraintTop_toBottomOf="@id/layoutExtraContent"
                 tools:text="some messagess" />
 
             <TextView

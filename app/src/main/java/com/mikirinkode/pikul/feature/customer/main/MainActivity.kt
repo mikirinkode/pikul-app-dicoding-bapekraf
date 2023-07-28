@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         } else if (latestView == MAIN_VIEW.CUSTOMER_VIEW.toString()) {
             // NOTHING TO DO
             initNavigation()
-        } else {
+        } else { // TODO: SOME TIMES ERROR MAKE BOTTOM NAVIGATION NOT WORKING
             initNavigation()
         }
     }

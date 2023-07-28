@@ -3,7 +3,6 @@ package com.mikirinkode.pikul.feature.startbusiness.merchant
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,9 +15,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.utils.DateHelper
-import com.mikirinkode.pikul.utils.Event
 import com.mikirinkode.pikul.utils.FireStoreUtils
-import com.mikirinkode.pikul.utils.ImageHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
 import javax.inject.Inject

@@ -102,4 +102,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabs" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="?attr/background"
+        app:strokeWidth="0dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/cardNotHavePartner"
+        android:layout_margin="24dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <ImageView
+                android:id="@+id/ivIllustration"
+                android:src="@drawable/illustration_agreement"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/tvAnnouncementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivIllustration"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textAlignment="center"
+                android:layout_marginTop="16dp"
+                android:text="Anda belum memiliki mitra dagang."/>
+
+
+            <TextView
+                android:id="@+id/tvAnnouncementDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAnnouncementTitle"
+                android:textAlignment="center"
+                android:layout_marginTop="4dp"
+                android:text="Untuk mulai berjualan anda dapat mencari mitra dagang dengan menekan tombol di bawah"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFindPartner"
+                android:theme="@style/Theme.Pikul.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="Cari Mitra"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAnnouncementDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

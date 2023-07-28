@@ -25,6 +25,10 @@
         <action
             android:id="@+id/actionOpenStopPoint"
             app:destination="@id/merchantSellingPlaceFragment" />
+        <argument
+            android:name="agreement"
+            app:argType="com.mikirinkode.pikul.data.model.MerchantAgreement"
+            app:nullable="true"  />
     </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment"

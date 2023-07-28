@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.*
-import com.mikirinkode.pikul.utils.Event
 import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -61,8 +60,8 @@ class HomeViewModel @Inject constructor(
         return result
     }
 
-    fun getNearbyMerchantList(): LiveData<List<Merchant>> {
-        val list = MutableLiveData<List<Merchant>>()
+    fun getNearbyMerchantList(): LiveData<List<MerchantAgreement>> {
+        val list = MutableLiveData<List<MerchantAgreement>>()
         val merchantList = DummyData.getDummyMerchant()
         list.postValue(merchantList)
         return list

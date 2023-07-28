@@ -199,5 +199,9 @@
     <string name="txt_btn_pay">Bayar Sekarang</string>
     <string name="txt_order_summary">Pesanan</string>
     <string name="txt_fragment_payment">Pembayaran</string>
+    <string name="txt_tab_title_merchant_partner">Mitra Saya</string>
+    <string name="txt_tab_title_merchant_list">Pedagang</string>
+    <string name="txt_fragment_merchant_list">Daftar Pedagang</string>
+    <string name="txt_fragment_your_merchant">Pedagang Anda</string>
 
 </resources>

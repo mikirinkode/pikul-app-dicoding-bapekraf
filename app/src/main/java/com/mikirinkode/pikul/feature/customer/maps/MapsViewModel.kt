@@ -1,5 +1,6 @@
 package com.mikirinkode.pikul.feature.customer.maps
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,13 +26,16 @@ class MapsViewModel @Inject constructor(
         val result = MutableLiveData<PikulResult<List<SellingPlace>>>()
         result.postValue(PikulResult.Loading)
 
-        fireStore.collection(FireStoreUtils.TABLE_SELLING_PLACES).get()
+        fireStore.collection(FireStoreUtils.TABLE_SELLING_PLACES)
+            .whereEqualTo("visibility", true)
+            .get()
             .addOnSuccessListener {documents ->
                 val list = ArrayList<SellingPlace>()
                 for (doc in documents){
                     if (doc != null){
                         val sellingPlace: SellingPlace = doc.toObject()
                         list.add(sellingPlace)
+                        Log.e(TAG, "visibility: ${sellingPlace.visibility}")
                     }
                 }
                 result.postValue(PikulResult.Success(list))

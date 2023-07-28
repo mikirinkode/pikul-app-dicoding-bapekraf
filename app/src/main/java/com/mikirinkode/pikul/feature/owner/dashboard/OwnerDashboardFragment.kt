@@ -162,8 +162,12 @@ class OwnerDashboardFragment : Fragment() {
             // other menu
             cardProduct.setOnClickListener {
                 val action = OwnerDashboardFragmentDirections.actionOpenProductList()
-                Navigation.findNavController(binding.root).navigate(action) }
-            cardMerchant.setOnClickListener {  } // TODO
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+            cardMerchant.setOnClickListener {
+                val action = OwnerDashboardFragmentDirections.actionManageMerchant()
+                Navigation.findNavController(binding.root).navigate(action)
+            } // TODO
             cardTransaction.setOnClickListener {  } // TODO
         }
     }

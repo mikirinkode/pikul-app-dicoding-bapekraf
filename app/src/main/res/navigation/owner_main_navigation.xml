@@ -56,7 +56,11 @@
         android:id="@+id/manageMerchantFragment"
         android:name="com.mikirinkode.pikul.feature.owner.merchant.ManageMerchantFragment"
         android:label="fragment_manage_merchant"
-        tools:layout="@layout/fragment_manage_merchant" />
+        tools:layout="@layout/fragment_manage_merchant" >
+        <action
+            android:id="@+id/actionAddMerchant"
+            app:destination="@id/merchantListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment2"
         android:name="com.mikirinkode.pikul.feature.chat.history.ChatHistoryFragment"
@@ -76,4 +80,9 @@
         android:name="com.mikirinkode.pikul.feature.owner.stock.ManageStockFragment"
         android:label="fragment_manage_stock"
         tools:layout="@layout/fragment_manage_stock" />
+    <fragment
+        android:id="@+id/merchantListFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.merchant.MerchantListFragment"
+        android:label="fragment_merchant_list"
+        tools:layout="@layout/fragment_merchant_list" />
 </navigation>
