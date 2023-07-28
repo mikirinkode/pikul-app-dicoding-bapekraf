@@ -5,24 +5,27 @@
     android:id="@+id/dialog_add_new_stop_point"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/background"
+    android:backgroundTint="?attr/background"
     android:padding="16dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilStopPointName"
+        android:id="@+id/tilPlaceNote"
         style="@style/Theme.Pikul.InputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="@string/txt_hint_name"
+        android:hint="@string/txt_hint_note_for_customer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etStopPointName"
+            android:id="@+id/etPlaceNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
+            android:maxLength="100"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tilStopPointName">
+        app:layout_constraintTop_toBottomOf="@id/tilPlaceNote">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/actvProvince"
@@ -53,10 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:backgroundTint="?android:attr/windowBackground"
         android:padding="16dp"
+        android:backgroundTint="?attr/background"
         app:cardCornerRadius="@dimen/input_layout_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,11 +85,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="?android:attr/windowBackground"
+        android:backgroundTint="?attr/background"
         android:padding="16dp"
         app:cardCornerRadius="@dimen/input_layout_corner_radius"
-        android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilStartTime"

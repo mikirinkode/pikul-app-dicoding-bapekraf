@@ -157,7 +157,9 @@ class OwnerDashboardFragment : Fragment() {
             cardTotalOrder.setOnClickListener {  } // TODO
 
             cardSellingPlace.setOnClickListener {
-                val action = OwnerDashboardFragmentDirections.actionOpenMerchantSellingPlace()
+                val action = OwnerDashboardFragmentDirections.actionOpenMerchantSellingPlace(
+                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
+                )
                 Navigation.findNavController(binding.root).navigate(action)
             }
 

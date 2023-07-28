@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
@@ -27,7 +30,6 @@ import com.mikirinkode.pikul.databinding.DialogAddNewStopPointBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantSellingPlaceBinding
 import com.mikirinkode.pikul.feature.merchant.MerchantMainActivity
 import com.mikirinkode.pikul.utils.MapsHelper
-import com.mikirinkode.pikul.utils.TimePickerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,8 +45,8 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
-    GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnMapClickListener, MerchantMainActivity.Companion.TimePickerListener {
+    GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
+
     private var _binding: FragmentMerchantSellingPlaceBinding? = null
     private val binding get() = _binding!!
     private var dialogBinding: DialogAddNewStopPointBinding? = null
@@ -66,12 +68,10 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
 
     //    private var selectedCoordinate: LatLng? = null
     private var currentSelectedLocation: Marker? = null
-    private var selectTimeFor: String = ""
+    private var totalSellingPlace: Int = 0
 
-    companion object {
-        private const val START_TIME = "start_time"
-        private const val END_TIME = "end_time"
-    }
+    private val args: MerchantSellingPlaceFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,7 +131,6 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
         dialogBinding?.actvProvince?.setAdapter(arrayAdapter)
         dialogBinding?.actvProvince?.setText(userProvince)
 
-        MerchantMainActivity.timePickerListener = this
 
         // used for dialog
         val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -141,8 +140,8 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
         addSellingPlaceDialog = dialogBuilder.create()
     }
 
-    private fun observeUserPlaces(){
-        viewModel.getUserPlaceCoordinates().observe(viewLifecycleOwner){ result ->
+    private fun observeUserPlaces() {
+        viewModel.getUserPlaceCoordinates().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is PikulResult.Loading -> {}
                 is PikulResult.LoadingWithProgress -> {}
@@ -165,15 +164,16 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                     Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
                 }
                 is PikulResult.Success -> {
+                    totalSellingPlace = result.data.size
                     createAllSellingPlaces(result.data)
                 }
             }
         }
     }
 
-    private fun createAllUserPlaces(coordinates: List<String>){
-        for (coordinate in coordinates){
-            if (coordinate.isNotEmpty()){
+    private fun createAllUserPlaces(coordinates: List<String>) {
+        for (coordinate in coordinates) {
+            if (coordinate.isNotEmpty()) {
                 val latLng = MapsHelper.getLatLngFromString(coordinate)
                 if (latLng != null) {
                     val marker =
@@ -198,9 +198,9 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     private fun updateView() {
         binding.apply {
             if (currentSelectedLocation != null) {
-                btnAddStopPoint.visibility = View.VISIBLE
+                fabAddSellingPlace.visibility = View.VISIBLE
             } else {
-                btnAddStopPoint.visibility = View.GONE
+                fabAddSellingPlace.visibility = View.GONE
             }
         }
     }
@@ -211,86 +211,123 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 addSellingPlaceDialog?.dismiss()
             }
             btnAdd.setOnClickListener {
-                var isValid = true
-                val name = etStopPointName.text.toString().trim()
-                val province = actvProvince.text.toString().trim()
-                val startTime = ""
-                val endTime = "" // TODO: CHANGE LATER
-
-                if (name.isEmpty()) {
-                    isValid = false
-                    etStopPointName.error = getString(R.string.empty_name)
-                }
-
-//                if (startTime.isEmpty() || endTime.isEmpty() || startTime == "Waktu Mulai" || endTime == "Waktu Selesai") {
-//                    isValid = false
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "Mohon pilih waktu mulai dan selesai",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-
-                if (currentSelectedLocation == null) {
-                    isValid = false
+                if (totalSellingPlace > 0) {
                     Toast.makeText(
                         requireContext(),
-                        "Mohon pilih lokasi terlebih dahulu",
-                        Toast.LENGTH_SHORT
+                        "Anda hanya dapat menambahkan 1 Lokasi",
+                        Toast.LENGTH_LONG
                     ).show()
-                }
+                } else {
+                    var isValid = true
+                    val placeNote = etPlaceNote.text.toString().trim()
+                    val province = actvProvince.text.toString().trim()
+                    val startTime = etStartTime.text.toString().trim()
+                    val endTime = etEndTime.text.toString().trim()
 
-                if (isValid) {
-                    val coordinate =
-                        "${currentSelectedLocation?.position?.latitude}, ${currentSelectedLocation?.position?.longitude}"
-                    viewModel.addStopPoint(name, province, startTime, endTime, coordinate)
-                        .observe(viewLifecycleOwner) { result ->
-                            // reset data
-                            addSellingPlaceDialog?.dismiss()
-                            if (currentSelectedLocation != null) {
-                                currentSelectedLocation?.remove()
-                                currentSelectedLocation = null
-                            }
-                            updateView()
 
-                            // calculate data
-                            when (result) {
-                                is PikulResult.Loading -> {
-                                    binding.layoutLoading.visibility = View.VISIBLE
+                    if (startTime.isEmpty() || endTime.isEmpty() || startTime == "Waktu Mulai" || endTime == "Waktu Selesai") {
+                        isValid = false
+                        Toast.makeText(
+                            requireContext(),
+                            "Mohon pilih waktu mulai dan selesai",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    if (currentSelectedLocation == null) {
+                        isValid = false
+                        Toast.makeText(
+                            requireContext(),
+                            "Mohon pilih lokasi terlebih dahulu",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    if (isValid) {
+                        val coordinate =
+                            "${currentSelectedLocation?.position?.latitude}, ${currentSelectedLocation?.position?.longitude}"
+                        viewModel.addStopPoint(
+                            args.businessId,
+                            placeNote,
+                            province,
+                            startTime,
+                            endTime,
+                            coordinate
+                        )
+                            .observe(viewLifecycleOwner) { result ->
+                                // reset data
+                                addSellingPlaceDialog?.dismiss()
+                                if (currentSelectedLocation != null) {
+                                    currentSelectedLocation?.remove()
+                                    currentSelectedLocation = null
                                 }
-                                is PikulResult.LoadingWithProgress -> {}
-                                is PikulResult.Error -> {
-                                    binding.layoutLoading.visibility = View.GONE
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Gagal menambah data",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                is PikulResult.Success -> {
-                                    dialogBinding?.etStopPointName?.setText("")
-                                    binding.layoutLoading.visibility = View.GONE
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Berhasil menambah titik berhenti",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                updateView()
+
+                                // calculate data
+                                when (result) {
+                                    is PikulResult.Loading -> {
+                                        binding.layoutLoading.visibility = View.VISIBLE
+                                    }
+                                    is PikulResult.LoadingWithProgress -> {}
+                                    is PikulResult.Error -> {
+                                        binding.layoutLoading.visibility = View.GONE
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Gagal menambah data",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    is PikulResult.Success -> {
+                                        dialogBinding?.etPlaceNote?.setText("")
+                                        dialogBinding?.etStartTime?.setText("")
+                                        dialogBinding?.etEndTime?.setText("")
+                                        binding.layoutLoading.visibility = View.GONE
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Berhasil menambah titik berhenti",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
-                        }
+                    }
                 }
             }
 
             tilStartTime.setOnClickListener {
-                selectTimeFor = START_TIME
-                val timePickerFragmentOne = TimePickerFragment()
-                timePickerFragmentOne.show(requireActivity().supportFragmentManager, "TimePicker")
+                val startTimePicker =
+                    MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(12)
+                        .setMinute(10)
+                        .setTitleText("Pilih Waktu Mulai")
+                        .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                        .build()
+
+                startTimePicker.show(childFragmentManager, "START_TIME_PICKER_TAG")
+                startTimePicker.addOnPositiveButtonClickListener {
+                    val hour = String.format("%02d", startTimePicker.hour)
+                    val minute = String.format("%02d", startTimePicker.minute)
+                    etStartTime.setText("$hour:$minute")
+                }
             }
 
             tilEndTime.setOnClickListener {
-                selectTimeFor = END_TIME
-                val timePickerFragmentOne = TimePickerFragment()
-                timePickerFragmentOne.show(requireActivity().supportFragmentManager, "TimePicker")
+                val endTimePicker =
+                    MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(12)
+                        .setMinute(10)
+                        .setTitleText("Pilih Waktu Selesai")
+                        .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                        .build()
+
+                endTimePicker.show(childFragmentManager, "END_TIME_PICKER_TAG")
+                endTimePicker.addOnPositiveButtonClickListener {
+                    val hour = String.format("%02d", endTimePicker.hour)
+                    val minute = String.format("%02d", endTimePicker.minute)
+                    etEndTime.setText("$hour:$minute")
+                }
             }
         }
     }
@@ -329,10 +366,10 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 if (result != null) {
                     binding.apply {
                         cardSellingPointDetail.visibility = View.VISIBLE
-                        tvPlaceName.text = result.placeName
+                        tvPlaceNote.text = result.placeNoteForCustomer
                         tvPlaceProvince.text = result.province
                         tvPlaceCoordinate.text = result.coordinate
-
+                        tvTime.text = "${result.startTime} - ${result.endTime}"
 
                         btnDelete.setOnClickListener {
                             viewModel.deleteSellingPlaceById(placeId = result.placeId ?: "")
@@ -351,6 +388,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                                             ).show()
                                         }
                                         is PikulResult.Success -> {
+                                            totalSellingPlace -= 1
                                             marker.remove()
                                             cardSellingPointDetail.visibility = View.GONE
                                             layoutLoading.visibility = View.GONE
@@ -370,22 +408,6 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
         return true
     }
 
-    override fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int) {
-        // Siapkan time formatter-nya terlebih dahulu
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        calendar.set(Calendar.MINUTE, minute)
-
-        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-        dialogBinding?.apply {
-            if (selectTimeFor == START_TIME) {
-                etStartTime.text = "Waktu mulai: ${dateFormat.format(calendar.time)}"
-            } else if (selectTimeFor == END_TIME) {
-                etEndTime.text = "Waktu selesai: ${dateFormat.format(calendar.time)}"
-            }
-        }
-    }
 
     private fun onClickAction() {
         binding.apply {
@@ -393,8 +415,17 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 Navigation.findNavController(binding.root).navigateUp()
             }
 
-            btnAddStopPoint.setOnClickListener {
-                addSellingPlaceDialog?.show()
+            fabAddSellingPlace.setOnClickListener {
+                if (totalSellingPlace > 0) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda hanya dapat menambahkan 1 Lokasi",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+                    addSellingPlaceDialog?.show()
+                }
             }
         }
     }

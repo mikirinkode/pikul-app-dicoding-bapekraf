@@ -14,30 +14,122 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvPlaceName"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBusinessAvatar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBusinessAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvBusinessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLines="1"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardBusinessAvatar"
             tools:text="Test nama" />
+
         <ImageView
+            android:id="@+id/ivTime"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_location"
-            app:layout_constraintEnd_toStartOf="@id/tvMerchantDistance"
-            app:layout_constraintTop_toTopOf="@id/tvMerchantDistance"
-            android:layout_marginEnd="8dp"
-            app:tint="?attr/colorPrimary"/>
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_time_outline"
+            app:layout_constraintStart_toStartOf="@id/tvBusinessName"
+            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/ivTime"
+            app:layout_constraintTop_toTopOf="@id/ivTime"
+            tools:text="00:00 - 00:00" />
+
+        <ImageView
+            android:id="@+id/ivLocation"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_location_outline"
+            app:layout_constraintStart_toEndOf="@id/tvTime"
+            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
+            app:tint="?attr/colorPrimary" />
+
         <TextView
             android:id="@+id/tvMerchantDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2.0 KM"
-            android:fontFamily="@font/poppins_medium"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/ivLocation"
+            app:layout_constraintTop_toTopOf="@id/ivLocation"
+            tools:text="2000.0 KM" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMerchant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTime">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivMerchantAvatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_default_user_avatar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMerchantName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintBottom_toBottomOf="@id/ivMerchantAvatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivMerchantAvatar"
+                app:layout_constraintTop_toTopOf="@id/ivMerchantAvatar"
+                tools:text="Kang Pikul" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvPlaceNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLength="120"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutMerchant"
+            tools:text="Depan Toko Jam fadfaldfkjasdf alsdfjadsf adlksfadsfadadsfadsfadsfaadsfasdfggg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

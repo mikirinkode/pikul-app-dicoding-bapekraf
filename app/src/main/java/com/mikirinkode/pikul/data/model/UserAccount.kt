@@ -3,7 +3,6 @@ package com.mikirinkode.pikul.data.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class UserAccount(
     var avatarUrl: String? = null,
     val conversationIdList: List<String>? = null,
@@ -18,4 +17,4 @@ data class UserAccount(
     val roles: List<String>? = null,
     var updatedAt: String? = null,
     var userId: String? = null,
-): Parcelable
+)

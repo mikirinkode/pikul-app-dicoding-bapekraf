@@ -9,11 +9,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.mikirinkode.pikul.data.local.LocalPreference
-import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.maps.SellingPlace
-import com.mikirinkode.pikul.feature.owner.dashboard.OwnerDashboardViewModel
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -128,7 +126,8 @@ class MerchantSellingPlaceViewModel @Inject constructor(
     }
 
     fun addStopPoint(
-        name: String,
+        businessId: String,
+        placeNote: String,
         province: String,
         startTime: String,
         endTime: String,
@@ -143,8 +142,9 @@ class MerchantSellingPlaceViewModel @Inject constructor(
 
             val data = SellingPlace(
                 merchantId = userId,
+                businessId = businessId,
                 placeId = ref.id,
-                placeName = name,
+                placeNoteForCustomer = placeNote,
                 province = province,
                 visibility = true,
                 startTime = startTime,

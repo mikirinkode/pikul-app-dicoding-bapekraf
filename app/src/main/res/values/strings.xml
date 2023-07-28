@@ -203,5 +203,6 @@
     <string name="txt_tab_title_merchant_list">Pedagang</string>
     <string name="txt_fragment_merchant_list">Daftar Pedagang</string>
     <string name="txt_fragment_your_merchant">Pedagang Anda</string>
+    <string name="txt_hint_note_for_customer">Catatan untuk pelanggan</string>
 
 </resources>

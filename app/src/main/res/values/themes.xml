@@ -39,7 +39,7 @@
     </style>
 
     <style name="Theme.Pikul.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="strokeWidth">2dp</item>
+        <item name="strokeWidth">1dp</item>
         <item name="strokeColor">@color/neutral_200</item>
         <item name="android:textColor">@color/neutral_200</item>
         <item name="android:padding">@dimen/button_padding</item>

@@ -1,14 +1,18 @@
 package com.mikirinkode.pikul.feature.merchant.maps
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
+import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.databinding.ItemSellingPlaceBinding
+import com.mikirinkode.pikul.feature.detail.DetailBusinessActivity
 import com.mikirinkode.pikul.utils.MapsHelper
 
 class SellingPlaceAdapter(private val pref: LocalPreference) :
@@ -29,7 +33,33 @@ class SellingPlaceAdapter(private val pref: LocalPreference) :
                     val formattedDistance = String.format("%.1f", distance)
                     tvMerchantDistance.text = "$formattedDistance KM"
                 }
-                tvPlaceName.text = place.placeName
+                tvBusinessName.text = place.businessName
+                tvTime.text = "${place.startTime} - ${place.endTime}"
+                tvPlaceNote.text = "Catatan penjual: ${place.placeNoteForCustomer}"
+                tvMerchantName.text = place.merchantName
+
+                Glide.with(itemView.context)
+                    .load(place.businessPhotoUrl)
+                    .placeholder(R.drawable.progress_animation)
+                    .into(ivBusinessAvatar)
+
+                if (place.merchantPhotoUrl != null && place.merchantPhotoUrl != ""){
+                    Glide.with(itemView.context)
+                        .load(place.merchantPhotoUrl)
+                        .placeholder(R.drawable.progress_animation)
+                        .into(ivMerchantAvatar)
+                } else {
+                    Glide.with(itemView.context)
+                        .load(R.drawable.ic_default_user_avatar)
+                        .into(ivMerchantAvatar)
+                }
+            }
+            itemView.setOnClickListener {
+                itemView.context.startActivity(
+                    Intent(itemView.context, DetailBusinessActivity::class.java)
+                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
+                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
+                )
             }
         }
     }
@@ -44,7 +74,7 @@ class SellingPlaceAdapter(private val pref: LocalPreference) :
     }
 
     override fun onBindViewHolder(holder: SellingPlaceAdapter.ViewHolder, position: Int) {
-        Log.e("SellingPlaceAdapter", "data: ${list[position].placeName}, position: ${position}")
+        Log.e("SellingPlaceAdapter", "data: ${list[position].placeNoteForCustomer}, position: ${position}")
         holder.bind(list[position])
     }
 
@@ -58,7 +88,7 @@ class SellingPlaceAdapter(private val pref: LocalPreference) :
 
     fun getDataPositionById(id: String): Int {
         for ((index, place) in list.withIndex()) {
-            Log.e("SellingPlaceAdapter", "data: ${place.placeName}, position: ${index}")
+            Log.e("SellingPlaceAdapter", "data: ${place.placeNoteForCustomer}, position: ${index}")
             if (place.placeId == id) {
                 return index
             }

@@ -32,6 +32,7 @@ class DetailBusinessActivity : AppCompatActivity()  {
 
     companion object {
         const val EXTRA_INTENT_BUSINESS_ID = "EXTRA_INTENT_BUSINESS_ID"
+        const val EXTRA_INTENT_MERCHANT_ID = "EXTRA_INTENT_MERCHANT_ID"
     }
 
 
@@ -45,15 +46,17 @@ class DetailBusinessActivity : AppCompatActivity()  {
     private fun handleIntent() {
         val extras = intent.extras
         val businessId = extras?.getString(EXTRA_INTENT_BUSINESS_ID)
+        val merchantId = extras?.getString(EXTRA_INTENT_MERCHANT_ID)
         if (businessId != null) {
-            setupNavigation(businessId)
+            setupNavigation(businessId, merchantId)
         }
     }
 
-    private fun setupNavigation(businessId: String) {
+    private fun setupNavigation(businessId: String, merchantId: String?) {
         val navController = findNavController(R.id.navHostDetailBusiness)
         val bundle = Bundle()
         bundle.putString("businessId", businessId)
+        bundle.putString("merchantId", merchantId)
         navController.setGraph(R.navigation.detail_business_navigation, bundle)
     }
 

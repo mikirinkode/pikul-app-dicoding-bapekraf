@@ -20,25 +20,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MerchantMainActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListener {
+class MerchantMainActivity : AppCompatActivity()  {
 
     private val binding: ActivityMerchantMainBinding by lazy {
         ActivityMerchantMainBinding.inflate(layoutInflater)
     }
 
-    companion object {
-        var timePickerListener: TimePickerListener? = null
-        interface TimePickerListener{
-            fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-    }
-
-    override fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int) {
-        timePickerListener?.onDialogTimeSet(tag, hourOfDay, minute)
     }
 }

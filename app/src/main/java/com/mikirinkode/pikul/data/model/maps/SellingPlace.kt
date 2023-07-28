@@ -1,10 +1,12 @@
 package com.mikirinkode.pikul.data.model.maps
 
-data class SellingPlace (
+import com.mikirinkode.pikul.data.model.Business
+
+data class SellingPlace(
     var merchantId: String? = null,
+    var businessId: String? = null,
     var placeId: String? = null,
-    var placeName: String? = null,
-    var placeDescription: String? = null, // TODO
+    var placeNoteForCustomer: String? = null,
     var coordinate: String? = null,
     var province: String? = null,
     var visibility: Boolean? = null,
@@ -14,4 +16,9 @@ data class SellingPlace (
     var createdAt: String? = null,
     var updatedAt: String? = null,
 
-    )
+    // lokal data
+    var businessName: String? = null,
+    var businessPhotoUrl: String? = null,
+    var merchantName: String? = null,
+    var merchantPhotoUrl: String? = null,
+)

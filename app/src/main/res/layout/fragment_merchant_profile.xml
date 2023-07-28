@@ -290,7 +290,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvTitleSelling" />
 
                 <Button
-                    android:id="@+id/btnAddStopPoint"
+                    android:id="@+id/btnAddSellingPlace"
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

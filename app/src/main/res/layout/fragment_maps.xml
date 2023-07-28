@@ -18,9 +18,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSellingPlaces"
         android:layout_width="match_parent"
-        android:layout_height="196dp"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

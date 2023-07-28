@@ -31,6 +31,8 @@ import javax.inject.Inject
  * TODO:
  * ADD LOADING INDICATOR
  * ON ERROR INDICATOR
+ * ADD MAPS
+ * ADD SELLING PLACE dan gunakan time yang ada disini untuk validasi pesanan
  */
 @AndroidEntryPoint
 class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
@@ -62,8 +64,12 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter(args.businessId) // TODO: IT SHOULD BE MERCHANT ID!
-        observeData(args.businessId)
+        // if merchant id is null, then the merchant will be the owner
+        // but what if the owner is not selling the data?
+        // TODO: HANDLE THIS, i think need some validation at home screen
+        val merchantId : String = if (args.merchantId != null) args.merchantId!! else args.businessId
+        initAdapter(merchantId) // TODO: IT SHOULD BE MERCHANT ID!
+        observeData(args.businessId, merchantId)
         initRecyclerView()
         onClickAction()
     }
@@ -84,7 +90,7 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
         }
     }
 
-    private fun observeData(businessId: String?) {
+    private fun observeData(businessId: String, merchantId: String) {
         if (businessId != null) {
             viewModel.getBusinessData(businessId).observe(viewLifecycleOwner) { result ->
                 when (result) {
@@ -107,7 +113,7 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
                 }
             }
 
-            viewModel.getMerchantData(businessId).observe(viewLifecycleOwner) { result ->
+            viewModel.getMerchantData(merchantId).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is PikulResult.Loading -> {}
                     is PikulResult.LoadingWithProgress -> {}

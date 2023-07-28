@@ -38,7 +38,11 @@
         android:id="@+id/merchantSellingPlaceFragment2"
         android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantSellingPlaceFragment"
         android:label="fragment_merchant_selling_place"
-        tools:layout="@layout/fragment_merchant_selling_place" />
+        tools:layout="@layout/fragment_merchant_selling_place" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/addProductFragment"
         android:name="com.mikirinkode.pikul.feature.owner.product.AddProductFragment"

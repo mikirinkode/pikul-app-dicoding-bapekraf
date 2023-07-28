@@ -61,7 +61,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddStopPoint"
+        android:id="@+id/fabAddSellingPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
@@ -92,25 +92,44 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/tvPlaceName"
+                android:id="@+id/tvPlaceNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/btnDelete"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Nama Tempat" />
+
+            <ImageView
+                android:id="@+id/ivTime"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_time_outline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaceNote"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/ivTime"
+                app:layout_constraintTop_toTopOf="@id/ivTime"
+                tools:text="00:00 - 00:00" />
 
             <TextView
                 android:id="@+id/tvPlaceProvince"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnDelete"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlaceName"
+                app:layout_constraintTop_toBottomOf="@id/ivTime"
                 tools:text="DKI Jakarta" />
 
             <TextView

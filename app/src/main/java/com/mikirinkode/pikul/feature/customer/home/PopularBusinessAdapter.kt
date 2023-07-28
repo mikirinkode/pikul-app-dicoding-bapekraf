@@ -29,6 +29,7 @@ class PopularBusinessAdapter : RecyclerView.Adapter<PopularBusinessAdapter.ViewH
                 itemView.context.startActivity(
                     Intent(itemView.context, DetailBusinessActivity::class.java)
                         .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, item.businessId)
+//                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, ) // TODO
                 )
             }
         }

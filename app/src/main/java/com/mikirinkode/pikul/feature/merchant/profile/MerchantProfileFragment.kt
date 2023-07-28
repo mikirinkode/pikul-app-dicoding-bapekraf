@@ -172,16 +172,18 @@ class MerchantProfileFragment : Fragment() {
             btnManageStock.setOnClickListener {
                 if (isHaveAgreement()){
                     val action = MerchantProfileFragmentDirections.actionManageStock(
-                        args.agreement?.businessPartnerId ?: ""
+                        args.agreement?.businessPartnerId ?: "" // TODO: CHECK AGAIN LATER
                     )
                     Navigation.findNavController(binding.root).navigate(action)
                 } else {
                     Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
                 }
             }
-            btnAddStopPoint.setOnClickListener {
+            btnAddSellingPlace.setOnClickListener {
                 if (isHaveAgreement()){
-                    val action = MerchantProfileFragmentDirections.actionOpenStopPoint()
+                    val action = MerchantProfileFragmentDirections.actionOpenStopPoint(
+                        args.agreement?.businessPartnerId ?: "" // TODO: CHECK AGAIN LATER
+                    )
                     Navigation.findNavController(binding.root).navigate(action)
                 } else {
                     Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
