@@ -79,7 +79,11 @@
         android:id="@+id/manageStockFragment"
         android:name="com.mikirinkode.pikul.feature.owner.stock.ManageStockFragment"
         android:label="fragment_manage_stock"
-        tools:layout="@layout/fragment_manage_stock" />
+        tools:layout="@layout/fragment_manage_stock" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/merchantListFragment"
         android:name="com.mikirinkode.pikul.feature.owner.merchant.MerchantListFragment"

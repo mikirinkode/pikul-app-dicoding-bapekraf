@@ -52,47 +52,29 @@ class ManageStockViewModel @Inject constructor(
     }
 
     // TODO: CHANGE FOR THE MERCHANT
-    fun getProductList(): LiveData<PikulResult<List<Product>>> {
+    fun getProductList(businessId: String): LiveData<PikulResult<List<Product>>> {
         val result = MutableLiveData<PikulResult<List<Product>>>()
 
         result.postValue(PikulResult.Loading)
 
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            fireStore.collection(FireStoreUtils.TABLE_PRODUCTS).whereEqualTo("ownerId", userId)
-                .addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        Log.e(TAG, "Listen failed.", e)
-                        val errorMessage: String = e.message ?: "Gagal mengambil data produk"
-                        result.postValue(PikulResult.Error(errorMessage))
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null) {
-                        val list = ArrayList<Product>()
-                        for (doc in snapshot) {
-                            val product = doc.toObject(Product::class.java)
-                            list.add(product)
-                        }
-                        result.postValue(PikulResult.Success(list))
-                    }
+        fireStore.collection(FireStoreUtils.TABLE_PRODUCTS).whereEqualTo("businessId", businessId)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e(TAG, "Listen failed.", e)
+                    val errorMessage: String = e.message ?: "Gagal mengambil data produk"
+                    result.postValue(PikulResult.Error(errorMessage))
+                    return@addSnapshotListener
                 }
-//                .get()
-//                .addOnSuccessListener { documents ->
-//                    val list = ArrayList<Product>()
-//                    for (doc in documents) {
-//                        val product = doc.toObject(Product::class.java)
-//                        list.add(product)
-//                    }
-//                    result.postValue(PikulResult.Success(list))
-//                }
-//                .addOnFailureListener {
-//                    val errorMessage: String =
-//                        it.message ?: "Terjadi kesalahan saat mengambil data produk"
-//                    result.postValue(PikulResult.Error(errorMessage))
-//                }
-        }
 
+                if (snapshot != null) {
+                    val list = ArrayList<Product>()
+                    for (doc in snapshot) {
+                        val product = doc.toObject(Product::class.java)
+                        list.add(product)
+                    }
+                    result.postValue(PikulResult.Success(list))
+                }
+            }
 
         return result
     }

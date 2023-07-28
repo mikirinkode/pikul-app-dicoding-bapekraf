@@ -127,8 +127,9 @@ class ProductViewModel @Inject constructor(
                         uploadSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { uri ->
                             val data = Product(
                                 productId = product.productId,
-                                ownerId = userId,
+                                ownerId = product.ownerId,
                                 productName = name,
+                                businessId = product.businessId,
                                 productCategory = category,
                                 productPrice = price,
                                 productThumbnailUrl = uri.toString(),
@@ -151,7 +152,8 @@ class ProductViewModel @Inject constructor(
                 // if there is no new image
                 val data = Product(
                     productId = product.productId,
-                    ownerId = userId,
+                    ownerId = product.ownerId,
+                    businessId = product.businessId, // TODO
                     productName = name,
                     productCategory = category,
                     productPrice = price,
@@ -210,6 +212,7 @@ class ProductViewModel @Inject constructor(
                         val data = Product(
                             productId = ref.id,
                             ownerId = userId,
+                            businessId = userId, // TODO
                             productName = name,
                             productCategory = category,
                             productPrice = price,

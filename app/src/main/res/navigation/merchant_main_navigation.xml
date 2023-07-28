@@ -29,6 +29,9 @@
             android:name="agreement"
             app:argType="com.mikirinkode.pikul.data.model.MerchantAgreement"
             app:nullable="true"  />
+        <action
+            android:id="@+id/actionManageStock"
+            app:destination="@id/manageStockFragment2" />
     </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment"
@@ -40,4 +43,13 @@
         android:name="com.mikirinkode.pikul.feature.merchant.maps.MerchantSellingPlaceFragment"
         android:label="fragment_merchant_all_stop_point"
         tools:layout="@layout/fragment_merchant_selling_place" />
+    <fragment
+        android:id="@+id/manageStockFragment2"
+        android:name="com.mikirinkode.pikul.feature.owner.stock.ManageStockFragment"
+        android:label="fragment_manage_stock"
+        tools:layout="@layout/fragment_manage_stock" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+    </fragment>
 </navigation>

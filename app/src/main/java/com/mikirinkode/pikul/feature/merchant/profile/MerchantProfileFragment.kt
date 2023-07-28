@@ -74,7 +74,6 @@ class MerchantProfileFragment : Fragment() {
 
     private fun initView() {
         binding.apply {
-
         }
     }
 
@@ -131,10 +130,11 @@ class MerchantProfileFragment : Fragment() {
                             is PikulResult.LoadingWithProgress -> {} // TODO
                             is PikulResult.Error -> {}
                             is PikulResult.Success -> {
+                                layoutBusinessOwner.visibility = View.VISIBLE
                                 layoutBusinessInformation.visibility = View.VISIBLE
                                 val businessData = result.data
                                 tvBusinessName.text = businessData.businessName
-                                tvBusinessSince.text = args.agreement?.partnerSince
+                                tvBusinessSince.text = "Mitra sejak ${args.agreement?.partnerSince}"
 
                                 if (businessData.businessPhoto != null && businessData.businessPhoto != "") {
                                     Glide.with(requireContext())
@@ -171,7 +171,10 @@ class MerchantProfileFragment : Fragment() {
             }
             btnManageStock.setOnClickListener {
                 if (isHaveAgreement()){
-
+                    val action = MerchantProfileFragmentDirections.actionManageStock(
+                        args.agreement?.businessPartnerId ?: ""
+                    )
+                    Navigation.findNavController(binding.root).navigate(action)
                 } else {
                     Toast.makeText(requireContext(), "Anda belum memiliki mitra dagang", Toast.LENGTH_SHORT).show()
                 }

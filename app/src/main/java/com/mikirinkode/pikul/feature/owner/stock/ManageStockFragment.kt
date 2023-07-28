@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikirinkode.pikul.R
@@ -43,6 +44,8 @@ class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
     private lateinit var adapter: ManageStockAdapter
 
     private var updateDialog: AlertDialog? = null
+
+    private val args: ManageStockFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +90,7 @@ class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
 
     private fun observeProductList() {
         binding.apply {
-            viewModel.getProductList().observe(viewLifecycleOwner) { result ->
+            viewModel.getProductList(args.businessId).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is PikulResult.Loading -> {
                         layoutLoading.visibility = View.VISIBLE
@@ -116,6 +119,7 @@ class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
         updateDialog?.show()
         dialogBinding?.apply {
             etProductName.setText(product.productName)
+
 
             btnCancel.setOnClickListener {
                 updateDialog?.cancel()

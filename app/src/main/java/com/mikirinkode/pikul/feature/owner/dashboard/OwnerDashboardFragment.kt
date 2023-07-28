@@ -148,7 +148,9 @@ class OwnerDashboardFragment : Fragment() {
                 showSellingModeDialog()
             }
             cardManageStock.setOnClickListener {
-                val action = OwnerDashboardFragmentDirections.actionManageStock()
+                val action = OwnerDashboardFragmentDirections.actionManageStock(
+                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
+                )
                 Navigation.findNavController(binding.root).navigate(action)
             }
 
