@@ -77,7 +77,7 @@ class MidtransWebViewActivity : AppCompatActivity() {
                             currentUrl.contains("transaction_status=capture")
                         ) {
                             goToSuccessView(transactionId)
-                        } else if (currentUrl.contains("gopay") && currentUrl.contains("verifyPaymentPin")){ // TODO: SEBENERNYA BELUM TERBAYAR
+                        } else if (currentUrl.contains("gopay-finish-deeplink")){ // TODO: SEBENERNYA BELUM TERBAYAR
                             goToSuccessView(transactionId)
                         } else if (currentUrl.contains("shopeepay-finish-deeplink")){ // TODO: SEBENERNYA BELUM TERBAYAR
                             goToSuccessView(transactionId)

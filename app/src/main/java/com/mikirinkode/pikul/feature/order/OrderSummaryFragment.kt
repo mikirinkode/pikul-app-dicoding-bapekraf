@@ -14,6 +14,7 @@ import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.databinding.FragmentOrderSummaryBinding
+import com.mikirinkode.pikul.feature.detail.DetailPickupPointMapsActivity
 import com.mikirinkode.pikul.feature.payment.MidtransWebViewActivity
 import com.mikirinkode.pikul.utils.MoneyHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +92,20 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
                 Navigation.findNavController(binding.root).navigateUp()
             }
 
+            btnSeeLocationOnMap.setOnClickListener {
+                startActivity(
+                    Intent(requireContext(), DetailPickupPointMapsActivity::class.java)
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_COORDINATES,
+                            args.transaction.pickupCoordinates ?: ""
+                        )
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_ADDRESS,
+                            args.transaction.pickupAddress ?: ""
+                        )
+                )
+            }
+
             btnPay.setOnClickListener {
                 val transaction = args.transaction
                 val totalItem = adapter.getTotalOrderItemAmount()
@@ -132,8 +147,14 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
                                     requireContext(),
                                     MidtransWebViewActivity::class.java
                                 )
-                                    .putExtra(MidtransWebViewActivity.EXTRA_INTENT_TRANSACTION_ID, transactionId)
-                                    .putExtra(MidtransWebViewActivity.EXTRA_INTENT_PAYMENT_URL, paymentUrl)
+                                    .putExtra(
+                                        MidtransWebViewActivity.EXTRA_INTENT_TRANSACTION_ID,
+                                        transactionId
+                                    )
+                                    .putExtra(
+                                        MidtransWebViewActivity.EXTRA_INTENT_PAYMENT_URL,
+                                        paymentUrl
+                                    )
                             )
                         }
                     }

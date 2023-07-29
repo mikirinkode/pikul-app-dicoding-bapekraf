@@ -14,6 +14,7 @@ import com.mikirinkode.pikul.data.model.PikulTransaction
 import com.mikirinkode.pikul.databinding.ActivityPaymentSuccessBinding
 import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionViewModel
+import com.mikirinkode.pikul.feature.detail.DetailPickupPointMapsActivity
 import com.mikirinkode.pikul.feature.payment.MidtransWebViewActivity
 import com.mikirinkode.pikul.utils.CommonHelper
 import com.mikirinkode.pikul.utils.MoneyHelper
@@ -73,6 +74,20 @@ class PaymentSuccessActivity : AppCompatActivity() {
             tvMerchantAddress.text = data.pickupAddress
             tvTransactionStatus.text =
                 CommonHelper.getReadAbleTransactionStatus(TRANSACTION_STATUS.WAITING_FOR_MERCHANT.toString())
+
+            btnSeeLocationOnMap.setOnClickListener {
+                startActivity(
+                    Intent(this@PaymentSuccessActivity, DetailPickupPointMapsActivity::class.java)
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_COORDINATES,
+                            data.pickupCoordinates ?: ""
+                        )
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_ADDRESS,
+                            data.pickupAddress ?: ""
+                        )
+                )
+            }
         }
     }
 
@@ -84,7 +99,6 @@ class PaymentSuccessActivity : AppCompatActivity() {
 
     private fun onClickAction(){
         binding.apply {
-            btnSeeLocationOnMap.setOnClickListener {} // TODO
             btnBackToHome.setOnClickListener {
 
                 startActivity(Intent(this@PaymentSuccessActivity, MainActivity::class.java))

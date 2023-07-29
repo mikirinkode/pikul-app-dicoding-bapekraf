@@ -206,5 +206,6 @@
     <string name="txt_hint_note_for_customer">Catatan untuk pelanggan</string>
     <string name="txt_screen_payment_success">Pembayaran Berhasil</string>
     <string name="txt_screen_detail_transaction">Detail Transaksi</string>
+    <string name="txt_screen_detail_pickup_point">Titik Pengambilan Pesanan</string>
 
 </resources>

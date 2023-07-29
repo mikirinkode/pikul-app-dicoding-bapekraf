@@ -206,7 +206,17 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
 
             // TODO
             btnSeeLocationOnMap.setOnClickListener {
-
+                startActivity(
+                    Intent(requireContext(), DetailPickupPointMapsActivity::class.java)
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_COORDINATES,
+                            sellingPlace.coordinate ?: ""
+                        )
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_ADDRESS,
+                            sellingPlace.placeAddress ?: ""
+                        )
+                )
             }
         }
     }

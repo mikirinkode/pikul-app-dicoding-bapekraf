@@ -16,6 +16,7 @@ import com.mikirinkode.pikul.data.model.PikulTransaction
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.databinding.ActivityDetailTransactionBinding
 import com.mikirinkode.pikul.feature.detail.DetailBusinessActivity
+import com.mikirinkode.pikul.feature.detail.DetailPickupPointMapsActivity
 import com.mikirinkode.pikul.feature.payment.MidtransWebViewActivity
 import com.mikirinkode.pikul.utils.CommonHelper
 import com.mikirinkode.pikul.utils.MoneyHelper
@@ -99,6 +100,20 @@ class DetailTransactionActivity : AppCompatActivity() {
             tvMerchantAddress.text = data.pickupAddress
             tvTransactionStatus.text =
                 CommonHelper.getReadAblePaymentStatus(data.paymentStatus ?: "")
+
+            btnSeeLocationOnMap.setOnClickListener {
+                startActivity(
+                    Intent(this@DetailTransactionActivity, DetailPickupPointMapsActivity::class.java)
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_COORDINATES,
+                            data.pickupCoordinates
+                        )
+                        .putExtra(
+                            DetailPickupPointMapsActivity.EXTRA_INTENT_ADDRESS,
+                            data.pickupAddress
+                        )
+                )
+            }
 
             when (data.paymentStatus) {
                 PAYMENT_STATUS.WAITING_FOR_PAYMENT.toString() -> {
@@ -217,6 +232,8 @@ class DetailTransactionActivity : AppCompatActivity() {
             topAppBar.setNavigationOnClickListener {
                 onBackPressed()
             }
+
+
         }
     }
 }
