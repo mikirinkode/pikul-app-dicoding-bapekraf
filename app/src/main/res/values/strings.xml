@@ -204,5 +204,7 @@
     <string name="txt_fragment_merchant_list">Daftar Pedagang</string>
     <string name="txt_fragment_your_merchant">Pedagang Anda</string>
     <string name="txt_hint_note_for_customer">Catatan untuk pelanggan</string>
+    <string name="txt_screen_payment_success">Pembayaran Berhasil</string>
+    <string name="txt_screen_detail_transaction">Detail Transaksi</string>
 
 </resources>

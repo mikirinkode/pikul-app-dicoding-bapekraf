@@ -1,5 +1,6 @@
 package com.mikirinkode.pikul.feature.order
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.databinding.FragmentOrderSummaryBinding
+import com.mikirinkode.pikul.feature.payment.MidtransWebViewActivity
+import com.mikirinkode.pikul.utils.MoneyHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,26 +51,33 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
         _binding = null
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
         adapter = ProductSummaryAdapter(args.merchantId, this) // TODO
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         binding.apply {
             rvProducts.layoutManager = LinearLayoutManager(requireContext())
             rvProducts.adapter = adapter
         }
     }
 
-    private fun handleArgs(){
+    private fun handleArgs() {
         adapter.setData(args.products.toList())
         updateTotalPriceView()
+        initView()
     }
 
-    private fun updateTotalPriceView(){
+    private fun initView() {
+        binding.apply {
+            tvMerchantAddress.text = args.transaction.pickupAddress
+        }
+    }
+
+    private fun updateTotalPriceView() {
         binding.apply {
             tvTotalItem.text = adapter.getTotalOrderItemAmount().toString()
-            tvTotalBilling.text = adapter.getTotalOrderBilling().toString()
+            tvTotalBilling.text = MoneyHelper.getFormattedPrice(adapter.getTotalOrderBilling())
         }
     }
 
@@ -75,32 +85,54 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
         updateTotalPriceView()
     }
 
-    private fun onClickAction(){
+    private fun onClickAction() {
         binding.apply {
             topAppBar.setNavigationOnClickListener {
                 Navigation.findNavController(binding.root).navigateUp()
             }
 
             btnPay.setOnClickListener {
+                val transaction = args.transaction
                 val totalItem = adapter.getTotalOrderItemAmount()
                 val totalBilling = adapter.getTotalOrderBilling()
-                val pickupAddress = ""
-                val pickupCoordinates = ""
-                val businessId = ""
-                val businessName = ""
-                val merchantId = ""
-                val merchantName = ""
+                val pickupAddress = transaction.pickupAddress ?: ""
+                val pickupCoordinates = transaction.pickupCoordinates ?: ""
+                val businessId = transaction.businessId ?: ""
+                val businessName = transaction.businessName ?: ""
+                val merchantId = transaction.merchantId ?: ""
+                val merchantName = transaction.merchantName ?: ""
+                val listOfProduct = adapter.getBookedProducts()
+
                 viewModel.createTransaction(
-                    totalItem, totalBilling, pickupAddress, pickupCoordinates, businessId, businessName, merchantId, merchantName
-                ).observe(viewLifecycleOwner){ result ->
+                    totalItem,
+                    totalBilling,
+                    pickupAddress,
+                    pickupCoordinates,
+                    businessId,
+                    businessName,
+                    merchantId,
+                    merchantName,
+                    listOfProduct
+                ).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is PikulResult.Loading -> {}
                         is PikulResult.LoadingWithProgress -> {}
                         is PikulResult.Error -> {} // TODO
                         is PikulResult.Success -> {
-                            val paymentUrl = result.data
-                            val action = OrderSummaryFragmentDirections.actionPayTransaction(paymentUrl)
-                            Navigation.findNavController(binding.root).navigate(action)
+                            val paymentUrl = result.data.paymentUrl ?: ""
+                            val transactionId = result.data.transactionId ?: ""
+//                            val action =
+//                                OrderSummaryFragmentDirections.actionPayTransaction(paymentUrl, transactionId)
+//                            Navigation.findNavController(binding.root).navigate(action)
+
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    MidtransWebViewActivity::class.java
+                                )
+                                    .putExtra(MidtransWebViewActivity.EXTRA_INTENT_TRANSACTION_ID, transactionId)
+                                    .putExtra(MidtransWebViewActivity.EXTRA_INTENT_PAYMENT_URL, paymentUrl)
+                            )
                         }
                     }
                 }

@@ -11,8 +11,9 @@ object DateHelper {
     const val DATE_REGULAR_FORMAT = "dd MMMM yyyy" // 30 August 2023
     const val DATE_CHAT_HISTORY_FORMAT = "dd/MM/yyyy" // 30/August/2023
     const val TIME_12_HOURS_MESSAGE_FORMAT = "hh:mm a" // 08:20 PM
-    const val TIME_MESSAGE_FORMAT = "hh:mm" // 20:20
+    const val TIME_MESSAGE_FORMAT = "HH:mm" // 20:20
     const val DATE_TIME_LAST_ONLINE_FORMAT = "dd MMMM yyyy hh:mm a"
+    const val TRANSACTION_DATE_FORMAT = "EEEE, dd MMMM yyyy HH:mm"
 
     fun formatTimestampToDate(timestamp: Long): Date {
         val timestampObj = Timestamp(timestamp)
@@ -87,6 +88,18 @@ object DateHelper {
 
     }
 
+    /**
+     * @param Timestamp
+     * @return Date: Senin, 12 Agustus 2023 20:30
+     */
+    fun getFormattedTransactionDateFromTimestmap(timestamp: Long): String {
+        val timestampObj = Timestamp(timestamp)
+        val dateFormat = SimpleDateFormat(TRANSACTION_DATE_FORMAT, Locale.getDefault())
+        val date = Date(timestampObj.time)
+        return dateFormat.format(date)
+
+    }
+
     fun getFormattedLastOnline(timestamp: Long): String {
         val timestampObj = Timestamp(timestamp)
         val date = Date(timestampObj.time)
@@ -108,6 +121,15 @@ object DateHelper {
      */
     fun getCurrentDate(): String {
         val dateFormat = SimpleDateFormat("dd", Locale.getDefault())
+        val date = Date()
+        return dateFormat.format(date)
+    }
+
+    /**
+     * @return Time: 20:10
+     */
+    fun getCurrentTime(): String {
+        val dateFormat = SimpleDateFormat(TIME_MESSAGE_FORMAT, Locale.getDefault())
         val date = Date()
         return dateFormat.format(date)
     }

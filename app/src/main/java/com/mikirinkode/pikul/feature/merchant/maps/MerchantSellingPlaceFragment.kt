@@ -68,6 +68,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
 
     //    private var selectedCoordinate: LatLng? = null
     private var currentSelectedLocation: Marker? = null
+    private var currentSelectedAddress: String = ""
     private var totalSellingPlace: Int = 0
 
     private val args: MerchantSellingPlaceFragmentArgs by navArgs()
@@ -220,7 +221,8 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 } else {
                     var isValid = true
                     val placeNote = etPlaceNote.text.toString().trim()
-                    val province = actvProvince.text.toString().trim()
+//                    val province = actvProvince.text.toString().trim()
+                    val address = etAddress.text.toString().trim()
                     val startTime = etStartTime.text.toString().trim()
                     val endTime = etEndTime.text.toString().trim()
 
@@ -249,7 +251,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                         viewModel.addStopPoint(
                             args.businessId,
                             placeNote,
-                            province,
+                            address,
                             startTime,
                             endTime,
                             coordinate
@@ -348,6 +350,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
     override fun onMapClick(latLng: LatLng) {
         binding.cardSellingPointDetail.visibility = View.GONE
 
+
         MapsHelper.navigateToLocation(mMap, latLng)
         if (currentSelectedLocation != null) {
             currentSelectedLocation?.remove()
@@ -356,6 +359,12 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
         currentSelectedLocation = marker
 
         updateView()
+
+        viewModel.getAddressFromCoordinates(requireContext(), latLng)
+            .observe(viewLifecycleOwner) { result ->
+                currentSelectedAddress = result
+                dialogBinding?.etAddress?.setText(result)
+            }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
@@ -367,8 +376,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                     binding.apply {
                         cardSellingPointDetail.visibility = View.VISIBLE
                         tvPlaceNote.text = result.placeNoteForCustomer
-                        tvPlaceProvince.text = result.province
-                        tvPlaceCoordinate.text = result.coordinate
+                        tvPlaceAddress.text = result.placeAddress
                         tvTime.text = "${result.startTime} - ${result.endTime}"
 
                         btnDelete.setOnClickListener {
@@ -424,6 +432,9 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                     ).show()
 
                 } else {
+                    if (currentSelectedAddress != ""){
+                        dialogBinding?.etAddress?.setText(currentSelectedAddress)
+                    }
                     addSellingPlaceDialog?.show()
                 }
             }

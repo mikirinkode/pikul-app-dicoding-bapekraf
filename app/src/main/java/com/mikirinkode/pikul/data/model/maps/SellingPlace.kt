@@ -8,7 +8,7 @@ data class SellingPlace(
     var placeId: String? = null,
     var placeNoteForCustomer: String? = null,
     var coordinate: String? = null,
-    var province: String? = null,
+    var placeAddress: String? = null,
     var visibility: Boolean? = null,
 
     var startTime: String? = null,

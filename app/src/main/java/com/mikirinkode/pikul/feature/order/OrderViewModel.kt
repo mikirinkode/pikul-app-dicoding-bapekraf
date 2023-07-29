@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ServerValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikirinkode.pikul.constants.Constants
@@ -65,14 +66,28 @@ class OrderViewModel @Inject constructor(
         businessName: String,
         merchantId: String,
         merchantName: String,
-    ): LiveData<PikulResult<String>> {
-        val result = MutableLiveData<PikulResult<String>>()
+        listOfProduct: List<Product>
+    ): LiveData<PikulResult<PikulTransaction>> {
+        val result = MutableLiveData<PikulResult<PikulTransaction>>()
         val userId = auth.currentUser?.uid
 
         if (userId != null) {
-            val productIdWithName = mapOf<String, String>()
-            val productIdWithPrice = mapOf<String, Float>()
-            val productIdWithAmount = mapOf<String, Int>()
+            val productIdWithName = mutableMapOf<String, String>()
+            val productIdWithPrice = mutableMapOf<String, Float>()
+            val productIdWithAmount = mutableMapOf<String, Int>()
+
+            for (product in listOfProduct){
+                if (product.productId != null && product.productName != null){
+                    productIdWithName[product.productId!!] = product.productName!!
+                    productIdWithPrice[product.productId!!] = product.productPrice!!
+                    productIdWithAmount[product.productId!!] = product.totalAmount
+
+                    val stock: Int = product.productStocks?.get(merchantId) ?: 0
+                    val finalAmount =  stock - product.totalAmount
+
+                    decreaseStockAmount(product.productId!!, merchantId, finalAmount)
+                }
+            }
 
             val ref = fireStore.collection(FireStoreUtils.TABLE_TRANSACTIONS).document()
 
@@ -85,7 +100,7 @@ class OrderViewModel @Inject constructor(
                 CoroutineScope(Dispatchers.IO).launch {
                     val response = ApiClient.getApiService(Constants.MIDTRANS_MAKE_TRANSACTION_URL)
                         .makeTransaction(
-                            "Basic U0ItTWlkLXNlcnZlci04RjdJV2NtQ1Y5YnVHRnpaWTd6Y3B5cGo=",
+                            Constants.MIDTRANS_AUTH,
                             data
                         ) // TODO: CHANGE
 
@@ -128,8 +143,10 @@ class OrderViewModel @Inject constructor(
                                 result.postValue(PikulResult.Error(errorMessage))
                             }
                             .addOnSuccessListener {
+                                // decrease stock amount()
+
                                 if (paymentUrl != null) {
-                                    result.postValue(PikulResult.Success(paymentUrl))
+                                    result.postValue(PikulResult.Success(pikulTransaction))
                                 } else {
 
                                     result.postValue(PikulResult.Error("Gagal membuat transaksi"))
@@ -140,6 +157,10 @@ class OrderViewModel @Inject constructor(
             }
         }
         return result
+    }
+
+    private fun decreaseStockAmount(productId: String, merchantId: String, amount: Int){
+        fireStore.collection(FireStoreUtils.TABLE_PRODUCTS).document(productId).update("productStocks.$merchantId", amount)
     }
 
     companion object {

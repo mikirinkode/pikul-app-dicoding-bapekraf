@@ -1,10 +1,11 @@
 package com.mikirinkode.pikul.feature.merchant.maps
 
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -15,7 +16,13 @@ import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class MerchantSellingPlaceViewModel @Inject constructor(
@@ -26,15 +33,46 @@ class MerchantSellingPlaceViewModel @Inject constructor(
 
     private val sellingPlaces = MutableLiveData<ArrayList<SellingPlace>>()
 
+    fun getAddressFromCoordinates(context: Context, latLng: LatLng): LiveData<String> {
+        val result = MutableLiveData<String>()
+
+        val geocoder = Geocoder(context, Locale.getDefault())
+
+        viewModelScope.launch {
+            try {
+                val addresses: List<Address>? =
+                    geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                val obj = addresses?.get(0)
+                val addressLine = obj?.getAddressLine(0)
+                if (addressLine != null) {
+                    var indexOfPlus = -1
+                    indexOfPlus = addressLine.indexOf("+")
+                    val indexOfSpace = addressLine.indexOf(" ")
+
+                    if (indexOfPlus > 0){
+                        var address = addressLine.substring(indexOfSpace + 1)
+                        result.postValue(address)
+                    } else {
+                        result.postValue(addressLine!!)
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
+        return result
+    }
+
     fun getUserPlaceCoordinates(): LiveData<PikulResult<List<String>>> {
         val result = MutableLiveData<PikulResult<List<String>>>()
         result.postValue(PikulResult.Loading)
 
         fireStore.collection(FireStoreUtils.TABLE_USER).get()
             .addOnSuccessListener { snapshot ->
-                if (!snapshot.isEmpty){
-                    val  list = ArrayList<String>()
-                    for (doc in snapshot){
+                if (!snapshot.isEmpty) {
+                    val list = ArrayList<String>()
+                    for (doc in snapshot) {
                         val user = doc.toObject(UserAccount::class.java)
                         user.coordinates?.let { list.add(it) }
                     }
@@ -128,7 +166,7 @@ class MerchantSellingPlaceViewModel @Inject constructor(
     fun addStopPoint(
         businessId: String,
         placeNote: String,
-        province: String,
+        address: String,
         startTime: String,
         endTime: String,
         coordinate: String
@@ -145,7 +183,7 @@ class MerchantSellingPlaceViewModel @Inject constructor(
                 businessId = businessId,
                 placeId = ref.id,
                 placeNoteForCustomer = placeNote,
-                province = province,
+                placeAddress = address,
                 visibility = true,
                 startTime = startTime,
                 endTime = endTime,

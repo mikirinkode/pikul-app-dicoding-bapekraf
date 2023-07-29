@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
+import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.Product
+import com.mikirinkode.pikul.data.model.UserAccount
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.databinding.ItemProductOrderBinding
 import com.mikirinkode.pikul.utils.MoneyHelper
 
@@ -16,6 +19,9 @@ class ProductOrderAdapter(private val merchantId: String, private val clickListe
     RecyclerView.Adapter<ProductOrderAdapter.ViewHolder>() {
 
     private val list: ArrayList<Product> = ArrayList()
+    private var sellingPlace: SellingPlace? = null
+    private var businessData: Business? = null
+    private var merchantData: UserAccount? = null
 
     // to save the product order
     // the key is the product id
@@ -58,6 +64,7 @@ class ProductOrderAdapter(private val merchantId: String, private val clickListe
                     btnMinusAmount.visibility = View.VISIBLE
                     etItemOrderAmount.visibility = View.VISIBLE
                 }
+
 
                 btnPlusAmount.setOnClickListener {
                     val newAmount = product.totalAmount + 1
@@ -133,6 +140,24 @@ class ProductOrderAdapter(private val merchantId: String, private val clickListe
         list.addAll(newList)
         notifyDataSetChanged()
     }
+
+    fun setSellingPlace(data: SellingPlace){
+        this.sellingPlace = data
+    }
+
+    fun setMerchantData(data: UserAccount){
+        this.merchantData = data
+    }
+
+    fun setBusinessData(data: Business){
+        this.businessData = data
+    }
+
+    fun getBusinessData() = businessData
+
+    fun getSellingPlace() = sellingPlace
+
+    fun getMerchantData() = merchantData
 
     fun getProductById(productId: String): Product? {
         for (product in list){

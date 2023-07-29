@@ -29,9 +29,9 @@ class ProductSummaryAdapter(private val merchantId: String, private val clickLis
         fun bind(product: Product, position: Int) {
             binding.apply {
                 tvItemName.text = product.productName
-                tvItemAmountAndPrice.text = "${product.totalAmount} x ${product.productPrice}"
+                tvItemAmountAndPrice.text = "${product.totalAmount} x ${MoneyHelper.getFormattedPrice(product.productPrice ?: 0f)}"
                 val total = product.productPrice?.times(product.totalAmount)
-                tvItemTotalPrice.text = total.toString()
+                tvItemTotalPrice.text = MoneyHelper.getFormattedPrice(total ?: 0f)
 
                 val stock = product.productStocks?.get(merchantId) ?: 0
 
@@ -113,6 +113,17 @@ class ProductSummaryAdapter(private val merchantId: String, private val clickLis
         }
 
         return totalItem
+    }
+
+    fun getBookedProducts(): List<Product> {
+        val products = ArrayList<Product>()
+        for (product in list){
+            if (product.totalAmount > 0){
+                products.add(product)
+            }
+        }
+
+        return products
     }
 
     fun getTotalOrderBilling(): Float {

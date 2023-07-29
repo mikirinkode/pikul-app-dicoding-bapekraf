@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.databinding.FragmentOngoingOrderBinding
-import com.mikirinkode.pikul.databinding.FragmentOwnerRegisterBinding
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionAdapter
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +54,7 @@ class OngoingOrderFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.getTransactionList().observe(viewLifecycleOwner) {result ->
+        viewModel.getOnGoingTransactionList().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is PikulResult.Loading -> {}
                 is PikulResult.LoadingWithProgress -> {} // TODO

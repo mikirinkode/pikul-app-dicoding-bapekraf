@@ -1,5 +1,9 @@
 package com.mikirinkode.pikul.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class PikulTransaction(
     // transaction data
     var transactionId: String? = null,
@@ -32,4 +36,4 @@ data class PikulTransaction(
     var createdTimestamp: Long? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null
-)
+): Parcelable

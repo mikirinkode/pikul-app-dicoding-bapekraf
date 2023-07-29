@@ -12,6 +12,7 @@ import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.data.model.UserAccount
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.feature.owner.product.ProductViewModel
 import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,10 +53,32 @@ class DetailBusinessViewModel @Inject constructor(
                 val errorMessage = it.message ?: "Gagal Mengambil Data"
                 result.postValue(PikulResult.Error(errorMessage))
             }
-            .addOnSuccessListener {doc ->
+            .addOnSuccessListener { doc ->
                 val user = doc.toObject(UserAccount::class.java)
                 if (user != null) {
                     result.postValue(PikulResult.Success(user))
+                }
+            }
+        return result
+    }
+
+    fun getMerchantPlace(merchantId: String): LiveData<PikulResult<SellingPlace>> {
+        val result = MutableLiveData<PikulResult<SellingPlace>>()
+
+        result.postValue(PikulResult.Loading)
+
+        fireStore.collection(FireStoreUtils.TABLE_SELLING_PLACES)
+            .whereEqualTo("merchantId", merchantId).get()
+            .addOnFailureListener {
+                val errorMessage = it.message ?: "Gagal Mengambil Data"
+                result.postValue(PikulResult.Error(errorMessage))
+            }
+            .addOnSuccessListener { doc ->
+                if (!doc.isEmpty) { // TODO
+                    val sellingPlace = doc.first().toObject(SellingPlace::class.java)
+                    if (sellingPlace != null) {
+                        result.postValue(PikulResult.Success(sellingPlace))
+                    }
                 }
             }
         return result

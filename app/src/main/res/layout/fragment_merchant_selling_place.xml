@@ -91,25 +91,34 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/ivLocation"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:id="@+id/tvPlaceNote"
+                android:id="@+id/tvPlaceAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_medium"
                 app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivLocation"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Nama Tempat" />
+                tools:text="Address" />
 
             <ImageView
                 android:id="@+id/ivTime"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/ic_time_outline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlaceNote"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaceAddress"
                 app:tint="?attr/colorPrimary" />
 
             <TextView
@@ -122,25 +131,25 @@
                 tools:text="00:00 - 00:00" />
 
             <TextView
-                android:id="@+id/tvPlaceProvince"
+                android:id="@+id/tvNoteTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnDelete"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivTime"
-                tools:text="DKI Jakarta" />
+                android:text="Catatan: " />
 
             <TextView
-                android:id="@+id/tvPlaceCoordinate"
+                android:id="@+id/tvPlaceNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnDelete"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlaceProvince"
-                tools:text="41409314, 1209431" />
+                app:layout_constraintTop_toBottomOf="@id/tvNoteTitle"
+                tools:text="user place note" />
 
             <Button
                 android:id="@+id/btnDelete"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.order.OrderSummaryFragment">
+    tools:context=".feature.order.PaymentSuccessActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -21,7 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="?android:attr/textColor"
-            app:title="@string/txt_order_summary" />
+            app:title="@string/txt_screen_payment_success" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -39,26 +39,58 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutTransactionStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_card"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvTransactionStatusTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status Transaksi:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTransactionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTransactionStatusTitle"
+                    tools:text="Menunggu Pembayaran" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/bg_rounded_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/layoutTransactionStatus">
 
                 <TextView
                     android:id="@+id/tvProductSectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="Produk"
                     android:textSize="18sp"
-                    android:fontFamily="@font/poppins_medium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +103,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvProductSectionTitle"
                     tools:itemCount="4"
-                    tools:listitem="@layout/item_product_summary" />
+                    tools:listitem="@layout/item_product_ordered" />
 
                 <View
                     android:id="@+id/separator"
@@ -139,8 +171,8 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutPickUpPlace"
-                android:layout_width="match_parent"
+                android:id="@+id/layoutMerchantProfile"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_rounded_card"
@@ -150,15 +182,62 @@
                 app:layout_constraintTop_toBottomOf="@id/layoutProduct">
 
                 <TextView
+                    android:id="@+id/tvMerchantSectionTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Pedagang"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivMerchantAvatar"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_user_avatar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMerchantSectionTitle" />
+
+                <TextView
+                    android:id="@+id/tvMerchantName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMerchantAvatar"
+                    app:layout_constraintStart_toEndOf="@id/ivMerchantAvatar"
+                    app:layout_constraintTop_toTopOf="@id/ivMerchantAvatar"
+                    tools:text="Kang Pikul" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutPickUpPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_rounded_card"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutMerchantProfile">
+
+                <TextView
                     android:id="@+id/tvLocationSectionTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Tempat Pengambilan Pesanan"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/poppins_medium"
                     android:layout_marginEnd="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Tempat Pengambilan Pesanan"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@id/btnSeeLocationOnMap"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -167,9 +246,9 @@
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lihat Peta"
-                    android:padding="0dp"
                     android:fontFamily="@font/poppins_medium"
+                    android:padding="0dp"
+                    android:text="Lihat Peta"
                     app:layout_constraintBottom_toBottomOf="@id/tvLocationSectionTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvLocationSectionTitle" />
@@ -213,11 +292,11 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPay"
+            android:id="@+id/btnBackToHome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/txt_btn_pay"
+            android:text="Halaman Utama"
             android:theme="@style/Theme.Pikul.Button"
             app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -225,4 +304,5 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

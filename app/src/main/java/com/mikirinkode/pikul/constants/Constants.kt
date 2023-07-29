@@ -7,6 +7,7 @@ object Constants {
 
     const val MIDTRANS_SERVER_KEY = "SB-Mid-server-8F7IWcmCV9buGFzZY7zcpypj"
 
+    const val MIDTRANS_AUTH = "Basic U0ItTWlkLXNlcnZlci04RjdJV2NtQ1Y5YnVHRnpaWTd6Y3B5cGo="
     const val MIDTRANS_MAKE_TRANSACTION_URL = "https://app.sandbox.midtrans.com/snap/v1/"
     const val MIDTRANS_CHECK_TRANSACTION_STATUS_URL = "https://api.sandbox.midtrans.com/v2/"
 }

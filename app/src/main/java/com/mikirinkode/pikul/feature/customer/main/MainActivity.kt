@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             val bottomNavView: BottomNavigationView = bottomNavView
-            bottomNavView.background = null
+//            bottomNavView.background = null
 
             bottomNavView.setupWithNavController(navController)
         }

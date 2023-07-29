@@ -8,6 +8,9 @@ object LocalPreferenceConstants {
     const val CONVERSATION_ID_LIST = "conversation_id_list"
     const val USER_LAST_LATITUDE = "user_latitude"
     const val USER_LAST_LONGITUDE = "user_longitude"
+
+    // order
+    const val TRANSACTION_ORDER = "transaction_order"
 }
 
 enum class MAIN_VIEW{

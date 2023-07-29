@@ -1,24 +1,61 @@
 package com.mikirinkode.pikul.feature.customer.transaction
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mikirinkode.pikul.constants.PAYMENT_STATUS
 import com.mikirinkode.pikul.data.model.PikulTransaction
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.databinding.ItemProductSummaryBinding
 import com.mikirinkode.pikul.databinding.ItemTransactionBinding
+import com.mikirinkode.pikul.feature.customer.transaction.detail.DetailTransactionActivity
+import com.mikirinkode.pikul.utils.CommonHelper
+import com.mikirinkode.pikul.utils.DateHelper
+import com.mikirinkode.pikul.utils.MoneyHelper
 
-class TransactionAdapter: RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     private val list = ArrayList<PikulTransaction>()
 
     inner class ViewHolder(private val binding: ItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(transaction: PikulTransaction){
-                binding.apply {
-                    tvTransactionPaymentStatus.text = transaction.transactionStatus
+        fun bind(transaction: PikulTransaction) {
+            binding.apply {
+                if (transaction.paymentStatus == PAYMENT_STATUS.FAILED.toString()){
+                    layoutFailedStatus.visibility = View.VISIBLE
+                    layoutGoodStatus.visibility = View.GONE
+                    tvDummyFailedStatus.text = CommonHelper.getReadAblePaymentStatus(PAYMENT_STATUS.FAILED.toString())
+                    tvFailedStatus.text = CommonHelper.getReadAblePaymentStatus(PAYMENT_STATUS.FAILED.toString())
+                } else {
+                    layoutFailedStatus.visibility = View.GONE
+                    layoutGoodStatus.visibility = View.VISIBLE
+                    tvGoodStatus.text = CommonHelper.getReadAbleTransactionStatus(transaction.transactionStatus.toString())
+                    tvDummyGoodStatus.text = CommonHelper.getReadAbleTransactionStatus(transaction.transactionStatus.toString())
+                }
+                tvBusinessName.text = transaction.businessName
+                tvTransactionTotalBilling.text = MoneyHelper.getFormattedPrice(transaction.totalBilling ?: 0f)
+                if (transaction.createdTimestamp != null){
+                    tvTransactionDate.text = DateHelper.getFormattedTransactionDateFromTimestmap(transaction.createdTimestamp!!)
+                } else {
+                    tvTransactionDate.text = transaction.createdAt
                 }
             }
+
+            itemView.setOnClickListener {
+                itemView.context.startActivity(
+                    Intent(
+                        itemView.context,
+                        DetailTransactionActivity::class.java
+                    )
+                        .putExtra(
+                            DetailTransactionActivity.EXTRA_INTENT_TRANSACTION_ID,
+                            transaction.transactionId
+                        )
+                )
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

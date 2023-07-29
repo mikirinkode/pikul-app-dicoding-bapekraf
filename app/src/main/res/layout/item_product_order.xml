@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -46,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@id/cardItemImage"
             app:layout_constraintTop_toBottomOf="@id/tvItemName"
             tools:text="20.000" />
@@ -58,7 +56,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/poppins_medium"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toStartOf="@+id/materialCardView"
             app:layout_constraintStart_toEndOf="@id/cardItemImage"
             app:layout_constraintTop_toBottomOf="@id/tvItemPrice"
@@ -130,22 +128,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:padding="0dp"
                     app:icon="@drawable/ic_remove"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/etItemOrderAmount"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/etItemOrderAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:textSize="16sp"
-                    android:inputType="number"
-                    android:imeOptions="actionDone"
                     app:layout_constraintBottom_toBottomOf="@id/btnPlusAmount"
-
                     app:layout_constraintEnd_toStartOf="@id/btnPlusAmount"
                     app:layout_constraintTop_toTopOf="@id/btnPlusAmount"
                     tools:text="10000000000" />
@@ -155,7 +149,6 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="0dp"
                     app:icon="@drawable/ic_add"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
