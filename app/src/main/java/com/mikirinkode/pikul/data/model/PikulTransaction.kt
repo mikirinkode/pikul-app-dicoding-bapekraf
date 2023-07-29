@@ -24,6 +24,7 @@ data class PikulTransaction(
 
     // customer data:
     var customerId: String? = null,
+    var customerName: String? = null,
 
     // business data
     var businessId: String? = null,
@@ -35,5 +36,6 @@ data class PikulTransaction(
 
     var createdTimestamp: Long? = null,
     var createdAt: String? = null,
+    var updatedAtTimestamp: Long? = null,
     var updatedAt: String? = null
 ): Parcelable

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mikirinkode.pikul.constants.PAYMENT_STATUS
+import com.mikirinkode.pikul.constants.TRANSACTION_STATUS
 import com.mikirinkode.pikul.data.model.PikulTransaction
 import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.databinding.ItemProductSummaryBinding
@@ -18,6 +19,8 @@ import com.mikirinkode.pikul.utils.MoneyHelper
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     private val list = ArrayList<PikulTransaction>()
+
+    var clickListener: ClickListener? = null
 
     inner class ViewHolder(private val binding: ItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -33,7 +36,19 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>()
                     layoutGoodStatus.visibility = View.VISIBLE
                     tvGoodStatus.text = CommonHelper.getReadAbleTransactionStatus(transaction.transactionStatus.toString())
                     tvDummyGoodStatus.text = CommonHelper.getReadAbleTransactionStatus(transaction.transactionStatus.toString())
+
+                    if (transaction.transactionStatus == TRANSACTION_STATUS.READY_TO_PICK_UP.toString()){
+                        btnMarkAsCompleted.visibility = View.VISIBLE
+                        btnMarkAsCompleted.setOnClickListener {
+                            clickListener?.updateTransactionAlreadyPickedUp(transaction.transactionId ?: "")
+                        }
+                    } else {
+                        btnMarkAsCompleted.visibility = View.GONE
+                    }
                 }
+
+
+
                 tvBusinessName.text = transaction.businessName
                 tvTransactionTotalBilling.text = MoneyHelper.getFormattedPrice(transaction.totalBilling ?: 0f)
                 if (transaction.createdTimestamp != null){
@@ -77,5 +92,9 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>()
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()
+    }
+
+    interface ClickListener{
+        fun updateTransactionAlreadyPickedUp(transactionId: String)
     }
 }

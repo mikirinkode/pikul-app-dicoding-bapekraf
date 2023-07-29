@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.pikul.data.model.PikulResult
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class OngoingOrderFragment : Fragment() {
+class OngoingOrderFragment : Fragment(), TransactionAdapter.ClickListener {
     private var _binding: FragmentOngoingOrderBinding? = null
     private val binding get() = _binding!!
 
@@ -36,6 +37,7 @@ class OngoingOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter.clickListener = this
         initRecyclerView()
         observeData()
         onClickAction()
@@ -66,6 +68,34 @@ class OngoingOrderFragment : Fragment() {
         }
     }
 
+    override fun updateTransactionAlreadyPickedUp(transactionId: String) {
+        viewModel.updateTransactionAlreadyPickedUp(transactionId)
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {
+                        binding.layoutLoading.visibility = View.VISIBLE
+                    }
+                    is PikulResult.LoadingWithProgress -> {}
+                    is PikulResult.Error -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            result.errorMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is PikulResult.Success -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            "Berhasil Memperbarui status pesanan",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+    }
+    
     private fun onClickAction(){
 
     }

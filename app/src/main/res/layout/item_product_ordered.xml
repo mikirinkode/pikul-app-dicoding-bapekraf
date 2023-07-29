@@ -16,52 +16,6 @@
 
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardOrderAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?attr/background"
-            app:layout_constraintBottom_toBottomOf="@id/tvItemAmountAndPrice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvItemName"
-            app:strokeWidth="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp">
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardItemAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="?attr/background"
-                    app:cardCornerRadius="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="?attr/itemTextAppearanceInactive"
-                    app:strokeWidth="2dp">
-
-                    <TextView
-                        android:id="@+id/etItemOrderAmount"
-                        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:enabled="false"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="8dp"
-                        android:textSize="16sp"
-                        tools:text="10" />
-                </com.google.android.material.card.MaterialCardView>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <TextView
             android:id="@+id/tvItemName"
             android:layout_width="0dp"
@@ -71,7 +25,7 @@
             android:maxLines="1"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/tvItemTotalPrice"
-            app:layout_constraintStart_toEndOf="@id/cardOrderAmount"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Siomay Telor" />
 
@@ -79,10 +33,9 @@
             android:id="@+id/tvItemAmountAndPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:textColor="@color/neutral_300"
             app:layout_constraintEnd_toStartOf="@+id/tvItemTotalPrice"
-            app:layout_constraintStart_toEndOf="@id/cardOrderAmount"
+            app:layout_constraintStart_toStartOf="@+id/tvItemName"
             app:layout_constraintTop_toBottomOf="@id/tvItemName"
             tools:text="10 x 20.000" />
 

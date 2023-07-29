@@ -101,6 +101,7 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
                 val businessName = transaction.businessName ?: ""
                 val merchantId = transaction.merchantId ?: ""
                 val merchantName = transaction.merchantName ?: ""
+                val customerName = transaction.customerName ?: ""
                 val listOfProduct = adapter.getBookedProducts()
 
                 viewModel.createTransaction(
@@ -112,6 +113,7 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
                     businessName,
                     merchantId,
                     merchantName,
+                    customerName,
                     listOfProduct
                 ).observe(viewLifecycleOwner) { result ->
                     when (result) {

@@ -29,7 +29,8 @@ class MidtransViewModel @Inject constructor(
             "alreadyPaid" to false, // TODO: ADD TO Firestrore Utils
             "paymentStatus" to PAYMENT_STATUS.FAILED.toString(),
             "transactionStatus" to TRANSACTION_STATUS.CANCELLED.toString(),
-            "updatedAt" to DateHelper.getCurrentDateTime()
+            "updatedAt" to DateHelper.getCurrentDateTime(),
+            "updatedAtTimestamp" to System.currentTimeMillis()
         )
         fireStore.collection(FireStoreUtils.TABLE_TRANSACTIONS).document(transactionId)
             .set(data, SetOptions.merge())

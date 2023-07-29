@@ -11,10 +11,8 @@ import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
-import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.MerchantAgreement
 import com.mikirinkode.pikul.data.model.PikulResult
-import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -114,8 +112,8 @@ class MerchantDashboardFragment : Fragment() {
 
     private fun setupTabs() {
         binding.apply {
-            val sectionsPagerAdapter = SectionsPagerAdapter(this@MerchantDashboardFragment)
-            viewPager.adapter = sectionsPagerAdapter
+            val merchantTransactionPagerAdapter = MerchantTransactionPagerAdapter(this@MerchantDashboardFragment)
+            viewPager.adapter = merchantTransactionPagerAdapter
             TabLayoutMediator(tabs, viewPager) { tab, position ->
                 tab.text = resources.getString(TAB_TITLES[position])
             }.attach()

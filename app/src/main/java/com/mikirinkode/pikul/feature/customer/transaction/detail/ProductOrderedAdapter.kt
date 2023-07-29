@@ -30,8 +30,6 @@ class ProductOrderedAdapter() :
                 val total = product.productPrice?.times(product.totalAmount)
                 tvItemTotalPrice.text = MoneyHelper.getFormattedPrice(total ?: 0f)
 
-                val totalAmount: Int = product.totalAmount
-                etItemOrderAmount.setText(totalAmount.toString())
             }
         }
     }

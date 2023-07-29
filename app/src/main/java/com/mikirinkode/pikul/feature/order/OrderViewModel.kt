@@ -66,6 +66,7 @@ class OrderViewModel @Inject constructor(
         businessName: String,
         merchantId: String,
         merchantName: String,
+        customerName: String,
         listOfProduct: List<Product>
     ): LiveData<PikulResult<PikulTransaction>> {
         val result = MutableLiveData<PikulResult<PikulTransaction>>()
@@ -125,6 +126,7 @@ class OrderViewModel @Inject constructor(
                             productAmounts = productIdWithAmount,
 
                             customerId = userId,
+                            customerName = customerName,
 
                             businessId = businessId,
                             businessName = businessName,
@@ -134,7 +136,8 @@ class OrderViewModel @Inject constructor(
 
                             createdTimestamp = System.currentTimeMillis(),
                             createdAt = DateHelper.getCurrentDateTime(),
-                            updatedAt = null,
+                            updatedAtTimestamp = System.currentTimeMillis(),
+                            updatedAt = DateHelper.getCurrentDateTime(),
                         )
 
                         ref.set(pikulTransaction)

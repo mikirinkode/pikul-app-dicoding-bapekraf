@@ -29,7 +29,7 @@ object CommonHelper {
         TRANSACTION_STATUS.ON_PROCESS_BY_MERCHANT.toString() -> {
             "Sedang Diproses Pedagang"
         }
-        TRANSACTION_STATUS.WAITING_FOR_PICKUP.toString() -> {
+        TRANSACTION_STATUS.READY_TO_PICK_UP.toString() -> {
             "Pesanan Siap Diambil"
         }
         TRANSACTION_STATUS.COMPLETED.toString() -> {

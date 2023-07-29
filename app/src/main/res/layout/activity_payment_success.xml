@@ -31,7 +31,7 @@
         android:clipToPadding="false"
         android:paddingBottom="64dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutButtonAction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
@@ -42,15 +42,26 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp">
 
+            <ImageView
+                android:id="@+id/ivCheckMark"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="?android:attr/colorPrimary"
+                android:src="@drawable/ic_check_mark"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutTransactionStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_rounded_card"
                 android:padding="16dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/ivCheckMark">
 
                 <TextView
                     android:id="@+id/tvTransactionStatusTitle"
@@ -283,6 +294,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:id="@+id/layoutButtonAction"
         android:background="@drawable/bg_rounded_top"
         android:elevation="8dp"
         android:padding="16dp"

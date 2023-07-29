@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
     android:backgroundTint="?attr/background"
     app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutGoodStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/tvDummyGoodStatus"
@@ -32,12 +32,12 @@
                 android:background="@drawable/bg_rounded_card"
                 android:backgroundTint="?attr/colorPrimary"
                 android:fontFamily="@font/poppins_medium"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Pedagang" />
 
             <TextView
@@ -59,9 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutGoodStatus"
-            app:layout_constraintStart_toStartOf="parent">
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/tvDummyFailedStatus"
@@ -71,12 +71,12 @@
                 android:background="@drawable/bg_rounded_card"
                 android:backgroundTint="@color/red"
                 android:fontFamily="@font/poppins_medium"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
                 android:textAlignment="center"
                 android:textColor="@color/red"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Pedagang" />
 
             <TextView
@@ -91,27 +91,38 @@
                 app:layout_constraintTop_toTopOf="@id/tvDummyFailedStatus"
                 tools:text="Pedagang" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tvBusinessName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/ivUserIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="16dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/poppins_semibold"
+            android:src="@drawable/ic_user_outline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutFailedStatus"
-            tools:text="Nama Bisnis" />
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/ivUserIcon"
+            app:layout_constraintTop_toTopOf="@id/ivUserIcon"
+            tools:text="Muhammad Wafa" />
 
         <ImageView
             android:id="@+id/ivDateIcon"
-            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
-            app:layout_constraintStart_toStartOf="@id/tvBusinessName"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginTop="8dp"
-            app:tint="?attr/colorPrimary"
-            android:src="@drawable/ic_date_outline"/>
+            android:src="@drawable/ic_date_outline"
+            app:layout_constraintEnd_toEndOf="@+id/ivUserIcon"
+            app:layout_constraintStart_toStartOf="@+id/ivUserIcon"
+            app:layout_constraintTop_toBottomOf="@id/ivUserIcon"
+            app:tint="?attr/colorPrimary" />
+
         <TextView
             android:id="@+id/tvTransactionDate"
             android:layout_width="wrap_content"
@@ -121,34 +132,34 @@
             app:layout_constraintTop_toTopOf="@id/ivDateIcon"
             tools:text="Senin, 20 Maret 2023 20:20" />
 
-        <ImageView
-            android:id="@+id/ivPriceIcon"
-            app:layout_constraintTop_toBottomOf="@id/ivDateIcon"
-            app:layout_constraintStart_toStartOf="@id/ivDateIcon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="16dp"
-            app:tint="?attr/colorPrimary"
-            android:src="@drawable/ic_price_outline"/>
         <TextView
-            android:id="@+id/tvTransactionTotalBilling"
+            android:id="@+id/tvOrderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/ivPriceIcon"
-            app:layout_constraintTop_toTopOf="@id/ivPriceIcon"
-            tools:text="Rp.20.000" />
+            android:layout_marginTop="16dp"
+            android:text="Pesanan:"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTransactionDate" />
+
+
+        <TextView
+            android:id="@+id/tvOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="\n 3x Siomay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderTitle" />
 
         <Button
-
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:id="@+id/btnMarkAsCompleted"
+            android:id="@+id/btnAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Theme.Pikul.Button"
-            app:layout_constraintTop_toBottomOf="@id/tvTransactionTotalBilling"
-            android:text="Tandai Telah Diterima"
+            app:layout_constraintTop_toBottomOf="@id/tvOrder"
+            tools:text="Proses Pesanan"
             android:layout_marginTop="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

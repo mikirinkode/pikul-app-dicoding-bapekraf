@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".feature.customer.transaction.order.OngoingOrderFragment">
+    tools:context=".feature.merchant.dashboard.MerchantOnGoingTransactionFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -54,4 +54,5 @@
             app:layout_constraintStart_toEndOf="@id/progressBar"
             app:layout_constraintTop_toTopOf="@id/progressBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

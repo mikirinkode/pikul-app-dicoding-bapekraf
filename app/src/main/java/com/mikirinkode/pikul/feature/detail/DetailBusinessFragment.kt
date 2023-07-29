@@ -338,6 +338,7 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
                         productAmounts = productIdWithAmount,
 
                         customerId = null,
+                        customerName = user?.name, // TODO: check
 
                         businessId = businessId,
                         businessName = businessName,
@@ -347,6 +348,7 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
 
                         createdTimestamp = null,
                         createdAt = null,
+                        updatedAtTimestamp = null,
                         updatedAt = null,
                     )
 
