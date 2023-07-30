@@ -166,7 +166,40 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                 }
                 is PikulResult.Success -> {
                     totalSellingPlace = result.data.size
-                    createAllSellingPlaces(result.data)
+
+                    if (result.data.isNotEmpty()) {
+                        val sellingPlace = result.data.first()
+                        val latLng = MapsHelper.getLatLngFromString(sellingPlace.coordinate)
+                        if (latLng != null) {
+                            val markerOptions =
+                                MapsHelper.createSellingPlaceMarker(
+                                    latLng,
+                                    sellingPlace.placeId ?: ""
+                                )
+                            val marker = mMap.addMarker(markerOptions)
+
+                            binding.apply {
+                                cardSellingPointDetail.visibility = View.VISIBLE
+                                tvPlaceNote.text = sellingPlace.placeNoteForCustomer
+                                tvPlaceAddress.text = sellingPlace.placeAddress
+                                tvTime.text = "${sellingPlace.startTime} - ${sellingPlace.endTime}"
+
+                                cardSellingPointDetail.setOnClickListener {
+                                    val latLng =
+                                        MapsHelper.getLatLngFromString(sellingPlace.coordinate)
+                                    if (latLng != null) {
+                                        MapsHelper.navigateToLocation(mMap, latLng)
+                                    }
+                                }
+
+                                btnDelete.setOnClickListener {
+                                    if (marker != null) {
+                                        onDeletePlaceClicked(marker, sellingPlace.placeId ?: "")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -379,41 +412,54 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                         tvPlaceAddress.text = result.placeAddress
                         tvTime.text = "${result.startTime} - ${result.endTime}"
 
+                        cardSellingPointDetail.setOnClickListener {
+                            val latLng = MapsHelper.getLatLngFromString(result.coordinate)
+                            if (latLng != null) {
+                                MapsHelper.navigateToLocation(mMap, latLng)
+                            }
+                        }
+
                         btnDelete.setOnClickListener {
-                            viewModel.deleteSellingPlaceById(placeId = result.placeId ?: "")
-                                .observe(viewLifecycleOwner) { result ->
-                                    when (result) {
-                                        is PikulResult.Loading -> {
-                                            layoutLoading.visibility = View.VISIBLE
-                                        }
-                                        is PikulResult.LoadingWithProgress -> {}
-                                        is PikulResult.Error -> {
-                                            layoutLoading.visibility = View.GONE
-                                            Toast.makeText(
-                                                requireContext(),
-                                                result.errorMessage,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                        is PikulResult.Success -> {
-                                            totalSellingPlace -= 1
-                                            marker.remove()
-                                            cardSellingPointDetail.visibility = View.GONE
-                                            layoutLoading.visibility = View.GONE
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Berhasil Menghapus Data",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                                }
+                            onDeletePlaceClicked(marker, result.placeId ?: "")
                         }
                     }
                 }
             }
         }
         return true
+    }
+
+    private fun onDeletePlaceClicked(marker: Marker, placeId: String) {
+        binding.apply {
+            viewModel.deleteSellingPlaceById(placeId ?: "")
+                .observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is PikulResult.Loading -> {
+                            layoutLoading.visibility = View.VISIBLE
+                        }
+                        is PikulResult.LoadingWithProgress -> {}
+                        is PikulResult.Error -> {
+                            layoutLoading.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                result.errorMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is PikulResult.Success -> {
+                            totalSellingPlace -= 1
+                            marker.remove()
+                            cardSellingPointDetail.visibility = View.GONE
+                            layoutLoading.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                "Berhasil Menghapus Data",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+        }
     }
 
 
@@ -432,7 +478,7 @@ class MerchantSellingPlaceFragment : Fragment(), OnMapReadyCallback,
                     ).show()
 
                 } else {
-                    if (currentSelectedAddress != ""){
+                    if (currentSelectedAddress != "") {
                         dialogBinding?.etAddress?.setText(currentSelectedAddress)
                     }
                     addSellingPlaceDialog?.show()

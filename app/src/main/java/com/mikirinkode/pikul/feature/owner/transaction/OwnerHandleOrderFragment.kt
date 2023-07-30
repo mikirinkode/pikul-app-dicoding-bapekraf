@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.databinding.FragmentOwnerHandleOrderBinding
@@ -38,6 +39,10 @@ class OwnerHandleOrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupTabs()
+
+        binding.topAppBar.setNavigationOnClickListener {
+            Navigation.findNavController(binding.root).navigateUp()
+        }
     }
 
     override fun onDestroyView() {

@@ -17,6 +17,7 @@ import com.mikirinkode.pikul.data.model.MerchantAgreement
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
+import com.mikirinkode.pikul.feature.owner.dashboard.OwnerDashboardFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -100,12 +101,55 @@ class MerchantDashboardFragment : Fragment() {
                         agreement = result.data
                         if (agreement == null) {
                             cardNotHavePartner.visibility = View.VISIBLE
+                            cardNotYetSetLocation.visibility = View.GONE
+                            cardNotYetManageStock.visibility = View.GONE
                         } else {
                             if (agreement?.businessPartnerId != null) {
+
                                 cardNotHavePartner.visibility = View.GONE
                                 setupTabs()
+                                // check stock and location
+                                viewModel.getProductList(agreement?.businessPartnerId!!).observe(viewLifecycleOwner) { result ->
+                                    when (result) {
+                                        is PikulResult.Loading -> {}
+                                        is PikulResult.LoadingWithProgress -> {}
+                                        is PikulResult.Error -> {}
+                                        is PikulResult.Success -> {
+                                            if (result.data){
+                                                cardNotYetManageStock.visibility = View.VISIBLE
+                                            } else {
+                                                cardNotYetManageStock.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                }
+
+                                viewModel.getOwnerSellingPlaces().observe(viewLifecycleOwner) { result ->
+                                    when (result) {
+                                        is PikulResult.Loading -> {}
+                                        is PikulResult.LoadingWithProgress -> {}
+                                        is PikulResult.Error -> {}
+                                        is PikulResult.Success -> {
+                                            val totalSellingPlace = result.data.size
+                                            if (totalSellingPlace <= 0){
+                                                cardNotYetSetLocation.visibility = View.VISIBLE
+                                            } else {
+                                                cardNotYetSetLocation.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                }
+
+                                cardNotYetManageStock.setOnClickListener {
+                                    val action = MerchantDashboardFragmentDirections.actionManageStockFromDashboard(
+                                        agreement?.businessPartnerId ?: "" // TODO : CHECK AGAIN LATER
+                                    )
+                                    Navigation.findNavController(binding.root).navigate(action)
+                                }
                             } else {
                                 cardNotHavePartner.visibility = View.VISIBLE
+                                cardNotYetSetLocation.visibility = View.GONE
+                                cardNotYetManageStock.visibility = View.GONE
                             }
                         }
                     }
@@ -134,6 +178,14 @@ class MerchantDashboardFragment : Fragment() {
 
             btnOpenChat.setOnClickListener {
                 val action = MerchantDashboardFragmentDirections.actionOpenMerchantChats()
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+
+
+            cardNotYetSetLocation.setOnClickListener {
+                val action = MerchantDashboardFragmentDirections.actionOpenSellingPlaceFromDashboard(
+                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
+                )
                 Navigation.findNavController(binding.root).navigate(action)
             }
 

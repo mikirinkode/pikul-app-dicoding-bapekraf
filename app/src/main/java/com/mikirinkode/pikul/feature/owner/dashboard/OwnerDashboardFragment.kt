@@ -66,36 +66,6 @@ class OwnerDashboardFragment : Fragment() {
     private fun observeBusinessData(){
         binding.apply {
 
-            viewModel.getProductList().observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        if (result.data){
-                            cardNotYetManageStock.visibility = View.VISIBLE
-                        } else {
-                            cardNotYetManageStock.visibility = View.GONE
-                        }
-                    }
-                }
-            }
-
-            viewModel.getOwnerSellingPlaces().observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        val totalSellingPlace = result.data.size
-                        if (totalSellingPlace <= 0){
-                            cardNotYetSetLocation.visibility = View.VISIBLE
-                        } else {
-                            cardNotYetSetLocation.visibility = View.GONE
-                        }
-                    }
-                }
-            }
 
             viewModel.getBusinessData().observe(viewLifecycleOwner){result ->
                 when (result){
@@ -126,6 +96,42 @@ class OwnerDashboardFragment : Fragment() {
                             tvSellingModeStatusDummyActive.visibility = View.GONE
                             tvSellingModeStatusNotActive.visibility = View.VISIBLE
                             tvSellingModeStatusDummyNotActive.visibility = View.VISIBLE
+                        }
+
+                        if (!sellingMode){
+                            cardNotYetManageStock.visibility = View.GONE
+                            cardNotYetSetLocation.visibility = View.GONE
+                        } else {
+                            viewModel.getProductList().observe(viewLifecycleOwner) { result ->
+                                when (result) {
+                                    is PikulResult.Loading -> {}
+                                    is PikulResult.LoadingWithProgress -> {}
+                                    is PikulResult.Error -> {}
+                                    is PikulResult.Success -> {
+                                        if (result.data){
+                                            cardNotYetManageStock.visibility = View.VISIBLE
+                                        } else {
+                                            cardNotYetManageStock.visibility = View.GONE
+                                        }
+                                    }
+                                }
+                            }
+
+                            viewModel.getOwnerSellingPlaces().observe(viewLifecycleOwner) { result ->
+                                when (result) {
+                                    is PikulResult.Loading -> {}
+                                    is PikulResult.LoadingWithProgress -> {}
+                                    is PikulResult.Error -> {}
+                                    is PikulResult.Success -> {
+                                        val totalSellingPlace = result.data.size
+                                        if (totalSellingPlace <= 0){
+                                            cardNotYetSetLocation.visibility = View.VISIBLE
+                                        } else {
+                                            cardNotYetSetLocation.visibility = View.GONE
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -42,18 +42,20 @@ class MerchantSellingPlaceViewModel @Inject constructor(
             try {
                 val addresses: List<Address>? =
                     geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-                val obj = addresses?.get(0)
-                val addressLine = obj?.getAddressLine(0)
-                if (addressLine != null) {
-                    var indexOfPlus = -1
-                    indexOfPlus = addressLine.indexOf("+")
-                    val indexOfSpace = addressLine.indexOf(" ")
+                if (addresses?.isNotEmpty() == true){
+                    val obj = addresses?.get(0)
+                    val addressLine = obj?.getAddressLine(0)
+                    if (addressLine != null) {
+                        var indexOfPlus = -1
+                        indexOfPlus = addressLine.indexOf("+")
+                        val indexOfSpace = addressLine.indexOf(" ")
 
-                    if (indexOfPlus > 0){
-                        var address = addressLine.substring(indexOfSpace + 1)
-                        result.postValue(address)
-                    } else {
-                        result.postValue(addressLine!!)
+                        if (indexOfPlus > 0){
+                            var address = addressLine.substring(indexOfSpace + 1)
+                            result.postValue(address)
+                        } else {
+                            result.postValue(addressLine!!)
+                        }
                     }
                 }
             } catch (e: IOException) {
