@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.Business
@@ -23,6 +24,19 @@ class MapsViewModel @Inject constructor(
     private val preferences: LocalPreference
 ) : ViewModel() {
 
+    fun saveUserCoordinate(latitude: Double, longitude: Double) {
+        val coordinates = "$latitude, $longitude"
+        val update = mapOf(
+            "coordinates" to coordinates
+        )
+
+        val userId = auth.currentUser?.uid
+        if (userId != null){
+            fireStore.collection(FireStoreUtils.TABLE_USER).document(userId)
+                .set(update, SetOptions.merge())
+        }
+    }
+
     fun getSellingPlaces(): LiveData<PikulResult<List<SellingPlace>>> {
         val result = MutableLiveData<PikulResult<List<SellingPlace>>>()
         result.postValue(PikulResult.Loading)
@@ -33,9 +47,9 @@ class MapsViewModel @Inject constructor(
                 val errorMessage = it.message ?: "Gagal mengambil Data"
                 result.postValue(PikulResult.Error(errorMessage))
             }
-            .addOnSuccessListener {snapshots ->
+            .addOnSuccessListener { snapshots ->
                 val businesses = ArrayList<Business>()
-                for (doc in snapshots){
+                for (doc in snapshots) {
                     val business = doc.toObject(Business::class.java)
                     businesses.add(business)
                 }
@@ -52,30 +66,36 @@ class MapsViewModel @Inject constructor(
                     }
                     .addOnSuccessListener {
                         val merchants = ArrayList<UserAccount>()
-                        for (doc in it){
+                        for (doc in it) {
                             val user = doc.toObject(UserAccount::class.java)
                             merchants.add(user)
-                        Log.e(TAG, "merchant id: ${user.userId}, name: ${user.name}")
+                            Log.e(TAG, "merchant id: ${user.userId}, name: ${user.name}")
                         }
                         Log.e(TAG, "merchants result size: ${merchants.size}")
                         // get the selling places
                         fireStore.collection(FireStoreUtils.TABLE_SELLING_PLACES)
                             .whereEqualTo("visibility", true)
                             .get()
-                            .addOnSuccessListener {documents ->
+                            .addOnSuccessListener { documents ->
                                 val list = ArrayList<SellingPlace>()
-                                for (doc in documents){
-                                    if (doc != null){
+                                for (doc in documents) {
+                                    if (doc != null) {
                                         val sellingPlace: SellingPlace = doc.toObject()
 
-                                        if (sellingPlace.businessId != null){
-                                            val businessData = businesses.firstOrNull { it.businessId == sellingPlace.businessId }
-                                            val merchantData = merchants.firstOrNull { it.userId == sellingPlace.merchantId }
+                                        if (sellingPlace.businessId != null) {
+                                            val businessData =
+                                                businesses.firstOrNull { it.businessId == sellingPlace.businessId }
+                                            val merchantData =
+                                                merchants.firstOrNull { it.userId == sellingPlace.merchantId }
 
-                                            Log.e(TAG, "selling place id: ${sellingPlace.placeId}, merchant id: ${sellingPlace.placeId}, business id: ${sellingPlace.businessId}")
+                                            Log.e(
+                                                TAG,
+                                                "selling place id: ${sellingPlace.placeId}, merchant id: ${sellingPlace.placeId}, business id: ${sellingPlace.businessId}"
+                                            )
 
                                             sellingPlace.businessName = businessData?.businessName
-                                            sellingPlace.businessPhotoUrl = businessData?.businessPhoto
+                                            sellingPlace.businessPhotoUrl =
+                                                businessData?.businessPhoto
                                             sellingPlace.merchantName = merchantData?.name
                                             sellingPlace.merchantPhotoUrl = merchantData?.avatarUrl
 
@@ -86,7 +106,8 @@ class MapsViewModel @Inject constructor(
                                 result.postValue(PikulResult.Success(list))
                             }
                             .addOnFailureListener {
-                                val errorMessage: String = it.message ?: "Terjadi Kesalahan pada Maps"
+                                val errorMessage: String =
+                                    it.message ?: "Terjadi Kesalahan pada Maps"
                                 result.postValue(PikulResult.Error(errorMessage))
                             }
                     }

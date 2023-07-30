@@ -8,6 +8,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -195,6 +196,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
             observeNewLocation()
         } else {
             PermissionHelper.requestLocationPermission(requireActivity())
+            observeNewLocation()
         }
     }
 
@@ -226,6 +228,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                         )
 
                         handleUserMarker(it.latitude, it.longitude)
+                        viewModel.saveUserCoordinate(it.latitude, it.longitude)
                     }
                 }
                 .addOnFailureListener { exception: Exception ->
@@ -256,7 +259,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         val marker = mMap.addMarker(MapsHelper.createUserMarker(userLatLng))
         userMarker = marker
 
-        MapsHelper.navigateToLocation(mMap, userLatLng, 4f)
+        MapsHelper.navigateToLocation(mMap, userLatLng)
     }
 
     private fun isLocationServiceEnabled(context: Context): Boolean {
@@ -316,7 +319,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     }
 
 
-    private fun onClickAction() {}
+    private fun onClickAction() {
+        binding.apply {
+            fabUserLocation.setOnClickListener {
+                observeNewLocation()
+            }
+        }
+    }
 
 
     // handle the request permission result
@@ -325,6 +334,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        Log.e("MapsFragment", "onRequestPermissionsResult")
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionHelper.LOCATION_REQUEST_PERMISSION_CODE) {
             if (grantResults.isNotEmpty()) {

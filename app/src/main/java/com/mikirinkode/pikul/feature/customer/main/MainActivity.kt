@@ -4,7 +4,9 @@ import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -22,6 +24,7 @@ import com.mikirinkode.pikul.feature.auth.login.LoginActivity
 import com.mikirinkode.pikul.feature.merchant.MerchantMainActivity
 import com.mikirinkode.pikul.feature.owner.OwnerMainActivity
 import com.mikirinkode.pikul.feature.startbusiness.StartBusinessActivity
+import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -83,6 +86,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        Log.e("MapsFragment", "onRequestPermissionsResult")
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PermissionHelper.LOCATION_REQUEST_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty()) {
+                for (result in grantResults) {
+                    if (result == AppCompatActivity.RESULT_OK) {
+//                        observeNewLocation() // TODO
+                        Toast.makeText(
+                            this,
+                            getString(R.string.txt_location_permission_granted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
 
 }
