@@ -19,6 +19,12 @@
         <action
             android:id="@+id/actionOpenJobVacancy"
             app:destination="@id/jobVacancyFragment" />
+        <action
+            android:id="@+id/actionOpenSellingPlaceFromDashboard"
+            app:destination="@id/merchantSellingPlaceFragment" />
+        <action
+            android:id="@+id/actionManageStockFromDashboard"
+            app:destination="@id/manageStockFragment2" />
     </fragment>
     <fragment
         android:id="@+id/merchantProfileFragment"
