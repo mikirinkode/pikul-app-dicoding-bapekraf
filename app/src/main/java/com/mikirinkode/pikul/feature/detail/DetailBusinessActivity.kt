@@ -3,6 +3,7 @@ package com.mikirinkode.pikul.feature.detail
 import android.content.Intent
 import android.content.Intent.EXTRA_INTENT
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -47,6 +48,7 @@ class DetailBusinessActivity : AppCompatActivity()  {
         val extras = intent.extras
         val businessId = extras?.getString(EXTRA_INTENT_BUSINESS_ID)
         val merchantId = extras?.getString(EXTRA_INTENT_MERCHANT_ID)
+        Log.e("DetailActivity", "busienessId: $businessId")
         if (businessId != null) {
             setupNavigation(businessId, merchantId)
         }

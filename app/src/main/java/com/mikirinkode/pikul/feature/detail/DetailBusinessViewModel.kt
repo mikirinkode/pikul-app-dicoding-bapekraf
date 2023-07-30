@@ -27,15 +27,20 @@ class DetailBusinessViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getBusinessData(businessId: String): MutableLiveData<PikulResult<Business>> {
+        Log.e(TAG, "getBusinessData called: business id: ${businessId}")
         val result = MutableLiveData<PikulResult<Business>>()
         result.postValue(PikulResult.Loading)
         fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(businessId).get()
             .addOnFailureListener {
+
+                Log.e(TAG, "getBusinessData error: ${it.message}")
                 val errorMessage = it.message ?: "Gagal Mengambil Data"
                 result.postValue(PikulResult.Error(errorMessage))
             }
             .addOnSuccessListener { document ->
+                Log.e(TAG, "getBusinessData success, document: ${document.data.toString()}")
                 val business = document.toObject(Business::class.java)
+                Log.e(TAG, "getBusinessData success, name: ${business?.businessName}")
                 if (business != null) {
                     result.postValue(PikulResult.Success(business))
                 }

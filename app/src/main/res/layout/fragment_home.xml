@@ -107,6 +107,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="16dp"
                 android:padding="12dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:background="@drawable/bg_rounded_card">
 
                 <ImageView

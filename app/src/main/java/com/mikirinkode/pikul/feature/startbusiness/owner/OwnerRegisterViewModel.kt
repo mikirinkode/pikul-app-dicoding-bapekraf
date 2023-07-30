@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.algolia.search.model.ObjectID
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -70,7 +71,7 @@ class OwnerRegisterViewModel @Inject constructor(
                     businessProvince = businessProvince,
                     businessAddress = businessAddress,
                     businessPhoto = "",
-                    businessRating = 0.0
+                    businessRating = 0.0,
                 )
 
 
@@ -118,7 +119,7 @@ class OwnerRegisterViewModel @Inject constructor(
                                 businessProvince = businessProvince,
                                 businessAddress = businessAddress,
                                 businessPhoto = uri.toString(),
-                                businessRating = 0.0
+                                businessRating = 0.0,
                             )
                             // add new owner business data
                             fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)

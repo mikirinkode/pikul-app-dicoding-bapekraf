@@ -40,6 +40,8 @@ class MapsViewModel @Inject constructor(
                     businesses.add(business)
                 }
 
+                Log.e(TAG, "business size: ${businesses.size}")
+
                 // get merchant data
                 fireStore.collection(FireStoreUtils.TABLE_USER)
                     .whereNotEqualTo("role", "CUSTOMER")
@@ -70,7 +72,7 @@ class MapsViewModel @Inject constructor(
                                             val businessData = businesses.firstOrNull { it.businessId == sellingPlace.businessId }
                                             val merchantData = merchants.firstOrNull { it.userId == sellingPlace.merchantId }
 
-                                            Log.e(TAG, "selling place id: ${sellingPlace.placeId}, merchant id: ${sellingPlace.placeId}")
+                                            Log.e(TAG, "selling place id: ${sellingPlace.placeId}, merchant id: ${sellingPlace.placeId}, business id: ${sellingPlace.businessId}")
 
                                             sellingPlace.businessName = businessData?.businessName
                                             sellingPlace.businessPhotoUrl = businessData?.businessPhoto

@@ -37,6 +37,7 @@ class SellingPlaceAdapter(private val pref: LocalPreference) :
                 tvTime.text = "${place.startTime} - ${place.endTime}"
                 tvPlaceNote.text = "Catatan penjual: ${place.placeNoteForCustomer}"
                 tvMerchantName.text = place.merchantName
+                Log.e("SellingPlaceAdapter", "businessPhoto: ${place.businessPhotoUrl}")
 
                 Glide.with(itemView.context)
                     .load(place.businessPhotoUrl)

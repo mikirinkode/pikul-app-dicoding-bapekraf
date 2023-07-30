@@ -19,6 +19,7 @@ import com.mikirinkode.pikul.databinding.FragmentHomeBinding
 import com.mikirinkode.pikul.feature.auth.login.LoginActivity
 import com.mikirinkode.pikul.feature.notification.NotificationActivity
 import com.mikirinkode.pikul.feature.profile.ProfileActivity
+import com.mikirinkode.pikul.feature.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -174,6 +175,10 @@ class HomeFragment : Fragment() {
 
             btnNotification.setOnClickListener {
                 startActivity(Intent(requireContext(), NotificationActivity::class.java))
+            }
+
+            layoutSearchBar.setOnClickListener {
+                startActivity(Intent(requireContext(), SearchActivity::class.java))
             }
         }
     }

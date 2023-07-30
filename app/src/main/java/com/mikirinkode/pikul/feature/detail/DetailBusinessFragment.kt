@@ -72,6 +72,7 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("DetailFragment", "busienessId: ${args.businessId}")
         // if merchant id is null, then the merchant will be the owner
         // but what if the owner is not selling the data?
         // TODO: HANDLE THIS, i think need some validation at home screen

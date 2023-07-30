@@ -146,6 +146,13 @@ class MerchantDashboardFragment : Fragment() {
                                     )
                                     Navigation.findNavController(binding.root).navigate(action)
                                 }
+
+                                cardNotYetSetLocation.setOnClickListener {
+                                    val action = MerchantDashboardFragmentDirections.actionOpenSellingPlaceFromDashboard(
+                                        agreement?.businessPartnerId ?: "" // TODO : CHECK AGAIN LATER
+                                    )
+                                    Navigation.findNavController(binding.root).navigate(action)
+                                }
                             } else {
                                 cardNotHavePartner.visibility = View.VISIBLE
                                 cardNotYetSetLocation.visibility = View.GONE
@@ -181,13 +188,6 @@ class MerchantDashboardFragment : Fragment() {
                 Navigation.findNavController(binding.root).navigate(action)
             }
 
-
-            cardNotYetSetLocation.setOnClickListener {
-                val action = MerchantDashboardFragmentDirections.actionOpenSellingPlaceFromDashboard(
-                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
-                )
-                Navigation.findNavController(binding.root).navigate(action)
-            }
 
             btnFindPartner.setOnClickListener {
                 val action = MerchantDashboardFragmentDirections.actionOpenJobVacancy()
