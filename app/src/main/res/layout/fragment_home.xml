@@ -135,32 +135,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvCategorySectionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/txt_section_title_category"
-                android:textSize="18sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutSearchBar" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingEnd="16dp"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCategorySectionTitle"
-                app:reverseLayout="true"
-                tools:listitem="@layout/item_category" />
+
 
             <TextView
                 android:id="@+id/tvPopularSectionTitle"
@@ -171,7 +147,7 @@
                 android:text="@string/txt_section_title_popular_food"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvCategory" />
+                app:layout_constraintTop_toBottomOf="@id/layoutSearchBar" />
 
             <Button
                 android:id="@+id/btnSeeAllPopularItem"
@@ -179,6 +155,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_btn_see_all"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/tvPopularSectionTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvPopularSectionTitle" />
@@ -192,39 +170,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPopularSectionTitle"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_popular_business" />
 
-            <TextView
-                android:id="@+id/tvMerchantSectionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/txt_section_title_nearby_merchant"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvPopularItem" />
 
-            <Button
-                android:id="@+id/btnSeeAllNearbyMerchant"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_btn_see_all"
-                app:layout_constraintBottom_toBottomOf="@id/tvMerchantSectionTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvMerchantSectionTitle" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMerchantNearby"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvMerchantSectionTitle"
-                tools:listitem="@layout/item_nearby_merchant" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

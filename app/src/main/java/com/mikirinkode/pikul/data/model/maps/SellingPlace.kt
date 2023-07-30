@@ -19,6 +19,7 @@ data class SellingPlace(
     // lokal data
     var businessName: String? = null,
     var businessPhotoUrl: String? = null,
+    var businessRating: Double? = null,
     var merchantName: String? = null,
     var merchantPhotoUrl: String? = null,
 )

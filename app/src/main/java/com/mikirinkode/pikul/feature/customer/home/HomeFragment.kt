@@ -36,15 +36,11 @@ class HomeFragment : Fragment() {
 
 
     private val viewModel: HomeViewModel by viewModels()
-    private val categoryAdapter: CategoryAdapter by lazy {
-        CategoryAdapter()
-    }
+
     private val popularBusinessAdapter: PopularBusinessAdapter by lazy {
         PopularBusinessAdapter()
     }
-    private val nearbyMerchantAdapter: NearbyMerchantAdapter by lazy {
-        NearbyMerchantAdapter()
-    }
+
 
     @Inject
     lateinit var pref: LocalPreference
@@ -72,9 +68,7 @@ class HomeFragment : Fragment() {
         initView()
         observePopularBusinessList()
 
-        observeCategoryList()
-        observePopularItemList()
-        observeNearbyMerchantList()
+
         onClickAction()
     }
 
@@ -101,16 +95,11 @@ class HomeFragment : Fragment() {
                 tvUserName.text = getGreetings()
             }
 
-            // init recycler view
-            rvCategory.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            rvCategory.adapter = categoryAdapter
 
             rvPopularItem.layoutManager = LinearLayoutManager(requireContext())
             rvPopularItem.adapter = popularBusinessAdapter
 
-            rvMerchantNearby.layoutManager = LinearLayoutManager(requireContext())
-            rvMerchantNearby.adapter = nearbyMerchantAdapter
+
         }
     }
 
@@ -126,13 +115,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun observeCategoryList() {
-        Log.e("HomeFragment", "Observing category list")
-        viewModel.getCategoryList().observe(viewLifecycleOwner) { list ->
-            Log.e("HomeFragment", "category list: ${list.size}")
-            categoryAdapter.setData(list)
-        }
-    }
+
 
     private fun observePopularBusinessList() {
         viewModel.getPopularBusinessList().observe(viewLifecycleOwner) { result ->
@@ -147,21 +130,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun observePopularItemList() {
-        Log.e("HomeFragment", "Observing popular item list")
-        viewModel.getPopularItemList().observe(viewLifecycleOwner) { list ->
-            Log.e("HomeFragment", "popular list: ${list.size}")
-//            popularProductAdapter.setData(list)
-        }
-    }
 
-    private fun observeNearbyMerchantList() {
-        Log.e("HomeFragment", "Observing nearby merchant list")
-        viewModel.getNearbyMerchantList().observe(viewLifecycleOwner) { list ->
-            Log.e("HomeFragment", "nearby list: ${list.size}")
-            nearbyMerchantAdapter.setData(list)
-        }
-    }
 
     private fun onClickAction() {
         binding.apply {
@@ -180,6 +149,8 @@ class HomeFragment : Fragment() {
             layoutSearchBar.setOnClickListener {
                 startActivity(Intent(requireContext(), SearchActivity::class.java))
             }
+
+            btnSeeAllPopularItem.setOnClickListener {}
         }
     }
 }

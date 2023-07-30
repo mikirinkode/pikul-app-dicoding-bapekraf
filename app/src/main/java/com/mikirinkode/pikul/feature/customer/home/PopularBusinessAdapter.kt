@@ -1,35 +1,56 @@
 package com.mikirinkode.pikul.feature.customer.home
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.model.LatLng
 import com.mikirinkode.pikul.R
+import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.Business
+import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.databinding.ItemPopularBusinessBinding
 import com.mikirinkode.pikul.feature.detail.DetailBusinessActivity
+import com.mikirinkode.pikul.utils.MapsHelper
 
 class PopularBusinessAdapter : RecyclerView.Adapter<PopularBusinessAdapter.ViewHolder>() {
-    private val list = ArrayList<Business>()
+    private val list = ArrayList<SellingPlace>()
 
     inner class ViewHolder(private val binding: ItemPopularBusinessBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Business) {
+
+        fun bind(place: SellingPlace) {
             binding.apply {
-                tvBrandName.text = item.businessName
-                tvBrandRating.text = item.businessRating.toString()
+
+                tvBusinessName.text = place.businessName
+                tvBrandRating.text = place.businessRating.toString()
+
+                tvMerchantName.text = place.merchantName
+                Log.e("SellingPlaceAdapter", "businessPhoto: ${place.businessPhotoUrl}")
 
                 Glide.with(itemView.context)
-                    .load(item.businessPhoto)
+                    .load(place.businessPhotoUrl)
                     .placeholder(R.drawable.progress_animation)
-                    .into(ivBrandPicture)
+                    .into(ivBusinessAvatar)
+
+                if (place.merchantPhotoUrl != null && place.merchantPhotoUrl != ""){
+                    Glide.with(itemView.context)
+                        .load(place.merchantPhotoUrl)
+                        .placeholder(R.drawable.progress_animation)
+                        .into(ivMerchantAvatar)
+                } else {
+                    Glide.with(itemView.context)
+                        .load(R.drawable.ic_default_user_avatar)
+                        .into(ivMerchantAvatar)
+                }
             }
             itemView.setOnClickListener {
                 itemView.context.startActivity(
                     Intent(itemView.context, DetailBusinessActivity::class.java)
-                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, item.businessId)
-//                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, ) // TODO
+                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
+                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
                 )
             }
         }
@@ -49,7 +70,7 @@ class PopularBusinessAdapter : RecyclerView.Adapter<PopularBusinessAdapter.ViewH
         holder.bind(list[position])
     }
 
-    fun setData(newList: List<Business>) {
+    fun setData(newList: List<SellingPlace>) {
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()
