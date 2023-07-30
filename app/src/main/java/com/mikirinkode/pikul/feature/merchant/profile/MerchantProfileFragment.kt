@@ -131,7 +131,7 @@ class MerchantProfileFragment : Fragment() {
                             is PikulResult.Error -> {}
                             is PikulResult.Success -> {
                                 layoutBusinessOwner.visibility = View.VISIBLE
-                                layoutBusinessInformation.visibility = View.VISIBLE
+//                                layoutBusinessInformation.visibility = View.VISIBLE // TODO
                                 val businessData = result.data
                                 tvBusinessName.text = businessData.businessName
                                 tvBusinessSince.text = "Mitra sejak ${args.agreement?.partnerSince}"

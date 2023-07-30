@@ -83,6 +83,17 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                                     .load(businessData["businessPhotoUrl"])
                                     .placeholder(R.drawable.progress_animation)
                                     .into(ivBusinessAvatar)
+
+                                tvInvitationTitle.text = "Undangan Kerja Sama"
+                                tvInvitationDesc.text = "Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
+                                val isAccepted: Boolean? = businessData["accepted"].toBoolean()
+
+                                if (isAccepted == true) {
+                                    statusInvitation.text = "Diterima"
+                                } else {
+                                    statusInvitation.text = "Menunggu Respon"
+                                }
+
                             } else {
                                 layoutLoggedUserBusinessInvitation.visibility = View.GONE
                                 layoutInterlocutorBusinessInvitation.visibility = View.VISIBLE
@@ -93,6 +104,9 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                                     .placeholder(R.drawable.progress_animation)
                                     .into(ivInterlocutorBusinessAvatar)
 
+                                btnAcceptInvitation.text = "Terima Tawaran"
+                                tvInterlocutorInvitationTitle.text = "Undangan Kerja Sama"
+                                tvInterlocutorInvitationDesc.text = "Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
                                 val isAccepted: Boolean? = businessData["accepted"].toBoolean()
 
                                 if (isAccepted == true) {
@@ -107,6 +121,76 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
                                         chat.messageId,
                                         businessData["businessOwnerId"] ?: "",
                                         businessData["merchantId"] ?: "",
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    MessageType.BUSINESS_APPLICATION.toString() -> {
+                        if (chat.businessApplicationData != null){
+                            ivInterlocutorExtraImage.visibility = View.GONE
+                            ivloggedUserExtraImage.visibility = View.GONE
+                            val applicationData = chat.businessApplicationData
+                            // show message
+                            if (chat.senderId == loggedUserId) {
+                                layoutLoggedUserBusinessInvitation.visibility = View.VISIBLE
+                                layoutInterlocutorBusinessInvitation.visibility = View.GONE
+                                tvBusinessName.text = applicationData["merchantName"]
+                                tvBusinessAddress.text = applicationData["merchantAddress"]
+                                if (applicationData["merchantPhotoUrl"] == ""){
+                                    Glide.with(itemView.context)
+                                        .load(R.drawable.ic_default_user_avatar)
+                                        .into(ivBusinessAvatar)
+                                } else {
+                                    Glide.with(itemView.context)
+                                        .load(applicationData["merchantPhotoUrl"])
+                                        .placeholder(R.drawable.progress_animation)
+                                        .into(ivBusinessAvatar)
+                                }
+                                val isAccepted: Boolean? = applicationData["accepted"].toBoolean()
+
+
+                                if (isAccepted == true) {
+                                    statusInvitation.text = "Diterima"
+                                } else {
+                                    statusInvitation.text = "Menunggu Respon"
+                                }
+                                tvInvitationTitle.text = "Lamaran Pekerjaan"
+                                tvInvitationDesc.text = "Halo saya mengajukan Lamaran pekerjaan berdasarkan lowongan yang bapak atau ibu buka."
+                            } else {
+                                layoutLoggedUserBusinessInvitation.visibility = View.GONE
+                                layoutInterlocutorBusinessInvitation.visibility = View.VISIBLE
+                                tvInterlocutorBusinessName.text = applicationData["merchantName"]
+                                tvInterlocutorBusinessAddress.text = applicationData["merchantAddress"]
+                                if (applicationData["merchantPhotoUrl"] == ""){
+                                    Glide.with(itemView.context)
+                                        .load(R.drawable.ic_default_user_avatar)
+                                        .into(ivInterlocutorBusinessAvatar)
+                                } else {
+                                    Glide.with(itemView.context)
+                                        .load(applicationData["merchantPhotoUrl"])
+                                        .placeholder(R.drawable.progress_animation)
+                                        .into(ivInterlocutorBusinessAvatar)
+                                }
+
+                                btnAcceptInvitation.text = "Terima Lamaran"
+                                tvInterlocutorInvitationTitle.text = "Lamaran Pekerjaan"
+                                tvInterlocutorInvitationDesc.text = "Halo saya mengajukan Lamaran pekerjaan berdasarkan lowongan yang bapak atau ibu buka."
+                                val isAccepted: Boolean? = applicationData["accepted"].toBoolean()
+
+                                if (isAccepted == true) {
+                                    btnAcceptInvitation.isEnabled = false
+                                    btnAcceptInvitation.text = "Diterima"
+                                }
+
+                                btnAcceptInvitation.setOnClickListener {
+                                    // TODO
+                                    chatClickListener?.onAcceptApplicationButtonClicked(
+                                        applicationData["applicationId"] ?: "",
+                                        chat.messageId,
+                                        applicationData["businessOwnerId"] ?: "",
+                                        applicationData["merchantId"] ?: "",
                                     )
                                 }
                             }
@@ -459,6 +543,12 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
 
         fun onAcceptInvitationButtonClicked(
             invitationId: String,
+            messageId: String,
+            businessId: String,
+            merchantId: String,
+        )
+        fun onAcceptApplicationButtonClicked(
+            applicationId: String,
             messageId: String,
             businessId: String,
             merchantId: String,

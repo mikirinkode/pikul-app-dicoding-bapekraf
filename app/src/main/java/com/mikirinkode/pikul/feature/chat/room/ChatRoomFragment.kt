@@ -255,9 +255,8 @@ class ChatRoomFragment : Fragment(),
                         }
                         MessageType.VIDEO -> {}
                         MessageType.AUDIO -> {}
-                        MessageType.BUSINESS_INVITATION -> {
-
-                        }
+                        MessageType.BUSINESS_INVITATION -> {}
+                        MessageType.BUSINESS_APPLICATION -> {}
                     }
                 }
             }
@@ -304,6 +303,32 @@ class ChatRoomFragment : Fragment(),
                 }
             }
     }
+
+    override fun onAcceptApplicationButtonClicked(
+        applicationId: String,
+        messageId: String,
+        businessId: String,
+        merchantId: String,
+    ) {
+        viewModel.acceptBusinessApplication(applicationId, args.conversationId, messageId, businessId, merchantId)
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {
+                        binding.layoutLoading.visibility = View.VISIBLE
+                    }
+                    is PikulResult.LoadingWithProgress -> {} // TODO
+                    is PikulResult.Error -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                    is PikulResult.Success -> {
+                        binding.layoutLoading.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Undangan Telah Diterima", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
+
 
     override fun onMessageSelected() {
         Log.e("ChatRoom", "on message selected")

@@ -130,7 +130,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Undangan Kerja Sama"
+                            tools:text="Undangan Kerja Sama"
                             android:textSize="18sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +140,7 @@
                             android:id="@+id/tvInterlocutorInvitationDesc"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
+                            tools:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tvInterlocutorInvitationTitle" />
@@ -204,7 +204,7 @@
                             android:layout_marginTop="16dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
-                            android:text="Terima Tawaran"
+                            tools:text="Terima Tawaran"
                             android:textColor="?android:attr/colorPrimary"
                             app:cornerRadius="@dimen/button_corner_radius"
                             app:icon="@drawable/ic_agreement_fill"
@@ -314,7 +314,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Undangan Kerja Sama"
+                            tools:text="Undangan Kerja Sama"
                             android:textSize="18sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -324,7 +324,7 @@
                             android:id="@+id/tvInvitationDesc"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
+                            tools:text="Halo, kami mengundang anda untuk bekerja sama dengan kami dalam usaha kami yaitu :"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tvInvitationTitle" />
@@ -380,6 +380,24 @@
                             app:layout_constraintTop_toTopOf="@+id/ivLocation"
                             tools:text="2.0 KM" />
 
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/statusInvitation"
+                            style="@style/Theme.Pikul.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            tools:text="Terima Tawaran"
+                            android:enabled="false"
+                            app:cornerRadius="@dimen/button_corner_radius"
+                            app:icon="@drawable/ic_agreement_fill"
+                            app:iconGravity="textStart"
+                            app:iconPadding="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvBusinessAddress"
+                            app:strokeWidth="1dp" />
                     
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

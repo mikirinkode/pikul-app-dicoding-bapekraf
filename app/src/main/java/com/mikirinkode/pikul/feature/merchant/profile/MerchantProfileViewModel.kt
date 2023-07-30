@@ -79,7 +79,9 @@ class MerchantProfileViewModel @Inject constructor(
         if (userId != null) {
             result.postValue(PikulResult.Loading)
             fireStore.collection(FireStoreUtils.TABLE_TRANSACTIONS)
-                .whereEqualTo("merchantId", userId).get()
+                .whereEqualTo("merchantId", userId)
+                .whereEqualTo("transactionStatus", "COMPLETED")
+                .get()
                 .addOnFailureListener {
                     val errorMessage = it.message ?: "Gagal mengambil data transaksi"
                     result.postValue(PikulResult.Error(errorMessage))

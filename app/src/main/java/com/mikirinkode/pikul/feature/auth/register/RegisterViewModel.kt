@@ -59,6 +59,8 @@ class RegisterViewModel @Inject constructor(
                             val documentRef = fireStore.collection(FireStoreUtils.TABLE_USER)
                                 .document(loggedUser.uid)
 
+                            val role = PikulRole.CUSTOMER.toString()
+
                             // create user entity for local preference
                             val user = UserAccount(
                                 userId = loggedUser.uid,
@@ -68,7 +70,7 @@ class RegisterViewModel @Inject constructor(
                                 createdAt = timestamp,
                                 lastLoginAt = timestamp,
                                 updatedAt = timestamp,
-                                role = PikulRole.CUSTOMER.toString(),
+                                role = role,
                                 oneSignalToken = ""
                             )
 

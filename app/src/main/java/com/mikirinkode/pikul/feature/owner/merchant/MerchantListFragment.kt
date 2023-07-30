@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
-import com.mikirinkode.pikul.databinding.FragmentManageMerchantBinding
 import com.mikirinkode.pikul.databinding.FragmentMerchantListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -70,7 +67,7 @@ class MerchantListFragment : Fragment(), MerchantListAdapter.ClickListener {
     }
 
     private fun observeData(){
-        viewModel.getMerchantList().observe(viewLifecycleOwner){result ->
+        viewModel.getAvailableMerchantList().observe(viewLifecycleOwner){ result ->
             when (result) {
                 is PikulResult.Loading -> {}
                 is PikulResult.LoadingWithProgress -> {} // TODO

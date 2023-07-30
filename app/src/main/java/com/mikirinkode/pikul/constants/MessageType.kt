@@ -5,5 +5,6 @@ enum class MessageType {
     IMAGE,
     VIDEO,
     AUDIO,
-    BUSINESS_INVITATION
+    BUSINESS_INVITATION,
+    BUSINESS_APPLICATION
 }

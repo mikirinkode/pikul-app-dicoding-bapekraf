@@ -47,6 +47,77 @@ class ChatRoomViewModel @Inject constructor(
         preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
 
 
+    fun acceptBusinessApplication(
+        applicationId: String,
+        conversationId: String,
+        messageId: String,
+        businessId: String,
+        merchantId: String,
+    ): LiveData<PikulResult<Boolean>> {
+        val result = MutableLiveData<PikulResult<Boolean>>()
+        result.postValue(PikulResult.Loading)
+        val data = mapOf<String, String>(
+            "accepted" to true.toString()
+        )
+        Log.e("ChatRoomViewModel", "accepting")
+        // check if have agreement or not
+        fireStore.collection(FireStoreUtils.TABLE_MERCHANT_AGREEMENT)
+            .whereEqualTo("merchantId", merchantId)
+            .whereEqualTo("active", true)
+            .get()
+            .addOnSuccessListener {
+                if (!it.isEmpty) {
+                    result.postValue(PikulResult.Error("Pedagang sudah menjalin kerja sama"))
+                } else {
+                    // create the agreement
+                    val ref =
+                        fireStore.collection(FireStoreUtils.TABLE_MERCHANT_AGREEMENT).document()
+
+                    val agreement = MerchantAgreement(
+                        agreementId = ref.id,
+                        businessPartnerId = businessId,
+                        merchantId = merchantId,
+                        active = true,
+                        partnerSince = DateHelper.getCurrentDateTime(),
+                        createdAt = DateHelper.getCurrentDateTime(),
+                        updatedAt = null
+                    )
+
+                    // upload agreement
+                    ref.set(agreement)
+                        .addOnFailureListener { } // TODO
+                        .addOnSuccessListener {
+                            // upload data
+                            fireStore.collection(FireStoreUtils.TABLE_BUSINESS_APPLICATION)
+                                .document(applicationId)
+                                .set(data, SetOptions.merge())
+                                .addOnFailureListener { } // TODO
+                                .addOnSuccessListener {
+                                    val haveAgreement = mapOf<String, Boolean>(
+                                        "haveBusinessAgreement" to true
+                                    )
+                                    fireStore.collection(FireStoreUtils.TABLE_USER)
+                                        .document(merchantId)
+                                        .set(haveAgreement, SetOptions.merge())
+                                        .addOnFailureListener {} // TODO
+                                        .addOnSuccessListener {
+                                            messagesRef.child(conversationId).child(messageId)
+                                                .child("businessApplicationData")
+                                                .child("accepted").setValue(true.toString())
+                                                .addOnFailureListener { } // TODO
+                                                .addOnSuccessListener {
+                                                    result.postValue(PikulResult.Success(true))
+                                                }
+                                        }
+                                }
+                        }
+                }
+
+            }
+
+        return result
+    }
+
     // TODO: check invitation id validation
     fun acceptBusinessInvitation(
         invitationId: String,
@@ -205,21 +276,6 @@ class ChatRoomViewModel @Inject constructor(
         )
         conversationsRef?.child(conversationId)?.updateChildren(initialConversation)
 
-        val newConversationList = ArrayList<String>()
-        loggedUser?.conversationIdList?.let { newConversationList.addAll(it) }
-        newConversationList.add(conversationId)
-        val newUserData = UserAccount(
-            userId = loggedUser?.userId,
-            email = loggedUser?.email,
-            name = loggedUser?.name,
-            avatarUrl = loggedUser?.avatarUrl,
-            createdAt = loggedUser?.createdAt,
-            lastLoginAt = loggedUser?.lastLoginAt,
-            updatedAt = loggedUser?.updatedAt,
-            conversationIdList = newConversationList
-        )
-
-        preferences?.saveObject(LocalPreferenceConstants.USER, newUserData)
     }
 
     fun sendMessage(

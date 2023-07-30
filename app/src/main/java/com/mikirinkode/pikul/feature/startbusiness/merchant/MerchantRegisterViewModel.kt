@@ -49,7 +49,8 @@ class MerchantRegisterViewModel @Inject constructor(
                     FireStoreUtils.TABLE_USER_PROVINCE to province,
                     FireStoreUtils.TABLE_USER_NAME to name,
                     FireStoreUtils.TABLE_USER_UPDATED_AT to timestamp,
-                    FireStoreUtils.TABLE_USER_ROLE to role
+                    FireStoreUtils.TABLE_USER_ROLE to role,
+                    "haveBusinessAgreement" to false,
                 )
 
                 // update local saved user data
@@ -126,9 +127,8 @@ class MerchantRegisterViewModel @Inject constructor(
     private fun updateUserData(userName: String, userProvince: String, userRole: String, updatedAt: String, userAvatarUrl: String){
         val oldUser = preferences.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
         val avatar = if (userAvatarUrl == "") oldUser?.avatarUrl else userAvatarUrl
-        val newUser = UserAccount(
+        val newUser = UserAccount( // TODO ERROR NO Such Method Error
             avatarUrl = avatar,
-            conversationIdList = oldUser?.conversationIdList,
             createdAt = oldUser?.createdAt,
             email = oldUser?.email,
             lastLoginAt = oldUser?.lastLoginAt,

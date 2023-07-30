@@ -3,6 +3,7 @@ package com.mikirinkode.pikul.feature.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 // TODO: CHECK AGAIN
+// TODO: USE USER DATA FROM NETWORK
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     private val binding: ActivityProfileBinding by lazy {
@@ -68,6 +70,8 @@ class ProfileActivity : AppCompatActivity() {
             if (user == null) {
                 layoutUserProfile.visibility = View.GONE
             } else {
+                Log.e("ProfileActivity", "user role: ${user?.role}")
+                Log.e("ProfileActivity", "user name: ${user?.name}")
                 layoutUserProfile.visibility = View.VISIBLE
                 tvUserName.text = user?.name
                 tvEmail.text = user?.email

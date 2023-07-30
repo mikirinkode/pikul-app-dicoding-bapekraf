@@ -151,7 +151,6 @@ class OwnerRegisterViewModel @Inject constructor(
         val oldUser = preferences.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
         val newUser = UserAccount(
             avatarUrl = oldUser?.avatarUrl,
-            conversationIdList = oldUser?.conversationIdList,
             createdAt = oldUser?.createdAt,
             email = oldUser?.email,
             lastLoginAt = oldUser?.lastLoginAt,

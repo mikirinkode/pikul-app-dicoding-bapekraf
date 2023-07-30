@@ -64,6 +64,9 @@
         <action
             android:id="@+id/actionAddMerchant"
             app:destination="@id/merchantListFragment" />
+        <action
+            android:id="@+id/actionOpenJobVacancyScreen"
+            app:destination="@id/jobVacancyFragment2" />
     </fragment>
     <fragment
         android:id="@+id/chatHistoryFragment2"
@@ -93,4 +96,9 @@
         android:name="com.mikirinkode.pikul.feature.owner.merchant.MerchantListFragment"
         android:label="fragment_merchant_list"
         tools:layout="@layout/fragment_merchant_list" />
+    <fragment
+        android:id="@+id/jobVacancyFragment2"
+        android:name="com.mikirinkode.pikul.feature.customer.jobs.JobVacancyFragment"
+        android:label="fragment_job_vacancy"
+        tools:layout="@layout/fragment_job_vacancy" />
 </navigation>

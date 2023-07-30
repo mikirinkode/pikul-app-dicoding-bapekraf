@@ -8,17 +8,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.mikirinkode.pikul.constants.MessageType
-import com.mikirinkode.pikul.constants.PikulRole
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.Business
-import com.mikirinkode.pikul.data.model.InvitationData
+import com.mikirinkode.pikul.data.model.MerchantAgreement
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage
 import com.mikirinkode.pikul.utils.DateHelper
-import com.mikirinkode.pikul.utils.Event
 import com.mikirinkode.pikul.utils.FireStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,6 +33,24 @@ class ManageMerchantViewModel @Inject constructor(
 
     private val conversationsRef = database?.getReference("conversations")
     private val messagesRef = database?.getReference("messages")
+
+
+    fun updateJobVacancy(status: Boolean): MutableLiveData<PikulResult<Boolean>> {
+        val result = MutableLiveData<PikulResult<Boolean>>()
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            val update = mapOf<String, Any>(
+                "openJobVacancy" to status
+            )
+            result.postValue(PikulResult.Loading)
+            fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)
+                .set(update, SetOptions.merge())
+                .addOnSuccessListener {
+                    result.postValue(PikulResult.Success(true))
+                }
+        }
+        return result
+    }
 
     fun sendBusinessInvitation(
         businessOwnerId: String,
@@ -114,7 +131,47 @@ class ManageMerchantViewModel @Inject constructor(
             ?.child(interlocutorId)?.setValue(ServerValue.increment(1))
     }
 
-    fun getMerchantList(): LiveData<PikulResult<List<UserAccount>>> {
+
+    fun getMerchantPartnerList(): LiveData<PikulResult<List<UserAccount>>> {
+        val result = MutableLiveData<PikulResult<List<UserAccount>>>()
+
+        val businessId = auth.currentUser?.uid
+        if (businessId != null) {
+            result.postValue(PikulResult.Loading)
+            fireStore.collection(FireStoreUtils.TABLE_USER)
+                .whereEqualTo("role", "MERCHANT")
+                .whereEqualTo("haveBusinessAgreement", true)
+                .get()
+                .addOnSuccessListener { userSnapshot ->
+                    val merchantList = ArrayList<UserAccount>()
+                    for (doc in userSnapshot) {
+                        val user = doc.toObject(UserAccount::class.java)
+                        merchantList.add(user)
+                    }
+
+                    fireStore.collection(FireStoreUtils.TABLE_MERCHANT_AGREEMENT)
+                        .whereEqualTo("businessPartnerId", businessId)
+                        .get()
+                        .addOnFailureListener { } // TODO
+                        .addOnSuccessListener { agreementSnapshot ->
+                            val resultList = ArrayList<UserAccount>()
+
+                            for (doc in agreementSnapshot) {
+                                val agreement = doc.toObject(MerchantAgreement::class.java)
+                                val merchant =
+                                    merchantList.firstOrNull { it.userId == agreement.merchantId }
+                                if (merchant != null) {
+                                    resultList.add(merchant)
+                                }
+                            }
+                            result.postValue(PikulResult.Success(resultList))
+                        }
+                }
+        }
+        return result
+    }
+
+    fun getAvailableMerchantList(): LiveData<PikulResult<List<UserAccount>>> {
         val result = MutableLiveData<PikulResult<List<UserAccount>>>()
 
         result.postValue(PikulResult.Loading)
@@ -140,6 +197,42 @@ class ManageMerchantViewModel @Inject constructor(
                 }
                 result.postValue(PikulResult.Success(list))
             }
+        return result
+    }
+
+    // TODO: ADD LISTENER DETACH AND DUPLICATE WITH OWNER DASHBOARD
+    fun getBusinessData(): LiveData<PikulResult<Business>> {
+        Log.e(TAG, "getBusinessData")
+        val result = MutableLiveData<PikulResult<Business>>()
+        result.postValue(PikulResult.Loading)
+
+        val userId = auth.currentUser?.uid
+        Log.e(TAG, "userId: ${userId}")
+
+        if (userId != null) {
+            fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(userId)
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.e(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.e(TAG, "Current data: ${snapshot.data}")
+                        val businessData: Business? = snapshot.toObject(Business::class.java)
+                        Log.e(TAG, "businessId: ${businessData?.businessId}")
+
+                        if (businessData != null) {
+                            result.postValue(PikulResult.Success(businessData))
+                        }
+                    } else {
+                        Log.e(TAG, "Current data: null")
+                    }
+
+                }
+
+        }
+
         return result
     }
 

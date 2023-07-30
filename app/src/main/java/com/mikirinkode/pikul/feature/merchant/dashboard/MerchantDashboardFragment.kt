@@ -1,6 +1,7 @@
 package com.mikirinkode.pikul.feature.merchant.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.MerchantAgreement
 import com.mikirinkode.pikul.data.model.PikulResult
+import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,9 +29,9 @@ class MerchantDashboardFragment : Fragment() {
     @Inject
     lateinit var pref: LocalPreference
 
-//    private val user: UserAccount? by lazy {
-//        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
-//    }
+    private val user: UserAccount? by lazy {
+        pref?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+    }
 
     private val viewModel: MerchantDashboardViewModel by viewModels()
 
@@ -65,6 +68,7 @@ class MerchantDashboardFragment : Fragment() {
 
     private fun initView() {
         binding.apply {
+            Log.e("MDF", "User role: ${user?.role}")
 //            if (user != null) {
 //                tvUserName.text = user?.name
 //                tvAddress.text = user?.province
@@ -130,6 +134,11 @@ class MerchantDashboardFragment : Fragment() {
 
             btnOpenChat.setOnClickListener {
                 val action = MerchantDashboardFragmentDirections.actionOpenMerchantChats()
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+
+            btnFindPartner.setOnClickListener {
+                val action = MerchantDashboardFragmentDirections.actionOpenJobVacancy()
                 Navigation.findNavController(binding.root).navigate(action)
             }
         }

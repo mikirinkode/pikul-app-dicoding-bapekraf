@@ -14,6 +14,7 @@ data class Business(
     var businessPhoto: String? = null,
     var businessRating: Double? = null,
     var sellingMode: Boolean? = null,
+    var openJobVacancy: Boolean? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
 //    var product: List<Product>
