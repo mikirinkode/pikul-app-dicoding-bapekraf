@@ -208,5 +208,7 @@
     <string name="txt_screen_detail_transaction">Detail Transaksi</string>
     <string name="txt_screen_detail_pickup_point">Titik Pengambilan Pesanan</string>
     <string name="txt_screen_job_vacancy">Lowongan Pekerjaan</string>
+    <string name="txt_screen_owner_transaction_order">Pesanan</string>
+    <string name="txt_screen_owner_transaction_list">Daftar Transaksi</string>
 
 </resources>

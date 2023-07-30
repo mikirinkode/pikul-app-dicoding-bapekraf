@@ -13,6 +13,7 @@ import com.mikirinkode.pikul.databinding.ItemProductSummaryBinding
 import com.mikirinkode.pikul.databinding.ItemTransactionBinding
 import com.mikirinkode.pikul.databinding.ItemTransactionMerchantBinding
 import com.mikirinkode.pikul.feature.customer.transaction.detail.DetailTransactionActivity
+import com.mikirinkode.pikul.feature.merchant.transaction.MerchantDetailTransactionActivity
 import com.mikirinkode.pikul.utils.CommonHelper
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.MoneyHelper
@@ -82,16 +83,16 @@ class MerchantTransactionAdapter(private val clickListener: MerchantTransactionA
             }
 
             itemView.setOnClickListener { // TODO
-//                itemView.context.startActivity(
-//                    Intent(
-//                        itemView.context,
-//                        DetailTransactionActivity::class.java
-//                    )
-//                        .putExtra(
-//                            DetailTransactionActivity.EXTRA_INTENT_TRANSACTION_ID,
-//                            transaction.transactionId
-//                        )
-//                )
+                itemView.context.startActivity(
+                    Intent(
+                        itemView.context,
+                        MerchantDetailTransactionActivity::class.java
+                    )
+                        .putExtra(
+                            MerchantDetailTransactionActivity.EXTRA_INTENT_TRANSACTION_ID,
+                            transaction.transactionId
+                        )
+                )
             }
         }
     }

@@ -65,6 +65,38 @@ class OwnerDashboardFragment : Fragment() {
 
     private fun observeBusinessData(){
         binding.apply {
+
+            viewModel.getProductList().observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {}
+                    is PikulResult.LoadingWithProgress -> {}
+                    is PikulResult.Error -> {}
+                    is PikulResult.Success -> {
+                        if (result.data){
+                            cardNotYetManageStock.visibility = View.VISIBLE
+                        } else {
+                            cardNotYetManageStock.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+            viewModel.getOwnerSellingPlaces().observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is PikulResult.Loading -> {}
+                    is PikulResult.LoadingWithProgress -> {}
+                    is PikulResult.Error -> {}
+                    is PikulResult.Success -> {
+                        val totalSellingPlace = result.data.size
+                        if (totalSellingPlace <= 0){
+                            cardNotYetSetLocation.visibility = View.VISIBLE
+                        } else {
+                            cardNotYetSetLocation.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
             viewModel.getBusinessData().observe(viewLifecycleOwner){result ->
                 when (result){
                     is PikulResult.Loading -> {
@@ -147,6 +179,14 @@ class OwnerDashboardFragment : Fragment() {
             layoutSellingMode.setOnClickListener {
                 showSellingModeDialog()
             }
+
+            cardNotYetManageStock.setOnClickListener {
+                val action = OwnerDashboardFragmentDirections.actionManageStock(
+                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
+                )
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+
             cardManageStock.setOnClickListener {
                 val action = OwnerDashboardFragmentDirections.actionManageStock(
                     user?.userId ?: "" // TODO : CHECK AGAIN LATER
@@ -154,9 +194,19 @@ class OwnerDashboardFragment : Fragment() {
                 Navigation.findNavController(binding.root).navigate(action)
             }
 
-            cardTotalOrder.setOnClickListener {  } // TODO
+            cardTotalOrder.setOnClickListener {
+                val action = OwnerDashboardFragmentDirections.actionOpenTransactionOrder()
+                Navigation.findNavController(binding.root).navigate(action)
+            } // TODO
 
             cardSellingPlace.setOnClickListener {
+                val action = OwnerDashboardFragmentDirections.actionOpenMerchantSellingPlace(
+                    user?.userId ?: "" // TODO : CHECK AGAIN LATER
+                )
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+
+            cardNotYetSetLocation.setOnClickListener {
                 val action = OwnerDashboardFragmentDirections.actionOpenMerchantSellingPlace(
                     user?.userId ?: "" // TODO : CHECK AGAIN LATER
                 )
@@ -172,7 +222,10 @@ class OwnerDashboardFragment : Fragment() {
                 val action = OwnerDashboardFragmentDirections.actionManageMerchant()
                 Navigation.findNavController(binding.root).navigate(action)
             } // TODO
-            cardTransaction.setOnClickListener {  } // TODO
+            cardTransaction.setOnClickListener {
+                val action = OwnerDashboardFragmentDirections.actionOpenOwnerTransactionList()
+                Navigation.findNavController(binding.root).navigate(action)
+            } // TODO
         }
     }
 }

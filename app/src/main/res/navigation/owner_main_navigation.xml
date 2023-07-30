@@ -28,6 +28,12 @@
         <action
             android:id="@+id/actionManageStock"
             app:destination="@id/manageStockFragment" />
+        <action
+            android:id="@+id/actionOpenTransactionOrder"
+            app:destination="@id/ownerHandleOrderFragment" />
+        <action
+            android:id="@+id/actionOpenOwnerTransactionList"
+            app:destination="@id/ownerTransactionListFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
@@ -101,4 +107,14 @@
         android:name="com.mikirinkode.pikul.feature.customer.jobs.JobVacancyFragment"
         android:label="fragment_job_vacancy"
         tools:layout="@layout/fragment_job_vacancy" />
+    <fragment
+        android:id="@+id/ownerHandleOrderFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.transaction.OwnerHandleOrderFragment"
+        android:label="fragment_owner_transaction"
+        tools:layout="@layout/fragment_owner_handle_order" />
+    <fragment
+        android:id="@+id/ownerTransactionListFragment"
+        android:name="com.mikirinkode.pikul.feature.owner.transaction.OwnerTransactionListFragment"
+        android:label="fragment_owner_transaction_list"
+        tools:layout="@layout/fragment_owner_transaction_list" />
 </navigation>
