@@ -9,16 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
 import com.mikirinkode.pikul.constants.PikulRole
+import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ItemJobVacancyBinding
 import com.mikirinkode.pikul.databinding.ItemMerchantAvailableBinding
 import com.mikirinkode.pikul.feature.chat.room.ChatRoomActivity
+import com.mikirinkode.pikul.feature.detail.DetailBusinessActivity
 
 class JobVacancyAdapter(
-    private val loggedUserId: String,
-    private val loggedUserRole: String,
-    private val clickListener: ClickListener
+    private val loggedUserId: String?,
+    private val loggedUserRole: String?,
+    private val clickListener: ClickListener,
+    private val pref: LocalPreference
 ) :
     RecyclerView.Adapter<JobVacancyAdapter.ViewHolder>() {
 
@@ -42,45 +46,13 @@ class JobVacancyAdapter(
                         .into(ivUserAvatar)
                 }
 
-                btnSendMessage.setOnClickListener {
-                    val loggedUserId = loggedUserId
-                    val interlocutorId = business.ownerId
-                    if (loggedUserId != null && interlocutorId != null) {
-                        val conversationId =
-                            if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
-                        itemView.context.startActivity(
-                            Intent(
-                                itemView.context,
-                                ChatRoomActivity::class.java
-                            ).putExtra(
-                                ChatRoomActivity.EXTRA_INTENT_CONVERSATION_ID,
-                                conversationId
-                            ).putExtra(
-                                ChatRoomActivity.EXTRA_INTENT_INTERLOCUTOR_ID,
-                                interlocutorId
-                            )
-                        )
-                    }
-                }
-
-                if (loggedUserRole == PikulRole.OWNER.toString()){
-                    layoutActionButton.visibility = View.GONE
-                } else {
-                    layoutActionButton.visibility = View.VISIBLE
-                }
-
-                btnApply.setOnClickListener {
-                    if (loggedUserRole != PikulRole.MERCHANT.toString()){
-                        Toast.makeText(itemView.context, "Maaf anda belum mendaftar sebagai pedagang", Toast.LENGTH_SHORT).show()
-                    } else {
+                if (loggedUserId != null && loggedUserRole != null){
+                    btnSendMessage.setOnClickListener {
                         val loggedUserId = loggedUserId
                         val interlocutorId = business.ownerId
                         if (loggedUserId != null && interlocutorId != null) {
                             val conversationId =
                                 if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
-
-                            clickListener.onApplyClicked(interlocutorId, loggedUserId, conversationId)
-
                             itemView.context.startActivity(
                                 Intent(
                                     itemView.context,
@@ -95,8 +67,51 @@ class JobVacancyAdapter(
                             )
                         }
                     }
-                }
 
+                    if (loggedUserRole == PikulRole.OWNER.toString()){
+                        layoutActionButton.visibility = View.GONE
+                    } else {
+                        layoutActionButton.visibility = View.VISIBLE
+                    }
+
+                    btnApply.setOnClickListener {
+                        if (loggedUserRole != PikulRole.MERCHANT.toString()){
+                            Toast.makeText(itemView.context, "Maaf anda belum mendaftar sebagai pedagang", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val loggedUserId = loggedUserId
+                            val interlocutorId = business.ownerId
+                            if (loggedUserId != null && interlocutorId != null) {
+                                val conversationId =
+                                    if (interlocutorId < loggedUserId) "$interlocutorId-$loggedUserId" else "$loggedUserId-$interlocutorId"
+
+                                clickListener.onApplyClicked(interlocutorId, loggedUserId, conversationId)
+
+                                itemView.context.startActivity(
+                                    Intent(
+                                        itemView.context,
+                                        ChatRoomActivity::class.java
+                                    ).putExtra(
+                                        ChatRoomActivity.EXTRA_INTENT_CONVERSATION_ID,
+                                        conversationId
+                                    ).putExtra(
+                                        ChatRoomActivity.EXTRA_INTENT_INTERLOCUTOR_ID,
+                                        interlocutorId
+                                    )
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    layoutActionButton.visibility = View.GONE
+                }
+            }
+
+            val isLoggedIn = pref.getBoolean(LocalPreferenceConstants.IS_LOGGED_IN)
+
+            itemView.setOnClickListener {
+                if (isLoggedIn != true){
+                    Toast.makeText(itemView.context, "Harap login terlebih dahulu", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

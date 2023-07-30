@@ -114,6 +114,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onClickAction() {
         binding.apply {
+
+            topAppBar.setNavigationOnClickListener {
+                onBackPressed()
+            }
+
             btnLogin.setOnClickListener {
                 login()
             }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
@@ -55,12 +56,18 @@ class SellingPlaceAdapter(private val pref: LocalPreference) :
                         .into(ivMerchantAvatar)
                 }
             }
+            val isLoggedIn = pref.getBoolean(LocalPreferenceConstants.IS_LOGGED_IN)
+
             itemView.setOnClickListener {
-                itemView.context.startActivity(
-                    Intent(itemView.context, DetailBusinessActivity::class.java)
-                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
-                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
-                )
+                if (isLoggedIn == true) {
+                    itemView.context.startActivity(
+                        Intent(itemView.context, DetailBusinessActivity::class.java)
+                            .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
+                            .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
+                    )
+                } else {
+                    Toast.makeText(itemView.context, "Harap login terlebih dahulu", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

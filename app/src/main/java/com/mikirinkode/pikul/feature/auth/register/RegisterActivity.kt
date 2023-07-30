@@ -136,6 +136,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun onClickAction() {
         binding.apply {
+            topAppBar.setNavigationOnClickListener {
+                onBackPressed()
+            }
             btnRegister.setOnClickListener {
                 register()
             }

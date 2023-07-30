@@ -4,10 +4,12 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
 import com.mikirinkode.pikul.R
+import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.maps.SellingPlace
@@ -15,7 +17,7 @@ import com.mikirinkode.pikul.databinding.ItemPopularBusinessBinding
 import com.mikirinkode.pikul.feature.detail.DetailBusinessActivity
 import com.mikirinkode.pikul.utils.MapsHelper
 
-class PopularBusinessAdapter : RecyclerView.Adapter<PopularBusinessAdapter.ViewHolder>() {
+class PopularBusinessAdapter(private val pref: LocalPreference) : RecyclerView.Adapter<PopularBusinessAdapter.ViewHolder>() {
     private val list = ArrayList<SellingPlace>()
 
     inner class ViewHolder(private val binding: ItemPopularBusinessBinding) :
@@ -46,12 +48,19 @@ class PopularBusinessAdapter : RecyclerView.Adapter<PopularBusinessAdapter.ViewH
                         .into(ivMerchantAvatar)
                 }
             }
+
+            val isLoggedIn = pref.getBoolean(LocalPreferenceConstants.IS_LOGGED_IN)
+
             itemView.setOnClickListener {
-                itemView.context.startActivity(
-                    Intent(itemView.context, DetailBusinessActivity::class.java)
-                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
-                        .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
-                )
+                if (isLoggedIn == true){
+                    itemView.context.startActivity(
+                        Intent(itemView.context, DetailBusinessActivity::class.java)
+                            .putExtra(DetailBusinessActivity.EXTRA_INTENT_BUSINESS_ID, place.businessId)
+                            .putExtra(DetailBusinessActivity.EXTRA_INTENT_MERCHANT_ID, place.merchantId)
+                    )
+                } else {
+                    Toast.makeText(itemView.context, "Harap login terlebih dahulu", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -37,9 +37,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val popularBusinessAdapter: PopularBusinessAdapter by lazy {
-        PopularBusinessAdapter()
-    }
+    private lateinit var popularBusinessAdapter: PopularBusinessAdapter
 
 
     @Inject
@@ -65,10 +63,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        popularBusinessAdapter = PopularBusinessAdapter(pref)
         initView()
         observePopularBusinessList()
-
-
         onClickAction()
     }
 

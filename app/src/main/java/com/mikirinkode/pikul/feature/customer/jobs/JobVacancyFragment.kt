@@ -60,9 +60,7 @@ class JobVacancyFragment : Fragment(), JobVacancyAdapter.ClickListener {
 
     private fun initAdapter(){
         Log.e("JobVacancyFrag", "user role: ${user?.role}")
-        if (user != null && user?.userId != null && user?.role != null){
-            adapter = JobVacancyAdapter(user?.userId!!, user?.role!!, this)
-        }
+            adapter = JobVacancyAdapter(user?.userId, user?.role, this, pref)
     }
 
     private fun initRecyclerView() {
