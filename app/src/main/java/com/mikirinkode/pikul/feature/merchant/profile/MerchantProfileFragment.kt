@@ -81,10 +81,13 @@ class MerchantProfileFragment : Fragment() {
         binding.apply {
             viewModel.getMerchantData().observe(viewLifecycleOwner) {result ->
                 when (result) {
-                    is PikulResult.Loading -> {}
+                    is PikulResult.Loading -> {
+                        layoutLoading.visibility = View.VISIBLE
+                    }
                     is PikulResult.LoadingWithProgress -> {} // TODO
                     is PikulResult.Error -> {}
                     is PikulResult.Success -> {
+                        layoutLoading.visibility = View.GONE
                         val user = result.data
                         tvUserName.text = user?.name
                         tvDummyRole.text = "Pedagang"

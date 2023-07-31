@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.local.LocalPreference
+import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.Conversation
 import com.mikirinkode.pikul.data.model.chat.UserRTDB
@@ -232,6 +233,103 @@ class ChatHistoryViewModel @Inject constructor(
         return list
     }
 
+
+//    fun receiveMessageHistory(): LiveData<PikulResult<List<Conversation>>> {
+//        val result = MutableLiveData<PikulResult<List<Conversation>>>()
+//        Log.e("ChatHistoryVM", "ReceiveMessageHistory")
+//        val list = MutableLiveData<List<Conversation>>()
+//        val currentUser =
+//            preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
+//        Log.e("ChatHistoryVM", "currentUser uid: ${currentUser?.userId}")
+//
+//        val conversations = mutableListOf<Conversation>()
+//        val userId = currentUser?.userId
+//        if (userId != null){
+//            result.postValue(PikulResult.Loading)
+//            usersRef?.child(userId!!)?.addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(userSnapshot: DataSnapshot) {
+//                    val user = userSnapshot.getValue(UserRTDB::class.java)
+//                    Log.e("ConversationListHelper", "user: ${user}")
+//                    Log.e("ConversationListHelper", "user online : ${user?.onlineStatus?.online}")
+//                    Log.e("ConversationListHelper", "user last online timestamp: ${user?.onlineStatus?.lastOnlineTimestamp}")
+//
+//                    Log.e("ConversationListHelper", "is empty?: ${(user?.conversationIdList?.isEmpty())}")
+//                    // TODO: SHOULD SAVE ON LOCAL?
+////                    val idList = arrayListOf<String>()
+////                    user?.conversationIdList?.forEach { (id, _) -> idList.add(id) }
+////                    pref?.saveObjectsList(
+////                        PreferenceConstant.CONVERSATION_ID_LIST,
+////                        idList
+////                    )
+//                    if (user == null){
+//                        result.postValue(PikulResult.Success(emptyList()))
+//                    }
+//                    if (user?.conversationIdList?.isEmpty() == true){
+//                        result.postValue(PikulResult.Success(emptyList()))
+//                    }
+//
+//                    user?.conversationIdList?.forEach { (conversationId, _) ->
+//                        val refWithQuery = conversationsRef?.orderByChild("conversationId")
+//                            ?.equalTo(conversationId)
+//                        Log.e("ChatHistoryVM", "current conversationId: ${conversationId}")
+//
+//                        refWithQuery?.keepSynced(true)
+//
+//                        refWithQuery?.addValueEventListener(object : ValueEventListener {
+//                            override fun onDataChange(conversationSnapshot: DataSnapshot) {
+//                                if (conversationSnapshot.children.count() <= 0){
+//                                    result.postValue(PikulResult.Success(emptyList()))
+//                                }
+//
+//                                for (snapshot in conversationSnapshot.children) {
+//
+//                                    val conversation = snapshot.getValue(Conversation::class.java)
+//                                    val firstUserId = conversation?.participants?.keys?.first().toString()
+//                                    val secondUserId =
+//                                        conversation?.participants?.keys?.last().toString()
+//                                    val interlocutorId =
+//                                        if (firstUserId == userId) secondUserId else firstUserId
+//                                    Log.e("ChatHistoryVM", "keys: ${conversation?.participants?.keys}")
+//                                    Log.e("ChatHistoryVM", "interlocutor id: $interlocutorId")
+//
+//                                    if (interlocutorId != "null") {
+//                                        // Get user data by interlocutor ID
+//                                        CoroutineScope(Dispatchers.Main).launch {
+//                                            val interlocutorUser = getUserById(interlocutorId)
+//                                            // Check if the interlocutorUser is not null
+//                                            if (interlocutorUser != null) {
+//                                                // Add the user data to the conversation object
+//                                                conversation?.interlocutor = interlocutorUser
+//                                                // Add the conversation object to the conversations list
+//                                                if (conversation != null) {
+//                                                    val oldConversation =
+//                                                        conversations.find { it.conversationId == conversation.conversationId }
+//                                                    conversations.remove(oldConversation)
+//                                                    conversations.add(conversation)
+//
+////                                                    mListener.onDataChangeReceived(conversations)
+//                                                    result.postValue(PikulResult.Success(conversations))
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+////                                TODO("Not yet implemented")
+//                            }
+//                        })
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+////                    TODO("Not yet implemented")
+//                }
+//            })
+//        }
+//        return result
+//    }
     companion object {
         private const val TAG = "ChatHistoryViewModel"
     }

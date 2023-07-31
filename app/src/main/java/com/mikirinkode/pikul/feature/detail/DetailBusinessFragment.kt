@@ -100,49 +100,60 @@ class DetailBusinessFragment : Fragment(), ProductOrderAdapter.ClickListener {
     }
 
     private fun observeData(businessId: String, merchantId: String) {
-        if (businessId != null) {
-            viewModel.getBusinessData(businessId).observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        adapter.setBusinessData(result.data)
-                        initView(result.data)
+        binding.apply {
+            if (businessId != null) {
+                viewModel.getBusinessData(businessId).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is PikulResult.Loading -> {
+                            layoutLoadingBusinessData.visibility = View.VISIBLE
+                        }
+                        is PikulResult.LoadingWithProgress -> {}
+                        is PikulResult.Error -> {}
+                        is PikulResult.Success -> {
+                            layoutLoadingBusinessData.visibility = View.GONE
+                            adapter.setBusinessData(result.data)
+                            initView(result.data)
+                        }
                     }
                 }
-            }
-            viewModel.getProductList(businessId).observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        adapter.setData(result.data)
+                viewModel.getProductList(businessId).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is PikulResult.Loading -> {
+                            layoutLoadingProduct.visibility = View.VISIBLE
+                        }
+                        is PikulResult.LoadingWithProgress -> {}
+                        is PikulResult.Error -> {}
+                        is PikulResult.Success -> {
+                            layoutLoadingProduct.visibility = View.GONE
+                            adapter.setData(result.data)
+                        }
                     }
                 }
-            }
 
-            viewModel.getMerchantData(merchantId).observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        adapter.setMerchantData(result.data)
-                        initMerchantView(result.data)
+                viewModel.getMerchantData(merchantId).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is PikulResult.Loading -> {
+                            layoutLoadingMerchantData.visibility = View.VISIBLE
+                        }
+                        is PikulResult.LoadingWithProgress -> {}
+                        is PikulResult.Error -> {}
+                        is PikulResult.Success -> {
+                            layoutLoadingMerchantData.visibility = View.GONE
+                            adapter.setMerchantData(result.data)
+                            initMerchantView(result.data)
+                        }
                     }
                 }
-            }
 
-            viewModel.getMerchantPlace(merchantId).observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is PikulResult.Loading -> {}
-                    is PikulResult.LoadingWithProgress -> {}
-                    is PikulResult.Error -> {}
-                    is PikulResult.Success -> {
-                        adapter.setSellingPlace(result.data)
-                        initMerchantPlace(result.data)
+                viewModel.getMerchantPlace(merchantId).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is PikulResult.Loading -> {}
+                        is PikulResult.LoadingWithProgress -> {}
+                        is PikulResult.Error -> {}
+                        is PikulResult.Success -> {
+                            adapter.setSellingPlace(result.data)
+                            initMerchantPlace(result.data)
+                        }
                     }
                 }
             }

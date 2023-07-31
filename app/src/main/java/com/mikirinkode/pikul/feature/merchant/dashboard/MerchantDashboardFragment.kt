@@ -81,10 +81,13 @@ class MerchantDashboardFragment : Fragment() {
         binding.apply {
             viewModel.getMerchantData().observe(viewLifecycleOwner) { result ->
                 when (result) {
-                    is PikulResult.Loading -> {}
+                    is PikulResult.Loading -> {
+                        layoutLoading.visibility = View.VISIBLE
+                    }
                     is PikulResult.LoadingWithProgress -> {} // TODO
                     is PikulResult.Error -> {}
                     is PikulResult.Success -> {
+                        layoutLoading.visibility = View.GONE
                         val user = result.data
                         tvUserName.text = user.name
                         tvAddress.text = user.province
@@ -94,10 +97,13 @@ class MerchantDashboardFragment : Fragment() {
 
             viewModel.getAgreement().observe(viewLifecycleOwner) { result ->
                 when (result) {
-                    is PikulResult.Loading -> {}
+                    is PikulResult.Loading -> {
+                        layoutLoading.visibility = View.VISIBLE
+                    }
                     is PikulResult.LoadingWithProgress -> {} // TODO
                     is PikulResult.Error -> {}
                     is PikulResult.Success -> {
+                        layoutLoading.visibility = View.GONE
                         agreement = result.data
                         if (agreement == null) {
                             cardNotHavePartner.visibility = View.VISIBLE

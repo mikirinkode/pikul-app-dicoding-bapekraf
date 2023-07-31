@@ -73,6 +73,7 @@ class OrderViewModel @Inject constructor(
         val userId = auth.currentUser?.uid
 
         if (userId != null) {
+            result.postValue(PikulResult.Loading)
             val productIdWithName = mutableMapOf<String, String>()
             val productIdWithPrice = mutableMapOf<String, Float>()
             val productIdWithAmount = mutableMapOf<String, Int>()

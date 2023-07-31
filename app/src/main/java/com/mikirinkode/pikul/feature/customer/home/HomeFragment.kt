@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -117,10 +118,15 @@ class HomeFragment : Fragment() {
     private fun observePopularBusinessList() {
         viewModel.getPopularBusinessList().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is PikulResult.Loading -> {} // TODO
+                is PikulResult.Loading -> {
+                    binding.layoutLoading.visibility = View.VISIBLE
+                }
                 is PikulResult.LoadingWithProgress -> {}
-                is PikulResult.Error -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                }
                 is PikulResult.Success -> {
+                    binding.layoutLoading.visibility = View.GONE
                     popularBusinessAdapter.setData(result.data)
                 }
             }

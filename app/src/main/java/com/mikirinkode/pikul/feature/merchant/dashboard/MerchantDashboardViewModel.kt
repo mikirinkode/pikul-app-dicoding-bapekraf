@@ -1,5 +1,6 @@
 package com.mikirinkode.pikul.feature.merchant.dashboard
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,6 +29,7 @@ class MerchantDashboardViewModel @Inject constructor(
         result.postValue(PikulResult.Loading)
 
         val userId = auth.currentUser?.uid
+        Log.e(TAG, "get product list")
         if (userId != null) {
             fireStore.collection(FireStoreUtils.TABLE_PRODUCTS).whereEqualTo("businessId", businessId)
                 .get()
@@ -37,10 +39,13 @@ class MerchantDashboardViewModel @Inject constructor(
                         val product = doc.toObject(Product::class.java)
 
                         val stock = product.productStocks?.get(userId)
+        Log.e(TAG, "get product ${stock}")
                         if (stock != null) {
                             if (stock <= 0) {
                                 result.postValue(PikulResult.Success(true))
                             }
+                        }else{
+                                result.postValue(PikulResult.Success(true))
                         }
                     }
                 }
@@ -110,6 +115,7 @@ class MerchantDashboardViewModel @Inject constructor(
         val result = MutableLiveData<PikulResult<MerchantAgreement?>>()
         val userId = auth.currentUser?.uid
         if (userId != null) {
+            result.postValue(PikulResult.Loading)
             fireStore.collection(FireStoreUtils.TABLE_MERCHANT_AGREEMENT).whereEqualTo("merchantId", userId).whereEqualTo("active", true).get()
                 .addOnFailureListener {} // TODO
                 .addOnSuccessListener {documents ->

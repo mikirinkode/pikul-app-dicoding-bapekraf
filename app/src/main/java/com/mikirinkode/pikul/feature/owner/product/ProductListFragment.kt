@@ -76,8 +76,11 @@ class ProductListFragment : Fragment(), ProductListAdapter.ClickListener {
                         layoutLoading.visibility = View.GONE
                         if (result.data.isNotEmpty()) {
                             adapter.setData(result.data)
+                            binding.layoutOnEmptyData.visibility = View.GONE
+                            binding.rvProducts.visibility = View.VISIBLE
                         } else {
-
+                            binding.rvProducts.visibility = View.GONE
+                            binding.layoutOnEmptyData.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -106,6 +109,7 @@ class ProductListFragment : Fragment(), ProductListAdapter.ClickListener {
                         is PikulResult.Success -> {
                             binding.layoutLoading.visibility = View.GONE
                             Toast.makeText(requireContext(), "Berhasil menghapus data", Toast.LENGTH_SHORT).show()
+                            observeProductList()
                         }
                     }
                 }

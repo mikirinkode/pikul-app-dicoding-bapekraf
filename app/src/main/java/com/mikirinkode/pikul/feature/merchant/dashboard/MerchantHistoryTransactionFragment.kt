@@ -56,11 +56,19 @@ class MerchantHistoryTransactionFragment : Fragment(), MerchantTransactionAdapte
     private fun observeData() {
         viewModel.getCompleteTransactionList().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is PikulResult.Loading -> {}
+                is PikulResult.Loading -> {
+                    binding.layoutListLoading.visibility = View.VISIBLE
+                }
                 is PikulResult.LoadingWithProgress -> {} // TODO
                 is PikulResult.Error -> {}
                 is PikulResult.Success -> {
+                    binding.layoutListLoading.visibility = View.GONE
                     adapter.setData(result.data)
+                    if (result.data.isEmpty()){
+                        binding.layoutOnEmptyData.visibility = View.VISIBLE
+                    } else {
+                        binding.layoutOnEmptyData.visibility = View.GONE
+                    }
                 }
             }
         }

@@ -72,6 +72,108 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/layoutLoadingBusinessData"
+                    android:layout_height="wrap_content"
+                    android:elevation="2dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shimmer_auto_start="true"
+                    tools:visibility="visible">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:id="@+id/ll1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color" />
+                        <TextView
+                            android:id="@+id/ll2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:maxLength="100"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ll1"
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color"/>
+
+                        <TextView
+                            android:id="@+id/ll3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/tv_title_category"
+                            android:textColor="@color/neutral_300"
+                            app:layout_constraintEnd_toStartOf="@+id/ll5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ll2" />
+
+                        <TextView
+                            android:id="@+id/ll4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintEnd_toStartOf="@+id/ll5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ll3"
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color" />
+
+                        <TextView
+                            android:id="@+id/ll5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:text="@string/tv_title_rating"
+                            android:textColor="@color/neutral_300"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ll2" />
+
+                        <ImageView
+                            android:id="@+id/ll6"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_star"
+                            app:layout_constraintStart_toStartOf="@+id/ll5"
+                            app:layout_constraintTop_toBottomOf="@+id/ll5"
+                            app:tint="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/ll7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:maxLines="1"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ll6"
+                            app:layout_constraintTop_toBottomOf="@id/ll5"
+
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+
                 <TextView
                     android:id="@+id/tvBrandName"
                     android:layout_width="0dp"
@@ -92,7 +194,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBrandName"
-                    tools:text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore adipisci tempora. Lorem ipsum sir dolor" />
+                    tools:text="Lorem ipsum dolor sit, amet consectetur  " />
 
                 <TextView
                     android:id="@+id/tvCategorySectionTile"
@@ -160,6 +262,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBrandCategory" />
 
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutMerchantProfile"
                     android:layout_width="0dp"
@@ -188,9 +291,54 @@
                         app:layout_constraintStart_toEndOf="@id/ivMerchantAvatar"
                         app:layout_constraintTop_toTopOf="@id/ivMerchantAvatar"
                         tools:text="Kang Pikul" />
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/layoutLoadingMerchantData"
+                    android:layout_height="wrap_content"
+                    android:elevation="2dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMerchantSectionTile"
+                    app:shimmer_auto_start="true"
+                    tools:visibility="visible">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvMerchantSectionTile">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ll8"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="@id/ll8"
+                            app:layout_constraintStart_toEndOf="@id/ll8"
+                            app:layout_constraintTop_toTopOf="@id/ll8"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@drawable/bg_rounded_card_small_corner_radius"
+                            android:backgroundTint="?attr/shimmer_highlight_color" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+
 
                 <TextView
                     android:id="@+id/tvMerchantAddressSectionTile"
@@ -305,6 +453,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvItemSectionTile"
                     tools:listitem="@layout/item_product_order" />
+
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/layoutLoadingProduct"
+                    android:layout_height="wrap_content"
+                    android:elevation="2dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvItemSectionTile"
+                    app:shimmer_auto_start="true"
+                    tools:visibility="visible">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/placeholder_item_product" />
+                            <include layout="@layout/placeholder_item_product" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </ScrollView>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

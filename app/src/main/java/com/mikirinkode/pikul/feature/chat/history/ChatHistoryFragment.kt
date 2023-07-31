@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
+import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentChatHistoryBinding
 import com.mikirinkode.pikul.feature.auth.login.LoginActivity
@@ -44,6 +45,7 @@ class ChatHistoryFragment : Fragment() {
     private val loggedUser: UserAccount? by lazy {
         preferences?.getObject(LocalPreferenceConstants.USER, UserAccount::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,8 +68,8 @@ class ChatHistoryFragment : Fragment() {
         _binding = null
     }
 
-    private fun checkLoggedUser(){
-        if (loggedUser == null){
+    private fun checkLoggedUser() {
+        if (loggedUser == null) {
             binding.layoutNotLoginYet.visibility = View.VISIBLE
         } else {
             binding.layoutNotLoginYet.visibility = View.GONE
@@ -75,7 +77,7 @@ class ChatHistoryFragment : Fragment() {
         }
     }
 
-    private fun initView(){
+    private fun initView() {
         binding.apply {
             rvChatHistory.layoutManager = LinearLayoutManager(requireContext())
             rvChatHistory.adapter = adapter

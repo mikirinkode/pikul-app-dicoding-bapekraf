@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:backgroundTint="?attr/shimmer_base_color"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBusinessAvatar"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            app:cardCornerRadius="12dp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvBusinessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:maxLines="1"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardBusinessAvatar"  />
+
+        <ImageView
+            android:id="@+id/ivTime"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintStart_toStartOf="@id/tvBusinessName"
+            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"  />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/ivTime"
+            app:layout_constraintTop_toTopOf="@id/ivTime"
+
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color" />
+
+        <ImageView
+            android:id="@+id/ivLocation"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/tvTime"
+            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
+
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"/>
+
+        <TextView
+            android:id="@+id/tvMerchantDistance"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/ivLocation"
+            app:layout_constraintTop_toTopOf="@id/ivLocation"
+
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMerchant"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTime">
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

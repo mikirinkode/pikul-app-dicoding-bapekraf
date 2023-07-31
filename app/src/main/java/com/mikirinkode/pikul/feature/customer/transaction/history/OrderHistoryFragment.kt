@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.pikul.data.model.PikulResult
@@ -55,11 +56,21 @@ class OrderHistoryFragment : Fragment() {
     private fun observeData() {
         viewModel.getCompleteTransactionList().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is PikulResult.Loading -> {}
+                is PikulResult.Loading -> {
+                    binding.layoutListLoading.visibility = View.VISIBLE
+                }
                 is PikulResult.LoadingWithProgress -> {} // TODO
-                is PikulResult.Error -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                }
                 is PikulResult.Success -> {
+                    binding.layoutListLoading.visibility = View.GONE
                     adapter.setData(result.data)
+                    if (result.data.isEmpty()){
+                        binding.layoutOnEmptyData.visibility = View.VISIBLE
+                    } else {
+                        binding.layoutOnEmptyData.visibility = View.GONE
+                    }
                 }
             }
         }

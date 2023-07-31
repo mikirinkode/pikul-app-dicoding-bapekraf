@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -74,10 +75,15 @@ class JobVacancyFragment : Fragment(), JobVacancyAdapter.ClickListener {
     private fun observeData(){
         viewModel.getBusinessList().observe(viewLifecycleOwner){result ->
             when (result) {
-                is PikulResult.Loading -> {}
-                is PikulResult.LoadingWithProgress -> {} // TODO
-                is PikulResult.Error -> {}
+                is PikulResult.Loading -> {
+                    binding.layoutLoading.visibility = View.VISIBLE
+                }
+                is PikulResult.LoadingWithProgress -> {}
+                is PikulResult.Error -> {
+                    Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                }
                 is PikulResult.Success -> {
+                    binding.layoutLoading.visibility = View.GONE
                     adapter.setData(result.data)
                 }
             }

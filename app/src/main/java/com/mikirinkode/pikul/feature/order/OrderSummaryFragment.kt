@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -132,10 +133,16 @@ class OrderSummaryFragment : Fragment(), ProductSummaryAdapter.ClickListener {
                     listOfProduct
                 ).observe(viewLifecycleOwner) { result ->
                     when (result) {
-                        is PikulResult.Loading -> {}
+                        is PikulResult.Loading -> {
+                            layoutLoading.visibility = View.VISIBLE
+                        }
                         is PikulResult.LoadingWithProgress -> {}
-                        is PikulResult.Error -> {} // TODO
+                        is PikulResult.Error -> {
+                            layoutLoading.visibility = View.GONE
+                            Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                        } // TODO
                         is PikulResult.Success -> {
+                            layoutLoading.visibility = View.GONE
                             val paymentUrl = result.data.paymentUrl ?: ""
                             val transactionId = result.data.transactionId ?: ""
 //                            val action =

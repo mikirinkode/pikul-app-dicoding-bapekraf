@@ -228,7 +228,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                         )
 
                         handleUserMarker(it.latitude, it.longitude)
-                        viewModel.saveUserCoordinate(it.latitude, it.longitude)
+                        val isLoggedIn = pref.getBoolean(LocalPreferenceConstants.IS_LOGGED_IN)
+
+                        if (isLoggedIn == true) {
+                            viewModel.saveUserCoordinate(it.latitude, it.longitude)
+                        }
                     }
                 }
                 .addOnFailureListener { exception: Exception ->

@@ -40,6 +40,7 @@ class HomeViewModel @Inject constructor(
     fun getPopularBusinessList(): MutableLiveData<PikulResult<List<SellingPlace>>> {
         val result = MutableLiveData<PikulResult<List<SellingPlace>>>()
 
+        result.postValue(PikulResult.Loading)
         // get merchant data
         fireStore.collection(FireStoreUtils.TABLE_USER)
             .whereNotEqualTo("role", "CUSTOMER")
@@ -48,9 +49,9 @@ class HomeViewModel @Inject constructor(
                 val errorMessage = it.message ?: "Gagal mengambil Data"
 //                result.postValue(PikulResult.Error(errorMessage)) // TODO
             }
-            .addOnSuccessListener {
+            .addOnSuccessListener {merchantSnapshot ->
                 val merchants = ArrayList<UserAccount>()
-                for (doc in it){
+                for (doc in merchantSnapshot){
                     val user = doc.toObject(UserAccount::class.java)
                     merchants.add(user)
                     Log.e(TAG, "merchant id: ${user.userId}, name: ${user.name}")
@@ -94,8 +95,6 @@ class HomeViewModel @Inject constructor(
                                             sellingPlace.businessRating = businessData?.businessRating
                                             sellingPlace.merchantName = merchantData?.name
                                             sellingPlace.merchantPhotoUrl = merchantData?.avatarUrl
-
-
 
                                             list.add(sellingPlace)
                                         }

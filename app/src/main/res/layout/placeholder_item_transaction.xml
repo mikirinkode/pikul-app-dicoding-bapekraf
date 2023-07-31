@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:backgroundTint="?attr/shimmer_base_color"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutGoodStatus"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <TextView
+            android:id="@+id/tvBusinessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutGoodStatus"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivDateIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvBusinessName"
+            app:layout_constraintStart_toStartOf="@id/tvBusinessName"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"/>
+        <TextView
+            android:id="@+id/tvTransactionDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivDateIcon"
+            app:layout_constraintTop_toTopOf="@id/ivDateIcon"
+
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"/>
+
+        <ImageView
+            android:id="@+id/ivPriceIcon"
+            app:layout_constraintTop_toBottomOf="@id/ivDateIcon"
+            app:layout_constraintStart_toStartOf="@id/ivDateIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"/>
+        <TextView
+            android:id="@+id/tvTransactionTotalBilling"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPriceIcon"
+            app:layout_constraintTop_toTopOf="@id/ivPriceIcon"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color" />
+
+        <View
+            android:id="@+id/btnMarkAsCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTransactionTotalBilling"
+            android:background="@drawable/bg_rounded_card_small_corner_radius"
+            android:backgroundTint="?attr/shimmer_highlight_color"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

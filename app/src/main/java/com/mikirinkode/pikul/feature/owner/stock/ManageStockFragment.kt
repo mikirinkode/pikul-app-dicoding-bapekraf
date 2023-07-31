@@ -105,8 +105,9 @@ class ManageStockFragment : Fragment(), ManageStockAdapter.ClickListener {
                         layoutLoading.visibility = View.GONE
                         if (result.data.isNotEmpty()) {
                             adapter.setData(result.data)
+                            layoutOnEmptyData.visibility = View.GONE
                         } else {
-
+                            layoutOnEmptyData.visibility = View.VISIBLE
                         }
                     }
                 }
