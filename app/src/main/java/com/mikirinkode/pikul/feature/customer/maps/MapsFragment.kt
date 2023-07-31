@@ -237,11 +237,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                 }
                 .addOnFailureListener { exception: Exception ->
                     // Handle location retrieval failure
-                    Toast.makeText(
-                        requireContext(),
-                        "${exception.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "${exception.message}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
         } else {
             showEnableLocationServiceDialog()
@@ -332,27 +332,5 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     }
 
 
-    // handle the request permission result
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        Log.e("MapsFragment", "onRequestPermissionsResult")
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PermissionHelper.LOCATION_REQUEST_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty()) {
-                for (result in grantResults) {
-                    if (result == AppCompatActivity.RESULT_OK) {
-                        observeNewLocation()
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.txt_location_permission_granted),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
-    }
+
 }

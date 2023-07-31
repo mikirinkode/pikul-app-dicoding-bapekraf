@@ -98,11 +98,11 @@ class MainActivity : AppCompatActivity() {
                 for (result in grantResults) {
                     if (result == AppCompatActivity.RESULT_OK) {
 //                        observeNewLocation() // TODO
-                        Toast.makeText(
-                            this,
-                            getString(R.string.txt_location_permission_granted),
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this,
+//                            getString(R.string.txt_location_permission_granted),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 }
             }

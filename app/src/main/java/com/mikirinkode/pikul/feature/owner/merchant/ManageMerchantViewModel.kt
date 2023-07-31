@@ -65,6 +65,30 @@ class ManageMerchantViewModel @Inject constructor(
         // create the invitation
         fireStore.collection(FireStoreUtils.TABLE_BUSINESSES).document(businessOwnerId).get()
             .addOnSuccessListener {
+                val usersRef = database?.getReference("users")
+                usersRef?.child(businessOwnerId)?.child("conversationIdList")?.child(conversationId)
+                    ?.setValue(mapOf(conversationId to true))
+                usersRef?.child(merchantId)?.child("conversationIdList")?.child(conversationId)
+                    ?.setValue(mapOf(conversationId to true))
+                // create conversation object on realtime database
+                val timeStamp = System.currentTimeMillis()
+                val participants = mapOf(
+                    merchantId to mapOf(
+                        "joinedAt" to timeStamp
+                    ),
+                    businessOwnerId to mapOf(
+                        "joinedAt" to timeStamp
+                    ),
+                )
+                val initialConversation = mapOf(
+                    "conversationId" to conversationId,
+                    "participants" to participants,
+                    "conversationType" to "PERSONAL",
+                    "createdAt" to timeStamp
+                )
+                conversationsRef?.child(conversationId)?.updateChildren(initialConversation)
+
+                //create invitation data
                 val businessData = it.toObject(Business::class.java)
                 val ref = fireStore.collection(FireStoreUtils.TABLE_BUSINESS_INVITATIONS).document()
                 val businessName = businessData?.businessName ?: ""
@@ -84,7 +108,6 @@ class ManageMerchantViewModel @Inject constructor(
                 ref.set(invitationData) // TODO: add listener
 
                 // create the message
-                val timeStamp = System.currentTimeMillis()
                 val newMessageKey =
                     conversationsRef?.child(conversationId)?.child("messages")?.push()?.key
 

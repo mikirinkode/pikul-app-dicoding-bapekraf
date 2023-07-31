@@ -69,6 +69,30 @@ class JobVacancyViewModel @Inject constructor(
         val userId = auth.currentUser?.uid
 
         if (userId != null) {
+            val usersRef = database?.getReference("users")
+            usersRef?.child(businessOwnerId)?.child("conversationIdList")?.child(conversationId)
+                ?.setValue(mapOf(conversationId to true))
+            usersRef?.child(merchantId)?.child("conversationIdList")?.child(conversationId)
+                ?.setValue(mapOf(conversationId to true))
+            // create conversation object on realtime database
+            val timeStamp = System.currentTimeMillis()
+            val participants = mapOf(
+                merchantId to mapOf(
+                    "joinedAt" to timeStamp
+                ),
+                businessOwnerId to mapOf(
+                    "joinedAt" to timeStamp
+                ),
+            )
+            val initialConversation = mapOf(
+                "conversationId" to conversationId,
+                "participants" to participants,
+                "conversationType" to "PERSONAL",
+                "createdAt" to timeStamp
+            )
+            conversationsRef?.child(conversationId)?.updateChildren(initialConversation)
+
+
             fireStore.collection(FireStoreUtils.TABLE_USER)
                 .document(userId)
                 .get()

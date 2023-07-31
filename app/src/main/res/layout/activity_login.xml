@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="?android:attr/textColor"
-            app:title="@string/txt_chat_title" />
+            app:title="Masuk" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView

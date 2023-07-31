@@ -92,7 +92,8 @@ class MerchantRegisterViewModel @Inject constructor(
                                 FireStoreUtils.TABLE_USER_NAME to name,
                                 FireStoreUtils.TABLE_USER_UPDATED_AT to timestamp,
                                 FireStoreUtils.TABLE_USER_ROLE to role,
-                                FireStoreUtils.TABLE_USER_AVATAR_URL to uri
+                                FireStoreUtils.TABLE_USER_AVATAR_URL to uri,
+                                "haveBusinessAgreement" to false,
                             )
 
                             // update local saved user data
