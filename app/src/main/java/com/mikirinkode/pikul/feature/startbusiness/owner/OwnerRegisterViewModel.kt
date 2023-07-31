@@ -33,6 +33,8 @@ class OwnerRegisterViewModel @Inject constructor(
 
     fun registerAsOwner(
         businessName: String,
+        businessDesc: String,
+        businessProductCategory: String,
         businessEmail: String,
         businessPhoneNumber: String,
         businessProvince: String,
@@ -66,6 +68,8 @@ class OwnerRegisterViewModel @Inject constructor(
                     ownerId = userId,
                     businessId = userId,
                     businessName = businessName,
+                    businessDescription = businessDesc,
+                    businessProductCategory = businessProductCategory,
                     businessEmail = businessEmail,
                     businessPhoneNumber = businessPhoneNumber,
                     businessProvince = businessProvince,
@@ -114,6 +118,8 @@ class OwnerRegisterViewModel @Inject constructor(
                                 ownerId = userId,
                                 businessId = userId,
                                 businessName = businessName,
+                                businessDescription = businessDesc,
+                                businessProductCategory = businessProductCategory,
                                 businessEmail = businessEmail,
                                 businessPhoneNumber = businessPhoneNumber,
                                 businessProvince = businessProvince,

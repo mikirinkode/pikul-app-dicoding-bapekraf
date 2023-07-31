@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,11 +58,21 @@ class OwnerTransactionListFragment : Fragment() {
         binding.apply {
             viewModel.getAllOwnerTransactionList().observe(viewLifecycleOwner){ result ->
                 when (result) {
-                    is PikulResult.Loading -> {}
+                    is PikulResult.Loading -> {
+                        layoutListLoading.visibility = View.VISIBLE
+                    }
                     is PikulResult.LoadingWithProgress -> {} // TODO
-                    is PikulResult.Error -> {}
+                    is PikulResult.Error -> {
+                        Toast.makeText(requireContext(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
                     is PikulResult.Success -> {
+                        layoutListLoading.visibility = View.GONE
                         adapter.setData(result.data)
+                        if (result.data.isEmpty()){
+                            layoutOnEmptyData.visibility = View.VISIBLE
+                        } else {
+                            layoutOnEmptyData.visibility = View.GONE
+                        }
                     }
                 }
             }

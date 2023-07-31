@@ -211,5 +211,6 @@
     <string name="txt_screen_owner_transaction_order">Pesanan</string>
     <string name="txt_screen_owner_transaction_list">Daftar Transaksi</string>
     <string name="txt_screen_search">Cari</string>
+    <string name="txt_empty_business_product_category">Kategori produk yang anda jual tidak boleh kosong</string>
 
 </resources>

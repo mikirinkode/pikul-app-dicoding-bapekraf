@@ -76,6 +76,11 @@ class ManageMerchantFragment : Fragment() {
                     is PikulResult.Success -> {
                         layoutLoading.visibility = View.GONE
                         adapter.setData(result.data)
+                        if (result.data.isEmpty()){
+                            layoutOnEmptyData.visibility = View.VISIBLE
+                        } else {
+                            layoutOnEmptyData.visibility = View.GONE
+                        }
                     }
                 }
             }

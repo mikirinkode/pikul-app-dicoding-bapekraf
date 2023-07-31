@@ -9,7 +9,10 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
+import com.mikirinkode.pikul.constants.Constants
+import com.mikirinkode.pikul.constants.ConversationType
 import com.mikirinkode.pikul.constants.MessageType
+import com.mikirinkode.pikul.constants.NOTIFICATION_TYPE
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.MerchantAgreement
@@ -20,7 +23,10 @@ import com.mikirinkode.pikul.data.model.chat.UserStatus
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.Event
 import com.mikirinkode.pikul.utils.FireStoreUtils
+import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -191,11 +197,14 @@ class ChatRoomViewModel @Inject constructor(
         return result
     }
 
+    var receiveListener: ValueEventListener? = null
+
     fun receiveMessage(conversationId: String): LiveData<List<ChatMessage>> {
         val data = MutableLiveData<List<ChatMessage>>()
 
         val ref = conversationId.let { messagesRef?.child(it) }
-        ref?.addValueEventListener(object : ValueEventListener {
+//        ref?.addValueEventListener()
+        val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val messages = mutableListOf<ChatMessage>()
                 val theLatestMessage =
@@ -234,13 +243,18 @@ class ChatRoomViewModel @Inject constructor(
             override fun onCancelled(error: DatabaseError) {
                 // TODO: UNIMPLEMENTED
             }
-        })
+        }
+
+        ref?.addValueEventListener(listener)
+        receiveListener = listener
         return data
     }
 
-//    fun deactivateListener(conversationId: String) {
-//        messagesRef?.child(conversationId)?.removeEventListener(receiveListener)
-//    }
+    fun deactivateListener(conversationId: String) {
+        if (receiveListener != null) {
+            messagesRef.child(conversationId)?.removeEventListener(receiveListener!!)
+        }
+    }
 
 
     fun createPersonaChatRoom(userId: String, anotherUserId: String, conversationId: String) {
@@ -315,13 +329,51 @@ class ChatRoomViewModel @Inject constructor(
             messagesRef?.child(conversationId)?.child(newMessageKey)?.setValue(chatMessage)
 
             // post notification
-//            postNotification(senderName, message, receiverDeviceTokenList)
+            postNotification(conversationId, interlocutorId, senderName, message, receiverDeviceTokenList)
 
             // reset total unread messages
             resetTotalUnreadMessage(conversationId)
         }
 
     }
+
+    private fun postNotification(
+        conversationId: String,
+        interlocutorId: String,
+        senderName: String,
+        message: String,
+        receiverDeviceTokenList: List<String>
+    ) {
+        Log.e("ChatRoomVM", "postNotification called")
+        Log.e("ChatRoomVM", "receiver device token list: " + receiverDeviceTokenList)
+//        Log.e("ChatRoomVM", "receiver device token: ${receiverDeviceTokenList?.get(0)}")
+        val receivers = JSONArray(receiverDeviceTokenList)
+        val customData = JSONObject().apply {
+            put("conversationId", conversationId)
+            put("interlocutorId", interlocutorId)
+            put("notificationType", NOTIFICATION_TYPE.CHATTING.toString())
+        }
+        val notificationJson = JSONObject().apply {
+            put("app_id", Constants.ONE_SIGNAL_APP_ID)
+            put("include_player_ids", receivers)
+            put("contents", JSONObject().put("en", message))
+            put("headings", JSONObject().put("en", senderName))
+            put("data", customData)
+        }
+
+        OneSignal.postNotification(
+            notificationJson,
+            object : OneSignal.PostNotificationResponseHandler {
+                override fun onSuccess(response: JSONObject?) {
+                    // Notification sent successfully
+                }
+
+                override fun onFailure(response: JSONObject?) {
+                    // Failed to send notification
+                }
+            })
+    }
+
 
     // Reset the total unread message
     fun resetTotalUnreadMessage(conversationId: String) {

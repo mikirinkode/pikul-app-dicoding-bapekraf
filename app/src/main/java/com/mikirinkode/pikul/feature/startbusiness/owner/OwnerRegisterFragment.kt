@@ -207,8 +207,10 @@ class OwnerRegisterFragment : Fragment() {
             val businessName = etBusinessName.text.toString().trim()
             val businessEmail = etBusinessEmail.text.toString().trim()
             val businessPhone = etBusinessPhoneNumber.text.toString().trim()
-            val businessAddress = etBusinessAddress.text.toString().trim()
+            val businessDesc = etBusinessDesc.text.toString().trim()
+            val businessProductCategory = etBusinessProductCategory.text.toString().trim()
 
+            val businessAddress = etBusinessAddress.text.toString().trim()
             val provinces = resources.getStringArray(R.array.provinces)
             val businessProvince = actvProvince.text.toString()
 
@@ -242,6 +244,12 @@ class OwnerRegisterFragment : Fragment() {
                 etBusinessAddress.error = getString(R.string.txt_empty_business_address)
             }
 
+            if (businessProductCategory.isEmpty()) {
+                isValid = false
+                etBusinessAddress.error = getString(R.string.txt_empty_business_product_category)
+            }
+
+
             if (getFile == null) {
                 isValid = false
                 Toast.makeText(requireContext(), "Harap pilih foto untuk bisnis anda", Toast.LENGTH_SHORT).show()
@@ -250,6 +258,8 @@ class OwnerRegisterFragment : Fragment() {
             if (isValid){
                 viewModel.registerAsOwner(
                     businessName,
+                    businessDesc,
+                    businessProductCategory,
                     businessEmail,
                     businessPhone,
                     businessProvince,

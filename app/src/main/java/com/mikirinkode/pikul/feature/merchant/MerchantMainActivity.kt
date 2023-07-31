@@ -2,6 +2,8 @@ package com.mikirinkode.pikul.feature.merchant
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -15,6 +17,7 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.ActivityMerchantMainBinding
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionFragment
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionPagerAdapter
+import com.mikirinkode.pikul.utils.PermissionHelper
 import com.mikirinkode.pikul.utils.TimePickerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,5 +33,22 @@ class MerchantMainActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PermissionHelper.NOTIFICATION_REQUEST_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty()) {
+                for (result in grantResults) {
+                    Toast.makeText(this, "Ijin Notifikasi Diberikan", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
     }
 }

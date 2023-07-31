@@ -6,12 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.*
 import com.mikirinkode.pikul.data.model.maps.SellingPlace
+import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
+import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,7 +25,28 @@ class MerchantDashboardViewModel @Inject constructor(
     private val storage: FirebaseStorage,
     private val preferences: LocalPreference
 ) : ViewModel() {
+    fun updateOneSignalDeviceToken() {
+        // Retrieve the device token
+        val deviceState = OneSignal.getDeviceState()
+        val deviceToken = deviceState?.userId
 
+        // Check if device token is available
+        if (deviceToken != null) {
+            val currentUserId = auth?.currentUser?.uid
+            val userRef = currentUserId?.let { fireStore?.collection("users")?.document(it) }
+
+            // Save token to server if use a server
+            if (currentUserId != null) {
+                val currentDate = DateHelper.getCurrentDateTime()
+                val newUpdate = hashMapOf<String, Any>(
+                    "oneSignalToken" to deviceToken,
+                    "oneSignalTokenUpdatedAt" to currentDate
+                )
+
+                userRef?.set(newUpdate, SetOptions.merge())
+            }
+        }
+    }
     fun getProductList(businessId: String): LiveData<PikulResult<Boolean>> {
         val result = MutableLiveData<PikulResult<Boolean>>()
 

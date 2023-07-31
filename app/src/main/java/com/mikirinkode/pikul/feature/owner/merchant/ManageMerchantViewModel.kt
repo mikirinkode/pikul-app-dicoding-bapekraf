@@ -10,7 +10,9 @@ import com.google.firebase.database.ServerValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
+import com.mikirinkode.pikul.constants.Constants
 import com.mikirinkode.pikul.constants.MessageType
+import com.mikirinkode.pikul.constants.NOTIFICATION_TYPE
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.Business
 import com.mikirinkode.pikul.data.model.MerchantAgreement
@@ -19,7 +21,10 @@ import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.data.model.chat.ChatMessage
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
+import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -90,7 +95,7 @@ class ManageMerchantViewModel @Inject constructor(
                         sendTimestamp = timeStamp,
                         type = MessageType.BUSINESS_INVITATION.toString(),
                         senderId = businessOwnerId,
-                        senderName = "", // TODO
+                        senderName = businessName, // TODO
                         businessInvitationData = invitationData
                     )
 
@@ -108,12 +113,68 @@ class ManageMerchantViewModel @Inject constructor(
                     messagesRef?.child(conversationId)?.child(newMessageKey)?.setValue(chatMessage)
 
                     // post notification
-//            postNotification(senderName, message, receiverDeviceTokenList)
+                    // post notification
+                    fireStore.collection(FireStoreUtils.TABLE_USER)
+                        .document(merchantId)
+                        .get()
+                        .addOnSuccessListener {
+                            val user = it.toObject(UserAccount::class.java)
+                            if (user != null) {
+                                if (user.oneSignalToken != null || user.oneSignalToken != "") {
+                                    val receiverDeviceTokenList =
+                                        listOf<String>(user.oneSignalToken?:"")
+
+                                    postNotification(
+                                        conversationId,
+                                        merchantId,
+                                        businessName,
+                                        "Undangan Bisnis",
+                                        receiverDeviceTokenList
+                                    )
+                                }
+                            }
+                        }
 
                     // reset total unread messages
                     resetTotalUnreadMessage(businessOwnerId, conversationId)
                 }
             }
+    }
+    private fun postNotification(
+        conversationId: String,
+        interlocutorId: String,
+        senderName: String,
+        message: String,
+        receiverDeviceTokenList: List<String>
+    ) {
+        Log.e("ChatRoomVM", "postNotification called")
+        Log.e("ChatRoomVM", "receiver device token list: " + receiverDeviceTokenList)
+//        Log.e("ChatRoomVM", "receiver device token: ${receiverDeviceTokenList?.get(0)}")
+        val receivers = JSONArray(receiverDeviceTokenList)
+        val customData = JSONObject().apply {
+            put("conversationId", conversationId)
+            put("interlocutorId", interlocutorId)
+            put("notificationType", NOTIFICATION_TYPE.CHATTING.toString())
+        }
+        val notificationJson = JSONObject().apply {
+            put("app_id", Constants.ONE_SIGNAL_APP_ID)
+            put("include_player_ids", receivers)
+            put("contents", JSONObject().put("en", message))
+            put("headings", JSONObject().put("en", senderName))
+            put("data", customData)
+        }
+
+        OneSignal.postNotification(
+            notificationJson,
+            object : OneSignal.PostNotificationResponseHandler {
+                override fun onSuccess(response: JSONObject?) {
+                    // Notification sent successfully
+                }
+
+                override fun onFailure(response: JSONObject?) {
+                    // Failed to send notification
+                }
+            })
     }
 
     // TODO: MULTIPLE PLACE

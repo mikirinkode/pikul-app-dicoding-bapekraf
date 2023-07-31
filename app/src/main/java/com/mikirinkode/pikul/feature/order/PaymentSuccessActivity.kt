@@ -2,12 +2,10 @@ package com.mikirinkode.pikul.feature.order
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.mikirinkode.pikul.R
-import com.mikirinkode.pikul.constants.PAYMENT_STATUS
 import com.mikirinkode.pikul.constants.TRANSACTION_STATUS
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.PikulTransaction
@@ -15,7 +13,6 @@ import com.mikirinkode.pikul.databinding.ActivityPaymentSuccessBinding
 import com.mikirinkode.pikul.feature.customer.main.MainActivity
 import com.mikirinkode.pikul.feature.customer.transaction.TransactionViewModel
 import com.mikirinkode.pikul.feature.detail.DetailPickupPointMapsActivity
-import com.mikirinkode.pikul.feature.payment.MidtransWebViewActivity
 import com.mikirinkode.pikul.utils.CommonHelper
 import com.mikirinkode.pikul.utils.MoneyHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +42,6 @@ class PaymentSuccessActivity : AppCompatActivity() {
 
     private fun observeData(transactionId: String) {
         binding.apply {
-            viewModel.onPaymentSuccessReceived(transactionId)
             viewModel.getTransactionById(transactionId)
                 .observe(this@PaymentSuccessActivity) { result ->
                     when (result) {
@@ -54,6 +50,17 @@ class PaymentSuccessActivity : AppCompatActivity() {
                         is PikulResult.Error -> {}
                         is PikulResult.Success -> {
                             initView(result.data)
+                            // post notification
+                            if (result.data.transactionStatus == TRANSACTION_STATUS.WAITING_FOR_PAYMENT.toString()){
+                                viewModel.onPaymentSuccessReceived(transactionId)
+                                viewModel.sendNotification(
+                                    result.data.transactionId,
+                                    result.data.merchantId,
+                                    result.data.customerName,
+                                    result.data.productNames,
+                                    result.data.productAmounts
+                                )
+                            }
                         }
                     }
                 }
@@ -97,7 +104,7 @@ class PaymentSuccessActivity : AppCompatActivity() {
         finishAffinity()
     }
 
-    private fun onClickAction(){
+    private fun onClickAction() {
         binding.apply {
             btnBackToHome.setOnClickListener {
 

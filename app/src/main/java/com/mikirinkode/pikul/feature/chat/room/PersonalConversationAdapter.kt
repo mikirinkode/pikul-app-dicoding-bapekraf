@@ -528,6 +528,10 @@ class PersonalConversationAdapter : RecyclerView.Adapter<PersonalConversationAda
         return tokenList
     }
 
+    fun setInterlocutorData(interlocutorData: UserAccount){
+        this.interlocutorData = interlocutorData
+    }
+
     fun getTotalSelectedMessages() = listIndexOfSelectedMessages.size
 
     fun getCurrentSelectedMessage() = currentSelectedMessage

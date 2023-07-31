@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentMerchantDashboardBinding
 import com.mikirinkode.pikul.feature.owner.dashboard.OwnerDashboardFragmentDirections
+import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,6 +62,8 @@ class MerchantDashboardFragment : Fragment() {
         initView()
         onClickAction()
         observeData()
+        checkPermission()
+        viewModel.updateOneSignalDeviceToken()
     }
 
     override fun onDestroyView() {
@@ -180,7 +184,16 @@ class MerchantDashboardFragment : Fragment() {
             }.attach()
         }
     }
-
+    private fun checkPermission() {
+        if (!PermissionHelper.isNotificationPermissionGranted(requireActivity())) {
+            Toast.makeText(
+                requireContext(),
+                "Ijin Notifikasi belum Diberikan",
+                Toast.LENGTH_SHORT
+            ).show()
+            PermissionHelper.requestNotificationPermission(requireActivity())
+        }
+    }
     private fun onClickAction() {
         binding.apply {
             layoutUserProfile.setOnClickListener {

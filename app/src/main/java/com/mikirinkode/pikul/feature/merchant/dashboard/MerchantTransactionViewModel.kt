@@ -1,5 +1,6 @@
 package com.mikirinkode.pikul.feature.merchant.dashboard
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,13 +8,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
+import com.mikirinkode.pikul.constants.Constants
+import com.mikirinkode.pikul.constants.NOTIFICATION_TYPE
 import com.mikirinkode.pikul.constants.TRANSACTION_STATUS
 import com.mikirinkode.pikul.data.local.LocalPreference
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.PikulTransaction
+import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
+import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,8 +50,58 @@ class MerchantTransactionViewModel @Inject constructor(
             }
             .addOnSuccessListener {
                 result.postValue(PikulResult.Success(true))
+
+                // post notification
+                fireStore.collection(FireStoreUtils.TABLE_USER)
+                    .document(customerId).get()
+                    .addOnSuccessListener {
+                        val user = it.toObject(UserAccount::class.java)
+                        if (user != null){
+                            if (user.oneSignalToken != null && user.oneSignalToken != ""){
+                                val title = "PESANAN SEDANG DIPROSES"
+                                var message = "Ketuk untuk lihat detail pesanan"
+                                val receiverDeviceTokenList = listOf<String>(user.oneSignalToken)
+                                postNotification(transactionId ?: "", title, message, receiverDeviceTokenList)
+                            }
+                        }
+                    }
             }
         return result
+    }
+
+    private fun postNotification(
+        transactionId: String,
+        senderName: String,
+        message: String,
+        receiverDeviceTokenList: List<String>
+    ) {
+        Log.e("ChatRoomVM", "postNotification called")
+        Log.e("ChatRoomVM", "receiver device token list: " + receiverDeviceTokenList)
+//        Log.e("ChatRoomVM", "receiver device token: ${receiverDeviceTokenList?.get(0)}")
+        val receivers = JSONArray(receiverDeviceTokenList)
+        val customData = JSONObject().apply {
+            put("transactionId", transactionId)
+            put("notificationType", NOTIFICATION_TYPE.BOOKING_DETAIL_CUSTOMER.toString())
+        }
+        val notificationJson = JSONObject().apply {
+            put("app_id", Constants.ONE_SIGNAL_APP_ID)
+            put("include_player_ids", receivers)
+            put("contents", JSONObject().put("en", message))
+            put("headings", JSONObject().put("en", senderName))
+            put("data", customData)
+        }
+
+        OneSignal.postNotification(
+            notificationJson,
+            object : OneSignal.PostNotificationResponseHandler {
+                override fun onSuccess(response: JSONObject?) {
+                    // Notification sent successfully
+                }
+
+                override fun onFailure(response: JSONObject?) {
+                    // Failed to send notification
+                }
+            })
     }
 
     // TODO: SEND NOTIFICATION
@@ -65,6 +122,22 @@ class MerchantTransactionViewModel @Inject constructor(
             }
             .addOnSuccessListener {
                 result.postValue(PikulResult.Success(true))
+
+                // post notification
+                // post notification
+                fireStore.collection(FireStoreUtils.TABLE_USER)
+                    .document(customerId).get()
+                    .addOnSuccessListener {
+                        val user = it.toObject(UserAccount::class.java)
+                        if (user != null){
+                            if (user.oneSignalToken != null && user.oneSignalToken != ""){
+                                val title = "PESANAN SIAP DIAMBIL"
+                                var message = "Ketuk untuk lihat detail pesanan"
+                                val receiverDeviceTokenList = listOf<String>(user.oneSignalToken)
+                                postNotification(transactionId ?: "", title, message, receiverDeviceTokenList)
+                            }
+                        }
+                    }
             }
         return result
     }

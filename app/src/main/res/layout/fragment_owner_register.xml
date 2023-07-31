@@ -209,9 +209,7 @@
                         android:id="@+id/etBusinessProductCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:maxLength="100"
-                        android:inputType="textMultiLine" />
+                        android:imeOptions="actionNext"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

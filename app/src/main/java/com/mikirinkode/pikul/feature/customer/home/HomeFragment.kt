@@ -21,6 +21,7 @@ import com.mikirinkode.pikul.feature.auth.login.LoginActivity
 import com.mikirinkode.pikul.feature.notification.NotificationActivity
 import com.mikirinkode.pikul.feature.profile.ProfileActivity
 import com.mikirinkode.pikul.feature.search.SearchActivity
+import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -68,7 +69,22 @@ class HomeFragment : Fragment() {
         initView()
         observePopularBusinessList()
         onClickAction()
+
+        checkPermission()
+        viewModel.updateOneSignalDeviceToken()
     }
+
+    private fun checkPermission() {
+        if (!PermissionHelper.isNotificationPermissionGranted(requireActivity())) {
+            Toast.makeText(
+                requireContext(),
+                "Ijin Notifikasi belum Diberikan",
+                Toast.LENGTH_SHORT
+            ).show()
+            PermissionHelper.requestNotificationPermission(requireActivity())
+        }
+    }
+
 
     private fun initView() {
         Log.e("HomeFragment", "on initView")
@@ -114,7 +130,6 @@ class HomeFragment : Fragment() {
     }
 
 
-
     private fun observePopularBusinessList() {
         viewModel.getPopularBusinessList().observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -132,7 +147,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 
 
     private fun onClickAction() {

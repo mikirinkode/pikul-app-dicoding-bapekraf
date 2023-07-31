@@ -107,6 +107,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        if (requestCode == PermissionHelper.NOTIFICATION_REQUEST_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty()) {
+                for (result in grantResults) {
+                    Toast.makeText(this, "Ijin Notifikasi Diberikan", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
     }
 
 }

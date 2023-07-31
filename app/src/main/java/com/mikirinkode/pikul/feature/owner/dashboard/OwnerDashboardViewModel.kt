@@ -16,7 +16,9 @@ import com.mikirinkode.pikul.data.model.Product
 import com.mikirinkode.pikul.data.model.maps.SellingPlace
 import com.mikirinkode.pikul.feature.merchant.maps.MerchantSellingPlaceViewModel
 import com.mikirinkode.pikul.feature.owner.product.ProductViewModel
+import com.mikirinkode.pikul.utils.DateHelper
 import com.mikirinkode.pikul.utils.FireStoreUtils
+import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,7 +29,29 @@ class OwnerDashboardViewModel @Inject constructor(
     private val storage: FirebaseStorage,
     private val preferences: LocalPreference
 ) : ViewModel() {
+    fun updateOneSignalDeviceToken() {
+        // Retrieve the device token
+        val deviceState = OneSignal.getDeviceState()
+        val deviceToken = deviceState?.userId
 
+
+        // Check if device token is available
+        if (deviceToken != null) {
+            val currentUserId = auth?.currentUser?.uid
+            val userRef = currentUserId?.let { fireStore?.collection("users")?.document(it) }
+
+            // Save token to server if use a server
+            if (currentUserId != null) {
+                val currentDate = DateHelper.getCurrentDateTime()
+                val newUpdate = hashMapOf<String, Any>(
+                    "oneSignalToken" to deviceToken,
+                    "oneSignalTokenUpdatedAt" to currentDate
+                )
+
+                userRef?.set(newUpdate, SetOptions.merge())
+            }
+        }
+    }
     fun getProductList(): LiveData<PikulResult<Boolean>> {
         val result = MutableLiveData<PikulResult<Boolean>>()
 
@@ -47,6 +71,8 @@ class OwnerDashboardViewModel @Inject constructor(
                             if (stock <= 0) {
                                 result.postValue(PikulResult.Success(true))
                             }
+                        } else {
+                                result.postValue(PikulResult.Success(true))
                         }
                     }
                 }

@@ -15,6 +15,7 @@ import com.mikirinkode.pikul.data.local.LocalPreferenceConstants
 import com.mikirinkode.pikul.data.model.PikulResult
 import com.mikirinkode.pikul.data.model.UserAccount
 import com.mikirinkode.pikul.databinding.FragmentOwnerDashboardBinding
+import com.mikirinkode.pikul.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,6 +48,8 @@ class OwnerDashboardFragment : Fragment() {
         initView()
         observeBusinessData()
         onClickAction()
+        checkPermission()
+        viewModel.updateOneSignalDeviceToken()
     }
 
     override fun onDestroyView() {
@@ -62,7 +65,18 @@ class OwnerDashboardFragment : Fragment() {
 //            }
         }
     }
+    private fun checkPermission() {
+        if (!PermissionHelper.isNotificationPermissionGranted(requireActivity())) {
+            Toast.makeText(
+                requireContext(),
+                "Ijin Notifikasi belum Diberikan",
+                Toast.LENGTH_SHORT
+            ).show()
+            PermissionHelper.requestNotificationPermission(requireActivity())
+        } else {
 
+        }
+    }
     private fun observeBusinessData(){
         binding.apply {
 

@@ -83,9 +83,10 @@ class ChatRoomFragment : Fragment(),
         onAppBatItemSelectedClickListener()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
+        viewModel.deactivateListener(args.conversationId)
     }
 
     override fun onStop() {
@@ -136,6 +137,7 @@ class ChatRoomFragment : Fragment(),
     private fun observeUserData() {
 
         viewModel.getUserById(args.interlocutorId).observe(viewLifecycleOwner) { user ->
+            adapter.setInterlocutorData(user)
             binding.apply {
 //                interlocutor = user
                 tvInterlocutorName.text = user.name
@@ -178,6 +180,30 @@ class ChatRoomFragment : Fragment(),
     private fun observeNewMessages() {
         viewModel.receiveMessage(args.conversationId).observe(viewLifecycleOwner) { messages ->
             adapter.setMessages(messages)
+
+            if (messages.isNotEmpty()) {
+
+                binding.apply {
+                    val layoutManager = binding.rvMessages.layoutManager as LinearLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val itemCount = layoutManager.itemCount
+                    // if the last visible item is not more than 5
+                    // ignore the isScrolledToBottom variable
+                    if (lastVisibleItemPosition in (itemCount - 5)..itemCount) { // TODO
+                        if (adapter.itemCount != null && adapter.itemCount - 1 > 0) {
+                            rvMessages.scrollToPosition(adapter.itemCount - 1)
+                            isScrolledToBottom = true
+                        }
+                    } else {
+                        // the visible item is more than 2 item
+                        if (adapter.itemCount != null && adapter.itemCount - 1 > 0 && !isScrolledToBottom) {
+                            rvMessages.scrollToPosition(adapter.itemCount - 1)
+                            isScrolledToBottom = true
+                        }
+                    }
+                }
+
+            }
         }
     }
 
