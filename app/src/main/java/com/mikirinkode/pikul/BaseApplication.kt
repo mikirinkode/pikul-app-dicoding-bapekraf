@@ -43,7 +43,9 @@ class BaseApplication : Application() {
                         startActivity(openIntent)
                     }
                 }
+
                 NOTIFICATION_TYPE.BOOKING_DETAIL_MERCHANT.toString() -> {}
+
                 NOTIFICATION_TYPE.BOOKING_DETAIL_CUSTOMER.toString() -> {
                     val transactionId = payload?.optString("transactionId")
                     if (transactionId != null && transactionId != ""){
